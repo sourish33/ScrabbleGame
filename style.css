@@ -28,8 +28,8 @@ table, td {
   
 }
 td {
+padding:0;
 width: 6.66%;
-height:6.66%;
 background-color: lightgrey;
 }
 
@@ -86,6 +86,16 @@ background-color: lightgrey;
     right: 2px;
     color: black;
     font-size: 10px;
+  }
+
+
+  .tile-in-rack{
+    height: 40px;
+  }
+
+  .tile-on-board {
+    max-width:100%;
+    max-height:100%;
   }
 
 

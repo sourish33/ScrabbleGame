@@ -302,14 +302,14 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td class="TW">TW</td>
+						<td class="TW" id="o7">TW</td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td class="DL">DL</td>
+						<td id="o13"></td>
 						<td></td>
-						<td></td>
-						<td class="TW">TW</td>
+						<td class="TW" id="o15">TW</td>
 					  </tr>
 	
 				  </table>
@@ -338,27 +338,27 @@
 				<div class="d-flex flex-row w-75 justify-content-center">
 					<!-- <div class="p-2 tile-holder">A</div> -->
 					<div class="tile-container" id="t1" draggable="true">
-						<img  src="img/tile.png" style="height: 40px;">
+						<img  src="img/tile.png" class="tile-on-board">
 						<div class="centered">Q</div>
 						<div class="bottom-right">10</div>
 					 </div>
-					 <div class="tile-container">
-						<img src="img/tile.png" style="height: 40px;">
+					 <div class="tile-container" id="t2" draggable="true">
+						<img src="img/tile.png" class="tile-on-board">
 						<div class="centered">B</div>
 						<div class="bottom-right">1</div>
 					 </div>
-					 <div class="tile-container">
-						<img src="img/tile.png" style="height: 40px;">
+					 <div class="tile-container" id="t3" draggable="true">
+						<img src="img/tile.png" class="tile-on-board">
 						<div class="centered">J</div>
 						<div class="bottom-right">8</div>
 					 </div>
-					 <div class="tile-container">
-						<img src="img/tile.png" style="height: 40px;">
+					 <div class="tile-container" id="t4" draggable="true">
+						<img src="img/tile.png" class="tile-on-board">
 						<div class="centered">S</div>
 						<div class="bottom-right">2</div>
 					 </div>
 					 <div class="tile-container">
-						<img src="img/tile.png" style="height: 40px;">
+						<img src="img/tile.png" class="tile-on-board">
 						<div class="centered">D</div>
 						<div class="bottom-right">3</div>
 					 </div>
@@ -386,11 +386,33 @@
 		</div>
 
 <script>
-const tile = document.getElementById("t1");
-const space = document.getElementById("a1");
-space.innerHTML="";
-space.appendChild(tile);
+	function clear(theSpace){
+		theSpace.innerHTML="";
+		const the_image = theSpace.getElementsByTagName('img')[0];
+		if (the_image){
+			theSpace.removeChild(the_image);
+		}
 
+	}
+	function move(moveWhat, moveWhere) {
+		const tile = document.getElementById(moveWhat);
+		const space = document.getElementById(moveWhere);
+		clear(space);
+		space.appendChild(tile);
+	}
+	move("t1","o13");
+	move("t2","o15");
+	move("t3","a1");
+	move("t4","a1");
+
+
+	// const tile = document.getElementById("t1");
+	// const space = document.getElementById("a1");
+	// space.innerHTML="";
+	// space.appendChild(tile);
+	// const the_image = tile.getElementsByTagName('img')[0];
+	// the_image.classList.remove("tile-in-rack");
+	// the_image.classList.add("tile-on-board");
 </script>
 		
 
