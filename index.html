@@ -335,7 +335,7 @@
 	<div class="row mt-4">
 			<div class="col-sm-6 d-flex flex-row justify-content-center"  >
 				<!-- <img src="img/rack.png" class="img-fluid w-75 h-50" alt="rack"> -->
-				<div class="d-flex flex-row w-75 justify-content-center">
+				<div class="d-flex flex-row w-75 justify-content-center" id="rack">
 					<!-- <div class="p-2 tile-holder">A</div> -->
 					<div class="tile-container" id="t1" draggable="true">
 						<img  src="img/tile.png" class="tile-on-board">
@@ -400,19 +400,23 @@
 		clear(space);
 		space.appendChild(tile);
 	}
+
+	function returnToRack(clearWhat) {
+		const toClear = document.getElementById(clearWhat);
+		const the_tile = toClear.firstChild;
+		if (!the_tile) {return};
+		toClear.removeChild(the_tile);
+		const putback = document.getElementById('rack');
+		putback.appendChild(the_tile);
+	}
 	move("t1","o13");
 	move("t2","o15");
 	move("t3","a1");
 	move("t4","a1");
+	returnToRack("o13");
+	returnToRack("o15");
+	returnToRack("a1");
 
-
-	// const tile = document.getElementById("t1");
-	// const space = document.getElementById("a1");
-	// space.innerHTML="";
-	// space.appendChild(tile);
-	// const the_image = tile.getElementsByTagName('img')[0];
-	// the_image.classList.remove("tile-in-rack");
-	// the_image.classList.add("tile-on-board");
 </script>
 		
 
