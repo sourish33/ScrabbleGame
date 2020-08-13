@@ -1,0 +1,82 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  padding: 10px;
+  background: #f1f1f1;
+}
+
+.headplate{
+    text-align: center;
+}
+
+/* Table styling */
+.tablestyle {
+  width: 600px;
+  height:600px;
+  text-align: center;
+  margin: 0 auto;
+  
+}
+
+table, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  
+}
+td {
+width: 6.66%;
+background-color: lightgrey;
+}
+
+.TW {
+  background-color: #ff6b33;
+  
+}
+
+.DL {
+  background-color: #3393ff;
+}
+
+.TL {
+  background-color: #4f9425;
+}
+
+.DW{
+  background-color: red;
+}
+
+.S{
+  background-color: red;
+  color: white;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.rack-table {
+  width:400px;
+  border-collapse: collapse;
+}
+
+.tile-holder {
+  background-image: url("img/tile.png");
+}
+
+
+
+
+.
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+/* @media screen and (max-width: 600px) {
+    .img-fluid {
+    max-width: 60%;
+  }
+
+} */
