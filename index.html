@@ -35,7 +35,7 @@
 				<table class="tablestyle">
 					<!-- row 1 -->
 					<tr>
-					  <td class="TW">TW</td>
+					  <td class="TW" id="a1">TW</td>
 					  <td></td>
 					  <td></td>
 					  <td class="DL">DL</td>
@@ -337,8 +337,8 @@
 				<!-- <img src="img/rack.png" class="img-fluid w-75 h-50" alt="rack"> -->
 				<div class="d-flex flex-row w-75 justify-content-center">
 					<!-- <div class="p-2 tile-holder">A</div> -->
-					<div class="tile-container">
-						<img draggable="true" src="img/tile.png" style="height: 40px;">
+					<div class="tile-container" id="t1" draggable="true">
+						<img  src="img/tile.png" style="height: 40px;">
 						<div class="centered">Q</div>
 						<div class="bottom-right">10</div>
 					 </div>
@@ -385,7 +385,13 @@
 	</div>
 		</div>
 
+<script>
+const tile = document.getElementById("t1");
+const space = document.getElementById("a1");
+space.innerHTML="";
+space.appendChild(tile);
 
+</script>
 		
 
 
