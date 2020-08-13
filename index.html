@@ -386,37 +386,63 @@
 		</div>
 
 <script>
-	function clear(theSpace){
-		theSpace.innerHTML="";
-		const the_image = theSpace.getElementsByTagName('img')[0];
-		if (the_image){
-			theSpace.removeChild(the_image);
-		}
+	// function clear(theSpace){
+	// 	theSpace.innerHTML="";
+	// 	const the_image = theSpace.getElementsByTagName('img')[0];
+	// 	if (the_image){
+	// 		theSpace.removeChild(the_image);
+	// 	}
 
-	}
-	function move(moveWhat, moveWhere) {
-		const tile = document.getElementById(moveWhat);
-		const space = document.getElementById(moveWhere);
-		clear(space);
-		space.appendChild(tile);
-	}
+	// }
+	// function move(moveWhat, moveWhere) {
+	// 	const tile = document.getElementById(moveWhat);
+	// 	const space = document.getElementById(moveWhere);
+	// 	clear(space);
+	// 	space.appendChild(tile);
+	// }
 
-	function returnToRack(clearWhat) {
-		const toClear = document.getElementById(clearWhat);
-		const the_tile = toClear.firstChild;
-		if (!the_tile) {return};
-		toClear.removeChild(the_tile);
-		const putback = document.getElementById('rack');
-		putback.appendChild(the_tile);
-	}
-	move("t1","o13");
-	move("t2","o15");
-	move("t3","a1");
-	move("t4","a1");
-	returnToRack("o13");
-	returnToRack("o15");
-	returnToRack("a1");
+	// function returnToRack(clearWhat) {
+	// 	const toClear = document.getElementById(clearWhat);
+	// 	const the_tile = toClear.firstChild;
+	// 	if (!the_tile) {return};
+	// 	toClear.removeChild(the_tile);
+	// 	const putback = document.getElementById('rack');
+	// 	putback.appendChild(the_tile);
+	// }
+	// move("t1","o13");
+	// move("t2","o15");
+	// move("t3","a1");
+	// move("t4","a1");
+	// returnToRack("o13");
+	// returnToRack("o15");
+	// returnToRack("a1");
+	var boosters = {};
+	boosters["a1"]=boosters["a8"]=boosters["a15"]=boosters["h1"]=boosters["h15"]="TW";
+	boosters["o1"]=boosters["o8"]=boosters["o15"]="TW";
 
+	boosters["a4"]=boosters["a12"]="DL";
+	boosters["c8"]=boosters["c10"]="DL";
+	boosters["d1"]=boosters["d8"]=boosters["d15"]="DL";
+	boosters["g3"]=boosters["g7"]=boosters["g9"]=boosters["g13"]="DL";
+	boosters["h4"]=boosters["h12"]="DL";
+	boosters["i3"]=boosters["i7"]=boosters["i9"]=boosters["i13"]="DL";
+	boosters["11"]=boosters["l8"]=boosters["l15"]="DL";
+	boosters["m7"]=boosters["m9"]="DL";
+	boosters["o3"]=boosters["o12"]="DL";
+
+	boosters["b6"]=boosters["b12"]="TL";
+	boosters["f2"]=boosters["f6"]=boosters["f10"]=boosters["f13"]="TL";
+	boosters["j2"]=boosters["j6"]=boosters["j10"]=boosters["j13"]="TL";
+	boosters["m6"]=boosters["m12"]="TL";
+	
+	boosters["b2"]=boosters["b14"]="DL";
+	boosters["c3"]=boosters["c13"]="DL";
+	boosters["d4"]=boosters["d12"]="DL";
+	boosters["e5"]=boosters["e11"]="DL";
+	boosters["k5"]=boosters["k11"]="DL";
+	boosters["l4"]=boosters["l12"]="DL";
+	boosters["m3"]=boosters["m13"]="DL";
+	boosters["n2"]=boosters["n14"]="DL";
 </script>
 		
 
