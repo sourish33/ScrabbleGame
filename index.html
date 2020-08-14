@@ -308,7 +308,10 @@
 						<td id="o11"></td>
 						<td id="o12" class="DL">DL</td>
 						<td id="o13"></td>
-						<td id="o14"></td>
+						<td id="o14"
+						ondragstart="onDragStart(event);"
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"						></td>
 						<td id="o15" class="TW">TW</td>
 					  </tr>
 	
@@ -337,7 +340,11 @@
 				<!-- <img src="img/rack.png" class="img-fluid w-75 h-50" alt="rack"> -->
 				<div class="d-flex flex-row w-75 justify-content-center" id="rack">
 					<!-- <div class="p-2 tile-holder">A</div> -->
-					<div class="tile-container" id="t1" draggable="true">
+					<div class="tile-container" id="t1" 
+					draggable="true" 						
+					ondragover="onDragOver(event);"
+					ondrop="onDrop(event);"	
+					ondragstart="onDragStart(event);">
 						<img  src="img/tile.png" class="tile-on-board">
 						<div class="centered">Q</div>
 						<div class="bottom-right">10</div>
@@ -387,6 +394,23 @@
 
 <script>
 
+	function onDragStart(event) {
+		event
+			.dataTransfer
+			.setData('text/plain', event.target.id);
+		}
+
+	function onDragOver(event) {
+		event.preventDefault();
+	}
+
+	function onDrop(event) {
+		const incoming = event.dataTransfer.getData('text');
+		const dropzone = event.target.id;
+		move(incoming,dropzone);
+		event.dataTransfer.clearData();
+	}
+
 	var boosters = {};
 	boosters["a1"]=boosters["a8"]=boosters["a15"]=boosters["h1"]=boosters["h15"]="TW";
 	boosters["o1"]=boosters["o8"]=boosters["o15"]="TW";
@@ -412,6 +436,11 @@
 	boosters["m3"]=boosters["m13"]="DL";
 	boosters["n2"]=boosters["n14"]="DL";
 	boosters["h8"]="&bigstar;";
+
+
+	function includes(strToCheck, word) {	
+		return (word.indexOf(strToCheck) > -1 ? true : false)
+	}
 
 	function clear(theSpace){
 	theSpace.innerHTML="";
@@ -442,12 +471,12 @@
 		u = boosters[whichSquare];
 		return (u!=null ? u : "");
 	}
-	move("t1","o13");
-	move("t2","o15");
-	move("t3","n1");
-	move("t4","j11");
-	move("t5","j12");
-	move("t6","j13");
+	// move("t1","o13");
+	// move("t2","o15");
+	// move("t3","n1");
+	// move("t4","j11");
+	// move("t5","j12");
+	// move("t6","j13");
 	// returnToRack("o13");
 	//returnToRack("o15");
 	// returnToRack("a1");
