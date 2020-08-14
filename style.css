@@ -100,7 +100,24 @@ background-color: lightgrey;
 
 
 
+  @media only screen and (max-width: 1000px) {
+    .tablestyle {
+      width: 500px;
+      height:500px;
+      text-align: center;
+      margin:0 auto;
+    }
 
+    .tile-container 
+    {
+      position: relative;
+      height: 30px;
+      text-align: center;
+      margin:0;
+      padding:0;
+    }
+  
+  }
 
 
 .
