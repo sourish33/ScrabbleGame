@@ -340,45 +340,91 @@
 				<!-- <img src="img/rack.png" class="img-fluid w-75 h-50" alt="rack"> -->
 				<div class="d-flex flex-row w-75 justify-content-center" id="rack">
 					<!-- <div class="p-2 tile-holder">A</div> -->
-					<div class="tile-container" id="t1" 
-					draggable="true" 						
-					ondragover="onDragOver(event);"
-					ondrop="onDrop(event);"	
-					ondragstart="onDragStart(event);">
-						<img  src="img/tile.png" class="tile-on-board">
-						<div class="centered">Q</div>
-						<div class="bottom-right">10</div>
-					 </div>
-					 <div class="tile-container" id="t2" draggable="true">
-						<img src="img/tile.png" class="tile-on-board">
-						<div class="centered">B</div>
-						<div class="bottom-right">1</div>
-					 </div>
-					 <div class="tile-container" id="t3" draggable="true">
-						<img src="img/tile.png" class="tile-on-board">
-						<div class="centered">J</div>
-						<div class="bottom-right">8</div>
-					 </div>
-					 <div class="tile-container" id="t4" draggable="true">
-						<img src="img/tile.png" class="tile-on-board">
-						<div class="centered">S</div>
-						<div class="bottom-right">2</div>
-					 </div>
-					 <div class="tile-container" id="t5" draggable="true">
-						<img src="img/tile.png" class="tile-on-board">
-						<div class="centered">D</div>
-						<div class="bottom-right">3</div>
-					 </div>
-					 <div class="tile-container" id="t6" draggable="true" >
-						<img src="img/tile.png" style="height: 40px;">
-						<div class="centered">V</div>
-						<div class="bottom-right">2</div>
-					 </div>
-					 <div class="tile-container" id="t7" draggable="true" >
-						<img src="img/tile.png" style="height: 40px;">
-						<div class="centered">P</div>
-						<div class="bottom-right">2</div>
-					 </div>
+					<div id="s1">
+						<div class="tile-container" id="t1" 
+						draggable="true" 						
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"	
+						ondragstart="onDragStart(event);">
+							<img  src="img/tile.png" class="tile-on-board">
+							<div class="centered">Q</div>
+							<div class="bottom-right">10</div>
+						</div>
+					</div>
+
+					<div id="s2">
+						<div class="tile-container" id="t2" 
+						draggable="true" 						
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"	
+						ondragstart="onDragStart(event);">
+							<img src="img/tile.png" class="tile-on-board">
+							<div class="centered">B</div>
+							<div class="bottom-right">1</div>
+						</div>
+					</div>
+
+					<div id="s3">
+						<div class="tile-container" id="t3" 
+						draggable="true" 						
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"	
+						ondragstart="onDragStart(event);">
+							<img src="img/tile.png" class="tile-on-board">
+							<div class="centered">J</div>
+							<div class="bottom-right">8</div>
+						</div>
+					</div>
+
+
+					<div id="s4">
+						<div class="tile-container" id="t4" 
+						draggable="true" 						
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"	
+						ondragstart="onDragStart(event);">
+							<img src="img/tile.png" class="tile-on-board">
+							<div class="centered">S</div>
+							<div class="bottom-right">2</div>
+						</div>
+					</div>
+
+					<div id="s5">
+						<div class="tile-container" id="t5" 
+						draggable="true" 						
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"	
+						ondragstart="onDragStart(event);">
+							<img src="img/tile.png" class="tile-on-board">
+							<div class="centered">D</div>
+							<div class="bottom-right">3</div>
+						</div>
+					</div>
+
+
+					<div id="s6">
+						<div class="tile-container" id="t6" 
+						draggable="true" 						
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"	
+						ondragstart="onDragStart(event);">
+							<img src="img/tile.png" style="height: 40px;">
+							<div class="centered">V</div>
+							<div class="bottom-right">2</div>
+						</div>
+					</div>
+
+					<div id="s7">
+						<div class="tile-container" id="t7" 
+						draggable="true" 						
+						ondragover="onDragOver(event);"
+						ondrop="onDrop(event);"	
+						ondragstart="onDragStart(event);">
+							<img src="img/tile.png" style="height: 40px;">
+							<div class="centered">P</div>
+							<div class="bottom-right">2</div>
+						</div>
+					</div>
 
 				  </div>
 			</div>
@@ -444,30 +490,17 @@
 		return (word.indexOf(strToCheck) > -1 ? true : false)
 	}
 
-	function clear(theSpace){
-	theSpace.innerHTML="";
-	const the_image = theSpace.getElementsByTagName('img')[0];
-	if (the_image){
-		theSpace.removeChild(the_image);
+	function move(fromWhere, toWhere) {
+		origin = document.getElementById(fromWhere);
+		tile = origin.getElementsByTagName('div')[0];
+		destination = document.getElementById(toWhere);
+		tileAlreadyThere = destination.getElementsByTagName('div')[0];
+		if (tile == null || tileAlreadyThere != null) { return}
+		destination.innerHTML = "";
+		destination.appendChild(tile);
+		origin.innerHTML=getLettersOnSquare(fromWhere);
 	}
 
-	}
-	function move(moveWhat, moveWhere) {
-		const tile = document.getElementById(moveWhat);
-		const space = document.getElementById(moveWhere);
-		clear(space);
-		space.appendChild(tile);
-	}
-
-	function returnToRack(clearWhat) {
-		const toClear = document.getElementById(clearWhat);
-		const the_tile = toClear.getElementsByTagName('div')[0];
-		if (the_tile==null) {return};
-		toClear.removeChild(the_tile);
-		toClear.innerHTML=getLettersOnSquare(clearWhat);
-		const putback = document.getElementById('rack');
-		putback.appendChild(the_tile);
-	}
 
 	function getLettersOnSquare(whichSquare){
 		u = boosters[whichSquare];
