@@ -412,6 +412,7 @@
 	}
 
 	var boosters = {};
+	(boosters = function fillBoosters() {
 	boosters["a1"]=boosters["a8"]=boosters["a15"]=boosters["h1"]=boosters["h15"]="TW";
 	boosters["o1"]=boosters["o8"]=boosters["o15"]="TW";
 	boosters["a4"]=boosters["a12"]="DL";
@@ -436,6 +437,7 @@
 	boosters["m3"]=boosters["m13"]="DL";
 	boosters["n2"]=boosters["n14"]="DL";
 	boosters["h8"]="&bigstar;";
+	})();
 
 
 	function includes(strToCheck, word) {	
