@@ -308,14 +308,8 @@
 						<td id="o11"></td>
 						<td id="o12" class="DL">DL</td>
 						<td id="o13"></td>
-						<td id="o14"
-						ondragstart="onDragStart(event);"
-						ondragover="onDragOver(event);"
-						ondrop="onDrop(event);"	></td>
-						<td id="o15" class="TW"
-						ondragstart="onDragStart(event);"
-						ondragover="onDragOver(event);"
-						ondrop="onDrop(event);"	>TW</td>
+						<td id="o14" ondragstart="onDragStart(event);"	ondragover="onDragOver(event);"	ondrop="onDrop(event);"	></td>
+						<td id="o15" class="TW"	ondragstart="onDragStart(event);" ondragover="onDragOver(event);" ondrop="onDrop(event);"	>TW</td>
 					  </tr>
 	
 				  </table>
@@ -475,6 +469,7 @@ window.addEventListener("drop",function(e){
 		let incoming = event.dataTransfer.getData('text');
 		let destination = event.target.id;
 		let u = document.getElementById(incoming);
+		if (u==null) {return;}//to prevent the error "cannot read parentelelement of null"
 		origin = u.parentElement.id;
 		move(origin,destination);
 		event.dataTransfer.clearData();
@@ -544,6 +539,8 @@ window.addEventListener("drop",function(e){
 		//create and leave behind a ghost tile if starting from the rack
 		if (includes("s", fromWhere)){
 			let ghostTile = tile.cloneNode(true);
+			let newid = tile.id+"g";
+			ghostTile.id = newid;
 			ghostTile.classList.add("ghost");
 			// ghostTile.style.visibility = "hidden";
 			origin.appendChild(ghostTile);
