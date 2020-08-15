@@ -503,9 +503,10 @@ window.addEventListener("drop",function(e){
 	boosters["h8"]="&bigstar;";
 	})();
 
-	var tiles = {};
-	(tiles = function makeTileList(){
+	var tilesArray = [];
+	(tilesArray = function makeTileList(){
 		
+		var tiles = {};
 		specs = [
 		[9, "A", 1], 
 		[12, "E", 1], 
@@ -542,6 +543,7 @@ window.addEventListener("drop",function(e){
 				count++;
 			}
 		}
+		tilesArray = Object.values(tiles);
 	})();
 
 
