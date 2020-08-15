@@ -343,7 +343,7 @@
 				<!-- <img src="img/rack.png" class="img-fluid w-75 h-50" alt="rack"> -->
 				<div class="d-flex flex-row w-75 justify-content-center" id="rack">
 					
-					<div id="s1"
+					<div id="s1" class="slot"
 					 ondrop="onDrop(event);"
 					 ondragover="onDragOver(event);"
 					 ondragstart="onDragStart(event);">
@@ -355,7 +355,7 @@
 						</div>
 					</div>
 
-					<div id="s2"
+					<div id="s2" class="slot"
 					ondragover="onDragOver(event);"
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
@@ -368,7 +368,7 @@
 						</div>
 					</div>
 
-					<div id="s3"
+					<div id="s3" class="slot"
 					ondragover="onDragOver(event);"
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
@@ -382,7 +382,7 @@
 					</div>
 
 
-					<div id="s4"
+					<div id="s4" class="slot"
 					ondragover="onDragOver(event);"
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
@@ -395,7 +395,7 @@
 						</div>
 					</div>
 
-					<div id="s5"
+					<div id="s5" class="slot"
 					ondragover="onDragOver(event);"
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
@@ -409,27 +409,27 @@
 					</div>
 
 
-					<div id="s6"
+					<div id="s6" class="slot"
 					ondragover="onDragOver(event);"
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
 						<div class="tile-container" id="t6" 
 						draggable="true">
-							<img src="img/tile.png" style="height: 40px;">
+							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">V</div>
 							<div class="bottom-right">2</div>
 						</div>
 					</div>
 
-					<div id="s7"
+					<div id="s7" class="slot"
 					ondragover="onDragOver(event);"
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
 						<div class="tile-container" id="t7" 
 						draggable="true">
-							<img src="img/tile.png" style="height: 40px;">
+							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">P</div>
 							<div class="bottom-right">2</div>
 						</div>
@@ -545,7 +545,7 @@ window.addEventListener("drop",function(e){
 		if (includes("s", fromWhere)){
 			let ghostTile = tile.cloneNode(true);
 			ghostTile.classList.add("ghost");
-			ghostTile.style.visibility = "hidden";
+			// ghostTile.style.visibility = "hidden";
 			origin.appendChild(ghostTile);
 		}
 

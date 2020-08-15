@@ -62,13 +62,15 @@ background-color: lightgrey;
     
 }
 
+
 .tile-container 
   {
     position: relative;
     height: 40px;
     text-align: center;
     margin:0;
-    padding:0;
+    padding:2px;
+    
   }
 
   .centered {
@@ -96,6 +98,15 @@ background-color: lightgrey;
   }
 
 
+  .ghost {
+    visibility: hidden;
+  }
+
+  .slot {
+    border: 2px solid teal;
+    border-radius: 5px;
+  }
+
 
   @media only screen and (max-width: 1000px) {
     .tablestyle {
@@ -105,9 +116,7 @@ background-color: lightgrey;
       margin:0 auto;
     }
 
-    .ghost {
-      visibility: hidden !important;
-    }
+
 
     .tile-container 
     {
