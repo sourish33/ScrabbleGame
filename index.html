@@ -449,6 +449,16 @@
 
 <script>
 
+//These prevent spurious webpages from opening by dragging
+window.addEventListener("dragover",function(e){
+  e = e || event;
+  e.preventDefault();
+},false);
+window.addEventListener("drop",function(e){
+  e = e || event;
+  e.preventDefault();
+},false);
+
 
 
 	function onDragStart(event) {
