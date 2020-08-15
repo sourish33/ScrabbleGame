@@ -15,8 +15,8 @@ body {
 
 /* Table styling */
 .tablestyle {
-  width: 600px;
-  height:600px;
+  width: 610px;
+  height:610px;
   text-align: center;
   margin:0 auto;
   
@@ -26,6 +26,9 @@ table, td {
   border: 1px solid black;
   border-collapse: collapse;
   
+}
+tr {
+  padding: 0;
 }
 td {
 padding:0;
