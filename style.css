@@ -89,9 +89,6 @@ background-color: lightgrey;
   }
 
 
-  .tile-in-rack{
-    height: 40px;
-  }
 
   .tile-on-board {
     max-width:100%;
@@ -106,6 +103,10 @@ background-color: lightgrey;
       height:500px;
       text-align: center;
       margin:0 auto;
+    }
+
+    .ghost {
+      visibility: hidden !important;
     }
 
     .tile-container 

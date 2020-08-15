@@ -452,8 +452,9 @@
 
 	function onDrop(event) {
 		const incoming = event.dataTransfer.getData('text');
-		const dropzone = event.target.id;
-		move(incoming,dropzone);
+		const destination = event.target.id;
+		origin = document.getElementById(incoming).parentElement.id;
+		move(origin,destination);
 		event.dataTransfer.clearData();
 	}
 
@@ -490,31 +491,77 @@
 		return (word.indexOf(strToCheck) > -1 ? true : false)
 	}
 
-	function move(fromWhere, toWhere) {
-		origin = document.getElementById(fromWhere);
-		tile = origin.getElementsByTagName('div')[0];
-		destination = document.getElementById(toWhere);
-		tileAlreadyThere = destination.getElementsByTagName('div')[0];
-		if (tile == null || tileAlreadyThere != null) { return}
-		destination.innerHTML = "";
-		destination.appendChild(tile);
-		origin.innerHTML=getLettersOnSquare(fromWhere);
-	}
+	// function move(fromWhere, toWhere) {
+	// 	origin = document.getElementById(fromWhere);
+	// 	tile = origin.getElementsByTagName('div')[0];
+	// 	destination = document.getElementById(toWhere);
+	// 	tileAlreadyThere = destination.getElementsByTagName('div')[0];
+	// 	if (tile == null || tileAlreadyThere != null) { return}
+	// 	destination.innerHTML = "";
+	// 	destination.appendChild(tile);
+	// 	origin.innerHTML=getLettersOnSquare(fromWhere);
+	// }
 
 
 	function getLettersOnSquare(whichSquare){
 		u = boosters[whichSquare];
 		return (u!=null ? u : "");
 	}
-	// move("t1","o13");
-	// move("t2","o15");
-	// move("t3","n1");
-	// move("t4","j11");
-	// move("t5","j12");
-	// move("t6","j13");
-	// returnToRack("o13");
-	//returnToRack("o15");
-	// returnToRack("a1");
+
+	function move(fromWhere, toWhere) {
+		let origin = document.getElementById(fromWhere);
+		let destination = document.getElementById(toWhere);
+		if (origin===destination){return;}
+		if (origin==null || destination==null) {return;}
+		let tile = origin.getElementsByTagName('div')[0];
+		tileAlreadyThere = destination.getElementsByTagName('div')[0];
+
+		if (tileAlreadyThere != null) { 
+			if (tileAlreadyThere.classList.contains("ghost"))
+			//going back to the rack, a ghost tile should be discarded
+				{
+					destination.removeChild(tileAlreadyThere);	
+				}
+			else {
+				return;
+				}
+		}
+		destination.innerHTML = "";
+		destination.appendChild(tile);
+		origin.innerHTML=getLettersOnSquare(fromWhere);
+		//create and leave behind a ghost tile if starting from the rack
+		if (includes("s", fromWhere)){
+			let ghostTile = tile.cloneNode(true);
+			ghostTile.classList.add("ghost");
+			ghostTile.style.visibility = "hidden";
+			origin.appendChild(ghostTile);
+		}
+
+	}
+	// function moveBoardToRack (fromWhere, toWhere) {
+	// 	let origin = document.getElementById(fromWhere);
+	// 	let destination = document.getElementById(toWhere);
+	// 	let tile = origin.getElementsByTagName('div')[0];
+	// 	tileAlreadyThere = destination.getElementsByTagName('div')[0];
+	// 	if (tile.classList.contains("ghost") ) { return}
+	// 	if (tileAlreadyThere != null) { 
+	// 		if (tileAlreadyThere.classList.contains("ghost"))
+	// 			{
+	// 				destination.removeChild(tileAlreadyThere);	
+	// 			}
+	// 		else {
+	// 			return;
+	// 			}
+	// 	}
+	// 	let ghostTile = tile.cloneNode(true);
+	// 	ghostTile.classList.add("ghost");
+	// 	ghostTile.style.visibility = "hidden";
+	// 	destination.innerHTML = "";
+	// 	destination.appendChild(tile);
+	// 	origin.innerHTML=getLettersOnSquare(fromWhere);
+	// 	origin.appendChild(ghostTile);
+
+	// }
 </script>
 		
 
