@@ -316,7 +316,7 @@
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-center" style="border: 1px solid white;">
 				<div class="p-2">
-					<button type="button" class="btn btn-primary">Dictionary</button>
+					<button type="button" class="btn btn-primary" id="replenish">Replenish Rack</button>
 				</div>
 				<div class="p-2">
 					<button type="button" class="btn btn-primary">Exchange</button>
@@ -444,37 +444,6 @@
 <script>
 
 //These prevent spurious webpages from opening by dragging
-window.addEventListener("dragover",function(e){
-  e = e || event;
-  e.preventDefault();
-},false);
-window.addEventListener("drop",function(e){
-  e = e || event;
-  e.preventDefault();
-},false);
-
-
-
-	function onDragStart(event) {
-		event
-			.dataTransfer
-			.setData('text/plain', event.target.id);
-		}
-
-	function onDragOver(event) {
-		event.preventDefault();
-	}
-
-	function onDrop(event) {
-		let incoming = event.dataTransfer.getData('text');
-		let destination = event.target.id;
-		let u = document.getElementById(incoming);
-		if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
-		origin = u.parentElement.id;
-		move(origin,destination);
-		event.dataTransfer.clearData();
-	}
-
 	var boosters = {};
 	(boosters = function fillBoosters() {
 	boosters["a1"]=boosters["a8"]=boosters["a15"]=boosters["h1"]=boosters["h15"]="TW";
@@ -548,6 +517,39 @@ window.addEventListener("drop",function(e){
 	})();
 
 
+	window.addEventListener("dragover",function(e){
+	e = e || event;
+	e.preventDefault();
+	},false);
+	window.addEventListener("drop",function(e){
+	e = e || event;
+	e.preventDefault();
+	},false);
+
+	// document.getElementById("replenish").addEventListener("click", replenishRack());
+
+
+	function onDragStart(event) {
+		event
+			.dataTransfer
+			.setData('text/plain', event.target.id);
+		}
+
+	function onDragOver(event) {
+		event.preventDefault();
+	}
+
+	function onDrop(event) {
+		let incoming = event.dataTransfer.getData('text');
+		let destination = event.target.id;
+		let u = document.getElementById(incoming);
+		if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
+		origin = u.parentElement.id;
+		move(origin,destination);
+		event.dataTransfer.clearData();
+	}
+
+
 	function includes(strToCheck, word) {	
 		return (word.indexOf(strToCheck) > -1 ? true : false)
 	}
@@ -612,6 +614,7 @@ window.addEventListener("drop",function(e){
 	}
 
 
+
 	function shuffle(arr){
 
 		let L = arr.length -1;
@@ -630,7 +633,7 @@ window.addEventListener("drop",function(e){
 		return pickedTile;
 	}
 	
-
+document.getElementById("replenish").addEventListener("click", replenishRack);
 
 // let spaces = rack.children
 // undefined
