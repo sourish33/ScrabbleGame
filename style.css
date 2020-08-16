@@ -11,10 +11,14 @@ body {
 .grid-container {
   display: grid;
   /* grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto; */
-  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px ;
+  /* grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px ;
   grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px ;
   height: 600px;
-  width: 600px; 
+  width: 600px;  */
+  width: 700px;
+  height:700px;
+  grid-template-columns: 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% ; 
+  grid-template-rows: 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% ;
   align-content: center;
   grid-gap: 0 0;
   margin-left: auto;
@@ -129,18 +133,25 @@ background-color: lightgrey;
   }
 
   .slot {
-    border: 2px solid  #855E42;
+    /* border: 2px solid  #855E42;
     border-radius: 5px;
-    background-color:  #855E42;
+    margin:5px; */
+  }
+
+  .holder {
+    background-image: url(img/rack.png);
+    /* width:150px; */
+    margin-left: -60px;
+
   }
 
 
   @media only screen and (max-width: 1000px) {
-    .tablestyle {
-      width: 500px;
-      height:500px;
-      text-align: center;
-      margin:0 auto;
+    .grid-container {
+      width: 100%;
+      height:100%;
+      grid-template-columns: 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% ; 
+      grid-template-rows: 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% ;
     }
 
 
@@ -152,6 +163,23 @@ background-color: lightgrey;
       text-align: center;
       margin:0;
       padding:0;
+    }
+
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+      color: black;
+      font-size: 15px;
+    }
+
+    .bottom-right {
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      color: black;
+      font-size: 10px;
     }
   
   }

@@ -316,8 +316,8 @@
 				<div class="p-2">
 					<button type="button" class="btn btn-primary" id="shuffle">Shuffle Rack</button>
 				</div>
-				<div class="p-2">
-					<h2>Tiles remaining: <span id="tile-counter">100</span></button>
+				<div class="p-2 tile-remaining">
+					<p>Tiles left: <span id="tile-counter">100</span></p>
 				</div>
 
 				<div class="mt-auto p-2">
@@ -328,10 +328,10 @@
 				  
 					
 		  </div>
-	<div class="row mt-4">
+	<div class="row mt-2">
 			<div class="col-lg-8 col-md-8 col-sm-10 d-flex flex-row justify-content-center" style="border: 1px solid white;" >
 				<!-- <img src="img/rack.png" class="img-fluid w-75 h-50" alt="rack"> -->
-				<div class="d-flex flex-row w-75 justify-content-center" id="rack">
+				<div class="d-flex flex-row w-75 justify-content-center holder" id="rack">
 					
 					<div id="s1" class="slot"
 					 ondrop="onDrop(event);"
