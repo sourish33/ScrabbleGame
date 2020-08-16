@@ -546,7 +546,7 @@
 		if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
 		origin = u.parentElement.id;
 		move(origin,destination);
-		event.dataTransfer.clearData();
+		// event.dataTransfer.clearData();
 	}
 
 
@@ -618,35 +618,35 @@
 	function shuffle(arr){
 
 		let L = arr.length -1;
+		let sarr = arr;
 
 		for(let i = L; i > 0; i--) {
 			const j = Math.floor(Math.random() * i);
-			const temp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = temp;
+			const temp = sarr[i];
+			sarr[i] = arr[j];
+			sarr[j] = temp;
 		}
+		return sarr;
 	}
 
 	function pickRandomTile() {
-		if (tilesArray.length % 5==0){ shuffle(tilesArray);		}
+		if (tilesArray.length % 5==0){ tilesArray = shuffle(tilesArray);		}
 		pickedTile= tilesArray.pop()
 		return pickedTile;
+	}
+
+	function shuffle_rack(){
+		let newOrder = shuffle(["s1","s2","s3","s4","s5","s6","s7"]);
+		for (let i=1;i<8;i++){
+			let curLoc = "s"+i.toString();
+			let newLoc = newOrder[i-1];
+			move(curLoc,newLoc);
+		}
 	}
 	
 document.getElementById("replenish").addEventListener("click", replenishRack);
 
-// let spaces = rack.children
-// undefined
-// spaces.length
-// 7
-// spaces[0].children[0]
-// <div class=​"tile-container ghost" id=​"t1" draggable=​"true">​…​</div>​
-// tile = spaces[0].children[0]
-// <div class=​"tile-container ghost" id=​"t1" draggable=​"true">​…​</div>​
-// letter = tile.children[1]
-// <div class=​"centered">​Q​</div>​
-// points = tile.children[2]
-// <div class=​"bottom-right">​10​</div>​
+
 
 
 
@@ -654,7 +654,7 @@ document.getElementById("replenish").addEventListener("click", replenishRack);
 </script>
 		
 
-
+<!-- <script src="scripts.js"></script> -->
 
 </body>
 </html>
