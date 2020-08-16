@@ -341,7 +341,7 @@
 					 ondrop="onDrop(event);"
 					 ondragover="onDragOver(event);"
 					 ondragstart="onDragStart(event);">
-						<div class="tile-container ghost" id="t1" 
+						<div class="tile-container ghost" 
 						draggable="true">
 							<img  src="img/tile.png" class="tile-on-board">
 							<div class="centered">Q</div>
@@ -354,7 +354,7 @@
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
-						<div class="tile-container ghost" id="t2" 
+						<div class="tile-container ghost" 
 						draggable="true" >					
 							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">B</div>
@@ -367,7 +367,7 @@
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
-						<div class="tile-container ghost" id="t3" 
+						<div class="tile-container ghost"
 						draggable="true" >
 							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">J</div>
@@ -381,7 +381,7 @@
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
-						<div class="tile-container ghost" id="t4" 
+						<div class="tile-container ghost" 
 						draggable="true">
 							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">S</div>
@@ -394,7 +394,7 @@
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
-						<div class="tile-container ghost" id="t5" 
+						<div class="tile-container ghost" 
 						draggable="true" >
 							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">D</div>
@@ -408,7 +408,7 @@
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
-						<div class="tile-container ghost" id="t6" 
+						<div class="tile-container ghost" 
 						draggable="true">
 							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">V</div>
@@ -421,7 +421,7 @@
 					ondrop="onDrop(event);"	
 					ondragstart="onDragStart(event);"
 					>
-						<div class="tile-container ghost" id="t7" 
+						<div class="tile-container ghost" 
 						draggable="true">
 							<img src="img/tile.png" class="tile-on-board">
 							<div class="centered">P</div>
@@ -503,10 +503,10 @@ window.addEventListener("drop",function(e){
 	boosters["h8"]="&bigstar;";
 	})();
 
-	var tilesArray = [];
+	var tilesArray;
 	(tilesArray = function makeTileList(){
-		
-		var tiles = {};
+
+		tilesArray=[];
 		specs = [
 		[9, "A", 1], 
 		[12, "E", 1], 
@@ -539,11 +539,12 @@ window.addEventListener("drop",function(e){
 		let count = 1;
 		for (x of specs) { 
 			for (let i=0;i<x[0];i++){ 
-				tiles[count]=[x[1], x[2].toString()];
+				newlist = [count,x[1], x[2].toString()];
+				tilesArray.push(newlist);
 				count++;
 			}
 		}
-		tilesArray = Object.values(tiles);
+
 	})();
 
 
@@ -582,8 +583,7 @@ window.addEventListener("drop",function(e){
 		//create and leave behind a ghost tile if starting from the rack
 		if (includes("s", fromWhere)){
 			let ghostTile = tile.cloneNode(true);
-			let newid = tile.id+"g";
-			ghostTile.id = newid;
+			ghostTile.id = "";
 			ghostTile.classList.add("ghost");
 			// ghostTile.style.visibility = "hidden";
 			origin.appendChild(ghostTile);
@@ -597,12 +597,15 @@ window.addEventListener("drop",function(e){
 		let rack = document.getElementById("rack");
 		let spaces = rack.children;
 		for (space of spaces) { 
-			let picked = pickRandomTile();
+			let pickedTile = pickRandomTile();
+			let picked = [pickedTile[1], pickedTile[2]];
 			let tile = space.children[0];
 			if (!tile.classList.contains("ghost")) {continue;}
 			tile.classList.remove("ghost");
 			tile.children[1].innerHTML = picked[0];
 			tile.children[2].innerHTML = picked[1];
+			newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
+			tile.id = newid;
 		}
 
 		
@@ -623,7 +626,8 @@ window.addEventListener("drop",function(e){
 
 	function pickRandomTile() {
 		if (tilesArray.length % 5==0){ shuffle(tilesArray);		}
-		return tilesArray.pop()
+		pickedTile= tilesArray.pop()
+		return pickedTile;
 	}
 	
 
