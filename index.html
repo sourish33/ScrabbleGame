@@ -593,10 +593,11 @@ window.addEventListener("drop",function(e){
 
 	function replenishRack() {
 
-		let picked = ["X", "10"]
+		
 		let rack = document.getElementById("rack");
 		let spaces = rack.children;
 		for (space of spaces) { 
+			let picked = pickRandomTile();
 			let tile = space.children[0];
 			if (!tile.classList.contains("ghost")) {continue;}
 			tile.classList.remove("ghost");
@@ -605,6 +606,24 @@ window.addEventListener("drop",function(e){
 		}
 
 		
+	}
+
+
+	function shuffle(arr){
+
+		let L = arr.length -1;
+
+		for(let i = L; i > 0; i--) {
+			const j = Math.floor(Math.random() * i);
+			const temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+		}
+	}
+
+	function pickRandomTile() {
+		if (tilesArray.length % 5==0){ shuffle(tilesArray);		}
+		return tilesArray.pop()
 	}
 	
 
