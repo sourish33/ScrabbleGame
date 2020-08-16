@@ -583,7 +583,7 @@ window.addEventListener("drop",function(e){
 		//create and leave behind a ghost tile if starting from the rack
 		if (includes("s", fromWhere)){
 			let ghostTile = tile.cloneNode(true);
-			ghostTile.id = "";
+			ghostTile.removeAttribute('id');
 			ghostTile.classList.add("ghost");
 			// ghostTile.style.visibility = "hidden";
 			origin.appendChild(ghostTile);
