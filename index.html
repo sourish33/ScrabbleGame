@@ -324,6 +324,10 @@
 				<div class="p-2">
 					<button type="button" class="btn btn-primary" id="shuffle">Shuffle Rack</button>
 				</div>
+				<div class="p-2">
+					<h2>Tiles remaining: <span id="tile-counter">100</span></button>
+				</div>
+
 				<div class="mt-auto p-2">
 					<button type="button" class="btn btn-primary">Play</button>
 				</div>
@@ -503,7 +507,7 @@
 		[1,"X",8],
 		[1,"Q",10],
 		[1,"Z",10],
-		[2," ", 0]
+		[2,"_", 0]
 		];
 		let count = 1;
 		for (x of specs) { 
@@ -599,16 +603,18 @@
 		let rack = document.getElementById("rack");
 		let spaces = rack.children;
 		for (space of spaces) { 
-			let pickedTile = pickRandomTile();
-			let picked = [pickedTile[1], pickedTile[2]];
 			let tile = space.children[0];
 			if (!tile.classList.contains("ghost")) {continue;}
 			tile.classList.remove("ghost");
+			let pickedTile = pickRandomTile();
+			let picked = [pickedTile[1], pickedTile[2]];
 			tile.children[1].innerHTML = picked[0];
 			tile.children[2].innerHTML = picked[1];
 			newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
 			tile.id = newid;
 		}
+
+		document.getElementById("tile-counter").innerHTML = tilesArray.length;
 
 		
 	}

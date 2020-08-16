@@ -15,10 +15,12 @@ body {
 
 /* Table styling */
 .tablestyle {
+  table-layout: fixed;
   width: 610px;
   height:610px;
   text-align: center;
   margin:0 auto;
+  
   
 }
 
@@ -29,10 +31,14 @@ table, td {
 }
 tr {
   padding: 0;
+  /* max-height: 41px; */
 }
 td {
 padding:0;
 width: 6.66%;
+/* max-width: 41px;
+max-height: 41px; */
+
 background-color: lightgrey;
 }
 
