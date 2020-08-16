@@ -319,10 +319,10 @@
 					<button type="button" class="btn btn-primary" id="replenish">Replenish Rack</button>
 				</div>
 				<div class="p-2">
-					<button type="button" class="btn btn-primary">Exchange</button>
+					<button type="button" class="btn btn-primary">Exchange Tiles</button>
 				</div>
 				<div class="p-2">
-					<button type="button" class="btn btn-primary">Shuffle</button>
+					<button type="button" class="btn btn-primary" id="shuffle">Shuffle Rack</button>
 				</div>
 				<div class="mt-auto p-2">
 					<button type="button" class="btn btn-primary">Play</button>
@@ -567,7 +567,7 @@
 		if (origin===destination){return;}
 		if (origin==null || destination==null) {return;}
 		let tile = origin.getElementsByTagName('div')[0];
-		tileAlreadyThere = destination.getElementsByTagName('div')[0];
+		let tileAlreadyThere = destination.getElementsByTagName('div')[0];
 
 		if (tileAlreadyThere != null) { 
 			if (tileAlreadyThere.classList.contains("ghost"))
@@ -635,16 +635,31 @@
 		return pickedTile;
 	}
 
+	function exchangeTiles(slot1, slot2){
+		if (slot1===slot2) {return;}
+		let origin = document.getElementById(slot1);
+		let destination = document.getElementById(slot2);
+		let tile1 = origin.getElementsByTagName('div')[0];
+		let tile2 = destination.getElementsByTagName('div')[0];
+		let temp1 = tile1.cloneNode(true);
+		let temp2 = tile2.cloneNode(true);
+		origin.removeChild(tile1);
+		destination.removeChild(tile2);
+		origin.appendChild(temp2);
+		destination.appendChild(temp1);
+	}
+
 	function shuffle_rack(){
 		let newOrder = shuffle(["s1","s2","s3","s4","s5","s6","s7"]);
 		for (let i=1;i<8;i++){
 			let curLoc = "s"+i.toString();
 			let newLoc = newOrder[i-1];
-			move(curLoc,newLoc);
+			exchangeTiles(curLoc,newLoc);
 		}
 	}
 	
 document.getElementById("replenish").addEventListener("click", replenishRack);
+document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 
 
 
