@@ -218,13 +218,13 @@ function shuffle_rack(){
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
-// //listen to drag event, not dragstart!
-// document.querySelector(".draggable").addEventListener("drag", (e)=>{
-//     e.target.classList.add("dragging");
-//   });
-//   document.querySelector(".draggable").addEventListener("dragend", (e)=>{
-//     e.target.classList.remove("dragging");
-//   });
+//listen to drag event, not dragstart!
+document.querySelector(".draggable").addEventListener("drag", (e)=>{
+    e.target.classList.add("dragging");
+  });
+  document.querySelector(".draggable").addEventListener("dragend", (e)=>{
+    e.target.classList.remove("dragging");
+  });
 
 
 

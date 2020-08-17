@@ -169,6 +169,10 @@ background-color: lightgrey;
     visibility: hidden;
   }
 
+  .fit-to-screen {
+      height: 100vw;
+  }
+
 
   @media only screen and (max-width: 1000px) {
     .grid-container {
@@ -214,7 +218,7 @@ background-color: lightgrey;
       /* border: 1px solid purple;   */
       position: absolute;
       left: 10%;
-      top: -10%;
+      top: 0;
       padding:0; 
       perspective: 100px;
     }
@@ -227,6 +231,11 @@ background-color: lightgrey;
       /* position: absolute;
       left:20%; */
     }
+
+    .control-btns{
+      flex-direction: row !important;
+    }
+
   
   }
 
