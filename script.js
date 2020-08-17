@@ -1,5 +1,5 @@
 
-//These prevent spurious webpages from opening by dragging
+
 var boosters = {};
 (boosters = function fillBoosters() {
 boosters["a1"]=boosters["a8"]=boosters["a15"]=boosters["h1"]=boosters["h15"]="TW";
@@ -72,7 +72,7 @@ var tilesArray;
 
 })();
 
-
+//These prevent spurious webpages from opening by dragging
 window.addEventListener("dragover",function(e){
 e = e || event;
 e.preventDefault();
@@ -218,6 +218,13 @@ function shuffle_rack(){
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
+// //listen to drag event, not dragstart!
+// document.querySelector(".draggable").addEventListener("drag", (e)=>{
+//     e.target.classList.add("dragging");
+//   });
+//   document.querySelector(".draggable").addEventListener("dragend", (e)=>{
+//     e.target.classList.remove("dragging");
+//   });
 
 
 
