@@ -250,26 +250,32 @@ function getUniques(arr){
     return Array.from(new Set(arr));
 }
 
-function getWords () {
+function getHorizontalWords () {
     let tiles = getTilesOnBoard();
     let addresses = [];
     let rows = [];
-    let cols = [];
+   
     tiles.forEach(tile => addresses.push(tile.id));
     tiles.forEach(tile => rows.push(tile.id[0]));
-    tiles.forEach(tile => cols.push(tile.id[1]));
-
     let uniqueRows = getUniques(rows);
+
+    let cols = [];
+    tiles.forEach(tile => cols.push(tile.id[1]));
     let uniqueCols = getUniques(cols);
-    let sorted = [];
+
+    let horRows = [];
    
 
-    for (let i =0; i++; i<uniqueRows.length) {
-        room = [];
-        addresses.forEach((address) => {if (uniqueRows[i] === addresses[0]) {room.push(addresses[0])}} );
-        sorted.push(room);
+    for (letter of uniqueRows) {
+        horRow = [];
+        for (address of addresses) {
+            if (letter===address[0]){
+                horRow.push(address);
+            }
+        }
+        horRows.push(horRow);
     }
-    return sorted;
+    return horRows;
 }
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
