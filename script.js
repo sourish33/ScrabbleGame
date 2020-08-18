@@ -250,7 +250,7 @@ function getUniques(arr){
     return Array.from(new Set(arr));
 }
 
-function getHorizontalWords () {
+function sortByHorizontalRows() {
     let tiles = getTilesOnBoard();
     let addresses = [];
     let rows = [];
