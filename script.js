@@ -110,6 +110,9 @@ function includes(strToCheck, word) {
     return (word.indexOf(strToCheck) > -1 ? true : false)
 }
 
+function getTheTile(square){
+    return square.getElementsByTagName('div')[0];
+}
 
 
 function getLettersOnSquare(whichSquare){
@@ -122,8 +125,8 @@ function move(fromWhere, toWhere) {
     let destination = document.getElementById(toWhere);
     if (origin===destination){return;}
     if (origin==null || destination==null) {return;}
-    let tile = origin.getElementsByTagName('div')[0];
-    let tileAlreadyThere = destination.getElementsByTagName('div')[0];
+    let tile = getTheTile(origin);
+    let tileAlreadyThere = getTheTile(destination);
 
     if (tileAlreadyThere != null) { 
         if (tileAlreadyThere.classList.contains("ghost"))
@@ -143,8 +146,15 @@ function move(fromWhere, toWhere) {
         let ghostTile = tile.cloneNode(true);
         ghostTile.removeAttribute('id');
         ghostTile.classList.add("ghost");
-        // ghostTile.style.visibility = "hidden";
         origin.appendChild(ghostTile);
+    }
+    //add the played-not-submitted class to any tile placed on the board and remove it if the tile is moved.
+    if ( !includes("s", toWhere) ){
+        destination.classList.add("played-not-submitted");
+    }
+    if (!includes("s", fromWhere)){
+        origin.classList.remove("played-not-submitted")
+
     }
 
 }
@@ -193,12 +203,15 @@ function pickRandomTile() {
     return pickedTile;
 }
 
+
 function exchangeTiles(slot1, slot2){
     if (slot1===slot2) {return;}
     let origin = document.getElementById(slot1);
     let destination = document.getElementById(slot2);
-    let tile1 = origin.getElementsByTagName('div')[0];
-    let tile2 = destination.getElementsByTagName('div')[0];
+    // let tile1 = origin.getElementsByTagName('div')[0];
+    // let tile2 = destination.getElementsByTagName('div')[0];
+    let tile1 = getTheTile(origin);
+    let tile2 = getTheTile(destination);
     let temp1 = tile1.cloneNode(true);
     let temp2 = tile2.cloneNode(true);
     origin.removeChild(tile1);
@@ -216,15 +229,58 @@ function shuffle_rack(){
     }
 }
 
+function getTilesOnBoard(){
+    let u = document.getElementsByClassName("played-not-submitted");
+    return Object.values(u);
+}
+
+function getSquareNumber(s) {//converts a cell address to a numerical value i.e. a1 = 1 , o15 = 225 etc
+    let firstDigit = s.charCodeAt(0)-97;
+    let secondDigit = parseInt(s.substr(1));
+    return firstDigit*15+secondDigit;
+}
+
+function getCellAddress(s) {
+    let firstchar = String.fromCharCode(parseInt(s/15)+97);
+    let lastdigit = (s%15).toString();
+    return firstchar+lastdigit;
+}
+
+function getUniques(arr){
+    return Array.from(new Set(arr));
+}
+
+function getWords () {
+    let tiles = getTilesOnBoard();
+    let addresses = [];
+    let rows = [];
+    let cols = [];
+    tiles.forEach(tile => addresses.push(tile.id));
+    tiles.forEach(tile => rows.push(tile.id[0]));
+    tiles.forEach(tile => cols.push(tile.id[1]));
+
+    let uniqueRows = getUniques(rows);
+    let uniqueCols = getUniques(cols);
+    let sorted = [];
+   
+
+    for (let i =0; i++; i<uniqueRows.length) {
+        room = [];
+        addresses.forEach((address) => {if (uniqueRows[i] === addresses[0]) {room.push(addresses[0])}} );
+        sorted.push(room);
+    }
+    return sorted;
+}
+
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 //listen to drag event, not dragstart!
-document.querySelector(".draggable").addEventListener("drag", (e)=>{
-    e.target.classList.add("dragging");
-  });
-  document.querySelector(".draggable").addEventListener("dragend", (e)=>{
-    e.target.classList.remove("dragging");
-  });
+// document.querySelector(".draggable").addEventListener("drag", (e)=>{
+//     e.target.classList.add("dragging");
+//   });
+//   document.querySelector(".draggable").addEventListener("dragend", (e)=>{
+//     e.target.classList.remove("dragging");
+//   });
 
 
 

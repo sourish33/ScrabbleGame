@@ -138,7 +138,7 @@ background-color: lightgrey;
     margin:5px; */
     transform-style: preserve-3d;
     transform: rotateX(20deg);
-    transform: translateY(10px);
+    transform: translateY(10%);
   }
 
   .holder {
@@ -162,12 +162,12 @@ background-color: lightgrey;
     left:20%; */
   }
 
-  .dragging {
+  /* .dragging {
     background: transparent;
     color: transparent;
     border: 1px solid #5856d6;
     visibility: hidden;
-  }
+  } */
 
   .fit-to-screen {
       height: 100vw;
