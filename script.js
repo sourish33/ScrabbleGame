@@ -257,7 +257,7 @@ function getUniques(arr){//returns unique elements in an array
 }
 
 
-function getWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
+function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
 
     let wordbag = [];
     let word =[];
@@ -294,7 +294,7 @@ function getAllHorWords(){
 
     let allHorWords = [];
     for (row of rows){
-        let u = getWords(row);
+        let u = getHorWords(row);
         if (u.length!==0){ allHorWords.push(u);}  
     }
     return allHorWords.flat();
