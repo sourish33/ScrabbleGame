@@ -110,6 +110,11 @@ function includes(strToCheck, word) {
     return (word.indexOf(strToCheck) > -1 ? true : false)
 }
 
+function getTileAt(address){
+    let square = document.getElementById(address);
+    return getTheTile(square);
+}
+
 function getTheTile(square){
     return square.getElementsByTagName('div')[0];
 }
@@ -234,48 +239,51 @@ function getTilesOnBoard(){
     return Object.values(u);
 }
 
-function getSquareNumber(s) {//converts a cell address to a numerical value i.e. a1 = 1 , o15 = 225 etc
-    let firstDigit = s.charCodeAt(0)-97;
-    let secondDigit = parseInt(s.substr(1));
-    return firstDigit*15+secondDigit;
-}
+// function getSquareNumber(s) {//converts a cell address to a numerical value i.e. a1 = 1 , o15 = 225 etc
+//     let firstDigit = s.charCodeAt(0)-97;
+//     let secondDigit = parseInt(s.substr(1));
+//     return firstDigit*15+secondDigit;
+// }
 
-function getCellAddress(s) {
-    let firstchar = String.fromCharCode(parseInt(s/15)+97);
-    let lastdigit = (s%15).toString();
-    return firstchar+lastdigit;
-}
+// function getCellAddress(s) {
+//     let firstchar = String.fromCharCode(parseInt(s/15)+97);
+//     let lastdigit = (s%15).toString();
+//     return firstchar+lastdigit;
+// }
 
-function getUniques(arr){
+function getUniques(arr){//returns unique elements in an array
     return Array.from(new Set(arr));
 }
 
-function sortByHorizontalRows() {
-    let tiles = getTilesOnBoard();
-    let addresses = [];
-    let rows = [];
-   
-    tiles.forEach(tile => addresses.push(tile.id));
-    tiles.forEach(tile => rows.push(tile.id[0]));
-    let uniqueRows = getUniques(rows);
 
-    let cols = [];
-    tiles.forEach(tile => cols.push(tile.id[1]));
-    let uniqueCols = getUniques(cols);
+function getWords(row) {
 
-    let horRows = [];
-   
+    let wordbag = [];
+    let word =[];
 
-    for (letter of uniqueRows) {
-        horRow = [];
-        for (address of addresses) {
-            if (letter===address[0]){
-                horRow.push(address);
+    for (let i =1; i<16; i++) {
+        curloc = row+i.toString();
+        // nextloc = "h"+(i+1).toString();
+        if (getTileAt(curloc) ==null) {
+            if (word.length!=0) {
+                wordbag.push(word); 
+                word =[];
             }
+        } else{
+            word.push(curloc);
         }
-        horRows.push(horRow);
     }
-    return horRows;
+    wordbag.push(word);
+    if (wordbag.length ===0) {return []}
+    for (x of wordbag) {//only keep two letter words and above
+        if (x.length ===0 || x.length ===1) {
+            wordbag = wordbag.filter(function(item) {
+                return item !== x;
+            })
+
+        }
+    }
+    return wordbag;
 }
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
