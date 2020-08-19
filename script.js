@@ -116,6 +116,7 @@ function getTileAt(address){
 }
 
 function getTheTile(square){
+    if (!square) { return null;}
     return square.getElementsByTagName('div')[0];
 }
 
@@ -256,14 +257,13 @@ function getUniques(arr){//returns unique elements in an array
 }
 
 
-function getWords(row) {
+function getWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
 
     let wordbag = [];
     let word =[];
 
     for (let i =1; i<16; i++) {
-        curloc = row+i.toString();
-        // nextloc = "h"+(i+1).toString();
+        let curloc = row+i.toString();
         if (getTileAt(curloc) ==null) {
             if (word.length!=0) {
                 wordbag.push(word); 
@@ -274,7 +274,7 @@ function getWords(row) {
         }
     }
     wordbag.push(word);
-    if (wordbag.length ===0) {return []}
+    if (wordbag.length ===0) {return [];}
     for (x of wordbag) {//only keep two letter words and above
         if (x.length ===0 || x.length ===1) {
             wordbag = wordbag.filter(function(item) {
@@ -284,6 +284,21 @@ function getWords(row) {
         }
     }
     return wordbag;
+}
+
+function getAllHorWords(){
+    let rows = [];
+    for (let i =97; i<112;i++) { 
+        rows.push(String.fromCharCode(i));
+      }
+
+    let allHorWords = [];
+    for (row of rows){
+        let u = getWords(row);
+        if (u.length!==0){ allHorWords.push(u);}  
+    }
+    return allHorWords.flat();
+
 }
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
