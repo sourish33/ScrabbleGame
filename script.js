@@ -105,6 +105,47 @@ function onDrop(event) {
     // event.dataTransfer.clearData();
 }
 
+function getUniques(arr){//returns unique elements in an array
+    return Array.from(new Set(arr));
+}
+
+
+function subtractArrays(arr1,arr2){
+    return arr1.filter(value => !arr2.includes(value));
+ }
+
+ function shuffle(arr){
+
+    let L = arr.length -1;
+    let sarr = arr;
+
+    for(let i = L; i > 0; i--) {
+        const j = Math.floor(Math.random() * i);
+        const temp = sarr[i];
+        sarr[i] = arr[j];
+        sarr[j] = temp;
+    }
+    return sarr;
+}
+
+
+function generateRows(){
+    let rows = [];
+    for (let i =97; i<112;i++) { 
+        rows.push(String.fromCharCode(i));
+    }
+    return rows;
+}
+
+function generateCols() {
+    let cols = [];
+    for (let i=1;i<16;i++) {
+        cols.push(i.toString());
+    }
+    return cols;
+}
+
+
 
 function includes(strToCheck, word) {	
     return (word.indexOf(strToCheck) > -1 ? true : false)
@@ -206,18 +247,19 @@ function placeTileOnRack(space_id){
         }
     }
 
-    function subtractArrays(arr1,arr2){
-       return arr1.filter(value => !arr2.includes(value));
+    function isEmptyOnRack(space_id){
+        let space = document.getElementById(space_id);
+        let tile = getTheTile(space);
+        return tile.classList.contains("ghost") ? true : false;
     }
+
 
     function findEmptyRackPosition(){//Find an empty position on the rack   
         let emptySlot;
         for (let j=1;j<8;j++) {
             let space_id = "s"+j.toString();
-            let space = document.getElementById(space_id);
-            let tile = getTheTile(space);
-            if (tile.classList.contains("ghost")) {
-                emptySlot = space_id; 
+            if (isEmptyOnRack(space_id)) { 
+                emptySlot=space_id;
                 break;
             }
         }
@@ -262,19 +304,7 @@ function placeTileOnRack(space_id){
 
 
 
-function shuffle(arr){
 
-    let L = arr.length -1;
-    let sarr = arr;
-
-    for(let i = L; i > 0; i--) {
-        const j = Math.floor(Math.random() * i);
-        const temp = sarr[i];
-        sarr[i] = arr[j];
-        sarr[j] = temp;
-    }
-    return sarr;
-}
 
 function pickRandomTile() {
     if (tilesArray.length ==0) {return;}
@@ -327,25 +357,6 @@ function getTilesOnBoard(){
 //     return firstchar+lastdigit;
 // }
 
-function getUniques(arr){//returns unique elements in an array
-    return Array.from(new Set(arr));
-}
-
-function generateRows(){
-    let rows = [];
-    for (let i =97; i<112;i++) { 
-        rows.push(String.fromCharCode(i));
-    }
-    return rows;
-}
-
-function generateCols() {
-    let cols = [];
-    for (let i=1;i<16;i++) {
-        cols.push(i.toString());
-    }
-    return cols;
-}
 
 
 function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
