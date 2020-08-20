@@ -336,7 +336,8 @@ function shuffle_rack(){
     for (let i=1;i<8;i++){
         let curLoc = "s"+i.toString();
         let newLoc = newOrder[i-1];
-        exchangeTiles(curLoc,newLoc);
+        if (!isEmptyOnRack(curLoc) && !isEmptyOnRack(newLoc))
+            {exchangeTiles(curLoc,newLoc);}
     }
 }
 
