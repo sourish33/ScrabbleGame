@@ -176,53 +176,81 @@ function placeTileOnRack(space_id){
     tile.children[1].innerHTML = picked[0];
     tile.children[2].innerHTML = picked[1];
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
+    tile.id = newid;
 }
 
-function replenishRack() {
+// function replenishRack() {
 
-    if (tilesArray.length ==0) {return;}
-    let rack = document.getElementById("rack");
-    let spaces = rack.children;
-    for (space of spaces) { 
-        let tile = space.children[0];
-        if (!tile.classList.contains("ghost")) {continue;}
-        tile.classList.remove("ghost");
-        if (tilesArray.length==0) {return;}
-        let pickedTile = pickRandomTile();
-        let picked = [pickedTile[1], pickedTile[2]];
-        tile.children[1].innerHTML = picked[0];
-        tile.children[2].innerHTML = picked[1];
-        newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
-        tile.id = newid;
-    }
+//     if (tilesArray.length ==0) {return;}
+//     let rack = document.getElementById("rack");
+//     let spaces = rack.children;
+//     for (space of spaces) { 
+//         let tile = space.children[0];
+//         if (!tile.classList.contains("ghost")) {continue;}
+//         tile.classList.remove("ghost");
+//         if (tilesArray.length==0) {return;}
+//         let pickedTile = pickRandomTile();
+//         let picked = [pickedTile[1], pickedTile[2]];
+//         tile.children[1].innerHTML = picked[0];
+//         tile.children[2].innerHTML = picked[1];
+//         newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
+//         tile.id = newid;
+//     }
 
+    function replenishRack() {
 
-}
-
-function populateBoard(n) {
-
-    if (tilesArray.length ==0) {return;}
-    if (7*n>tilesArray.length) { n=100;}
-    let squares = document.getElementsByClassName("grid-item");
-    let squaresArray = shuffle(Object.values(squares));//collects values into an array
-    let squareIDs =[];
-    for (square of squaresArray){
-        squareIDs.push(square.id);
-        }
-
-    let nn = parseInt(n/7);
-    let rr = n%7;
-
-    for (let i=0;i<nn;i++){
-        replenishRack();
+        if (tilesArray.length ==0) {return;}
         for (let j=1;j<8;j++){
             rackpos = "s"+j.toString();
-            let tile = document.getElementById(rackpos);
-            if (!tile.classList.contains("ghost")) {
-                move(rackpos,squareIDs.pop());
-            }
+            placeTileOnRack(rackpos);
         }
     }
+
+    function subtractArrays(arr1,arr2){
+       return arr1.filter(value => !arr2.includes(value));
+    }
+
+    function findEmptyRackPosition(){//Find an empty position on the rack   
+        let emptySlot;
+        for (let j=1;j<8;j++) {
+            let space_id = "s"+j.toString();
+            let space = document.getElementById(space_id);
+            let tile = getTheTile(space);
+            if (tile.classList.contains("ghost")) {
+                emptySlot = space_id; 
+                break;
+            }
+        }
+        return emptySlot;
+
+    }
+
+    function populateBoard(n) {
+
+        if (tilesArray.length ==0) {return;}
+        if (n>tilesArray.length) { n=tilesArray.length;}
+        let squares = document.getElementsByClassName("grid-item");
+        let filledSquares = document.getElementsByClassName("played-not-submitted");
+        let squaresArray = Object.values(squares);//collects all squares into an array
+        let filledSquaresArray = Object.values(filledSquares);//collects filled squares into an array
+        let unfilledSquares = shuffle(subtractArrays(squaresArray, filledSquaresArray));
+        let unfilledSquareIDs =[];
+        for (square of unfilledSquares){
+            unfilledSquareIDs.push(square.id);
+            }
+        //Find an empty position on the rack    
+
+        let unfilledPos = findEmptyRackPosition();
+        
+        if (unfilledPos== null) {
+            console.log("No position available on rack");
+            return;
+        }
+        for (let i=0;i<n;i++){
+            placeTileOnRack(unfilledPos);
+            move(unfilledPos,unfilledSquareIDs.pop());
+        }
+
 
     // replenishRack()
     // for (let j=0;j<8;j++){
