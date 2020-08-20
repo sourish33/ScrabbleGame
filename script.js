@@ -220,23 +220,7 @@ function placeTileOnRack(space_id){
     tile.id = newid;
 }
 
-// function replenishRack() {
 
-//     if (tilesArray.length ==0) {return;}
-//     let rack = document.getElementById("rack");
-//     let spaces = rack.children;
-//     for (space of spaces) { 
-//         let tile = space.children[0];
-//         if (!tile.classList.contains("ghost")) {continue;}
-//         tile.classList.remove("ghost");
-//         if (tilesArray.length==0) {return;}
-//         let pickedTile = pickRandomTile();
-//         let picked = [pickedTile[1], pickedTile[2]];
-//         tile.children[1].innerHTML = picked[0];
-//         tile.children[2].innerHTML = picked[1];
-//         newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
-//         tile.id = newid;
-//     }
 
     function replenishRack() {
 
@@ -460,6 +444,24 @@ function getAllWords(){
 
     return allWords.flat();
 
+}
+
+function readWord(arr){
+    let word =[];
+    for (space_id of arr){
+        let tile = getTileAt(space_id);
+        let letter =tile.children[1].innerHTML;
+        word.push(letter);
+    }
+    return word.join('');
+}
+
+function readAllWords(wordarray){
+    let words =[];
+    for (arr of wordarray){
+        words.push(readWord(arr));
+    }
+    return words;
 }
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
