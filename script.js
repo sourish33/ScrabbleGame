@@ -115,7 +115,7 @@ function getTileAt(address){
     return getTheTile(square);
 }
 
-function getTheTile(square){
+function getTheTile(square){//square is the object (div) that holds the tile
     if (!square) { return null;}
     return square.getElementsByTagName('div')[0];
 }
@@ -165,15 +165,29 @@ function move(fromWhere, toWhere) {
 
 }
 
+function placeTileOnRack(space_id){
+    if (tilesArray.length==0) {return;}
+    space = document.getElementById(space_id);
+    tile = getTheTile(space);
+    if (!tile.classList.contains("ghost")) {return;}
+    tile.classList.remove("ghost");
+    let pickedTile = pickRandomTile();
+    let picked = [pickedTile[1], pickedTile[2]];
+    tile.children[1].innerHTML = picked[0];
+    tile.children[2].innerHTML = picked[1];
+    newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
+}
+
 function replenishRack() {
 
-    
+    if (tilesArray.length ==0) {return;}
     let rack = document.getElementById("rack");
     let spaces = rack.children;
     for (space of spaces) { 
         let tile = space.children[0];
         if (!tile.classList.contains("ghost")) {continue;}
         tile.classList.remove("ghost");
+        if (tilesArray.length==0) {return;}
         let pickedTile = pickRandomTile();
         let picked = [pickedTile[1], pickedTile[2]];
         tile.children[1].innerHTML = picked[0];
@@ -182,9 +196,40 @@ function replenishRack() {
         tile.id = newid;
     }
 
-    document.getElementById("tile-counter").innerHTML = tilesArray.length;
 
-    
+}
+
+function populateBoard(n) {
+
+    if (tilesArray.length ==0) {return;}
+    if (7*n>tilesArray.length) { n=100;}
+    let squares = document.getElementsByClassName("grid-item");
+    let squaresArray = shuffle(Object.values(squares));//collects values into an array
+    let squareIDs =[];
+    for (square of squaresArray){
+        squareIDs.push(square.id);
+        }
+
+    let nn = parseInt(n/7);
+    let rr = n%7;
+
+    for (let i=0;i<nn;i++){
+        replenishRack();
+        for (let j=1;j<8;j++){
+            rackpos = "s"+j.toString();
+            let tile = document.getElementById(rackpos);
+            if (!tile.classList.contains("ghost")) {
+                move(rackpos,squareIDs.pop());
+            }
+        }
+    }
+
+    // replenishRack()
+    // for (let j=0;j<8;j++){
+    //     rackpos = "s"+j.toString();
+    //     move(rackpos,squareIDs.pop());
+    // }
+
 }
 
 
@@ -204,8 +249,10 @@ function shuffle(arr){
 }
 
 function pickRandomTile() {
+    if (tilesArray.length ==0) {return;}
     if (tilesArray.length % 5==0){ tilesArray = shuffle(tilesArray);		}
     pickedTile= tilesArray.pop()
+    document.getElementById("tile-counter").innerHTML = tilesArray.length;
     return pickedTile;
 }
 
@@ -256,6 +303,22 @@ function getUniques(arr){//returns unique elements in an array
     return Array.from(new Set(arr));
 }
 
+function generateRows(){
+    let rows = [];
+    for (let i =97; i<112;i++) { 
+        rows.push(String.fromCharCode(i));
+    }
+    return rows;
+}
+
+function generateCols() {
+    let cols = [];
+    for (let i=1;i<16;i++) {
+        cols.push(i.toString());
+    }
+    return cols;
+}
+
 
 function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
 
@@ -286,11 +349,45 @@ function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a"
     return wordbag;
 }
 
+function getVerWords(num) {//finds all 2-letter and higher words in column (e.g "a" or "h")
+
+    if (typeof(num) !== "string"){
+        num = num.toString();
+    }
+
+    let rows = generateRows();
+
+    let wordbag = [];
+    let word =[];
+
+    for (let i =0; i<15; i++) {
+        let curloc = rows[i]+num;
+        if (getTileAt(curloc) ==null) {
+            if (word.length!=0) {
+                wordbag.push(word); 
+                word =[];
+            }
+        } else{
+            word.push(curloc);
+        }
+    }
+    wordbag.push(word);
+    if (wordbag.length ===0) {return [];}
+    for (x of wordbag) {//only keep two letter words and above
+        if (x.length ===0 || x.length ===1) {
+            wordbag = wordbag.filter(function(item) {
+                return item !== x;
+            })
+
+        }
+    }
+    return wordbag;
+}
+
 function getAllHorWords(){
-    let rows = [];
-    for (let i =97; i<112;i++) { 
-        rows.push(String.fromCharCode(i));
-      }
+
+
+    rows = generateRows();
 
     let allHorWords = [];
     for (row of rows){
@@ -298,6 +395,30 @@ function getAllHorWords(){
         if (u.length!==0){ allHorWords.push(u);}  
     }
     return allHorWords.flat();
+
+}
+
+function getAllVerWords(){
+
+
+    cols = generateCols();
+
+    let allVerWords = [];
+    for (col of cols){
+        let u = getVerWords(col);
+        if (u.length!==0){ allVerWords.push(u);}  
+    }
+    return allVerWords.flat();
+
+}
+
+function getAllWords(){
+    let allWords =[];
+
+    allWords.push(getAllHorWords());
+    allWords.push(getAllVerWords());
+
+    return allWords.flat();
 
 }
 
