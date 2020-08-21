@@ -464,6 +464,16 @@ function readAllWords(wordarray){
     return words;
 }
 
+function play(){///DOES NOT WORK YET
+    let tiles = getTilesOnBoard();
+    for (tile of tiles) {
+        tile.classList.remove("played-not-submitted");
+        tile.classList.add("submitted");
+        tile.setAttribute("ondragstart","return false");
+        tile.classList.add("unselectable");
+    }
+}
+
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 //listen to drag event, not dragstart!

@@ -162,12 +162,14 @@ background-color: lightgrey;
     left:20%; */
   }
 
-  /* .dragging {
-    background: transparent;
-    color: transparent;
-    border: 1px solid #5856d6;
-    visibility: hidden;
-  } */
+  .unselectable {
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
 
   .fit-to-screen {
       height: 100vw;
