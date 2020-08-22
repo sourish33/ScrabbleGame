@@ -37,31 +37,7 @@ body {
 
 
 
-/* Table styling */
-/* .tablestyle {
-  table-layout: fixed;
-  width: 610px;
-  height:610px;
-  text-align: center;
-  margin:0 auto;
-  
-  
-}
 
-table, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  
-}
-tr {
-  padding: 0;
- 
-}
-td {
-padding:0;
-width: 6.66%;
-background-color: lightgrey;
-} */
 
 .TW {
   padding: 0;

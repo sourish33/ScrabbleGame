@@ -146,7 +146,6 @@ function generateCols() {
 }
 
 
-
 function includes(strToCheck, word) {	
     return (word.indexOf(strToCheck) > -1 ? true : false)
 }
@@ -162,7 +161,7 @@ function getTheTile(square){//square is the object (div) that holds the tile
 }
 
 
-function getLettersOnSquare(whichSquare){
+function getLettersOnSquare(whichSquare){//check if the square has TW, DL etc
     u = boosters[whichSquare];
     return (u!=null ? u : "");
 }
@@ -251,7 +250,7 @@ function placeTileOnRack(space_id){
 
     }
 
-    function populateBoard(n) {
+    function populateBoard(n) {//Place n tiles on the board 
 
         if (tilesArray.length ==0) {return;}
         if (n>tilesArray.length) { n=tilesArray.length;}
@@ -264,7 +263,7 @@ function placeTileOnRack(space_id){
         for (square of unfilledSquares){
             unfilledSquareIDs.push(square.id);
             }
-        //Find an empty position on the rack    
+        //Find an empty position on the rack, place picked tiles there and then move the tiles from there on to the board 
 
         let unfilledPos = findEmptyRackPosition();
         
@@ -326,6 +325,17 @@ function shuffle_rack(){
 }
 
 function getTilesOnBoard(){
+    let u = getTilesSubmitted();
+    let v = getTilesPlayedNotSubmitted();
+    return u.concat(v);
+}
+
+function getTilesSubmitted(){
+    let u = document.getElementsByClassName("submitted");
+    return Object.values(u);
+}
+
+function getTilesPlayedNotSubmitted(){
     let u = document.getElementsByClassName("played-not-submitted");
     return Object.values(u);
 }
@@ -411,8 +421,13 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
 function getAllHorWords(){
 
 
-    rows = generateRows();
+    // gets all new horizontal words
+    let played = getTilesPlayedNotSubmitted();
+    let rows =[];
+    played.forEach((tile)=>{rows.push(tile.id[0]);});
+    rows = getUniques(rows);
 
+    
     let allHorWords = [];
     for (row of rows){
         let u = getHorWords(row);
@@ -424,8 +439,11 @@ function getAllHorWords(){
 
 function getAllVerWords(){
 
-
-    cols = generateCols();
+    //gets all new vertical words
+    let played = getTilesPlayedNotSubmitted();
+    let cols =[];
+    played.forEach((tile)=>{cols.push(tile.id.substring(1));})
+    cols = getUniques(cols);
 
     let allVerWords = [];
     for (col of cols){
@@ -436,7 +454,7 @@ function getAllVerWords(){
 
 }
 
-function getAllWords(){
+function getAllNewWords(){
     let allWords =[];
 
     allWords.push(getAllHorWords());
@@ -464,8 +482,8 @@ function readAllWords(wordarray){
     return words;
 }
 
-function play(){///DOES NOT WORK YET
-    let tiles = getTilesOnBoard();
+function play(){//makes tiles stuck when play button is pressed
+    let tiles = getTilesPlayedNotSubmitted();
     for (tile of tiles) {
         tile.classList.remove("played-not-submitted");
         tile.classList.add("submitted");
@@ -476,6 +494,7 @@ function play(){///DOES NOT WORK YET
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
+document.getElementById("play").addEventListener("click", play);
 //listen to drag event, not dragstart!
 // document.querySelector(".draggable").addEventListener("drag", (e)=>{
 //     e.target.classList.add("dragging");
