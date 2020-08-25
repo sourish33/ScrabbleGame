@@ -418,15 +418,30 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
     return wordbag;
 }
 
-function getAllHorWords(){
-
-
-    // gets all new horizontal words
+function getPlayedRows(){
+    //find rows of new letters placed on the board
     let played = getTilesPlayedNotSubmitted();
     let rows =[];
     played.forEach((tile)=>{rows.push(tile.id[0]);});
     rows = getUniques(rows);
+    return rows;
+}
 
+function getPlayedCols(){
+    //find cols of new letters placed on the board
+    let played = getTilesPlayedNotSubmitted();
+    let cols =[];
+    played.forEach((tile)=>{cols.push(tile.id.substring(1));})
+    cols = getUniques(cols);
+    return cols;
+}
+
+function getAllHorWords(){
+
+
+    // gets all new horizontal words
+    let rows = getPlayedRows();
+    if (rows.length ===0) { return;}
     
     let allHorWords = [];
     for (row of rows){
@@ -440,10 +455,8 @@ function getAllHorWords(){
 function getAllVerWords(){
 
     //gets all new vertical words
-    let played = getTilesPlayedNotSubmitted();
-    let cols =[];
-    played.forEach((tile)=>{cols.push(tile.id.substring(1));})
-    cols = getUniques(cols);
+    let cols = getPlayedCols();
+    if (cols.length ===0) { return;}
 
     let allVerWords = [];
     for (col of cols){
@@ -475,6 +488,7 @@ function readWord(arr){
 }
 
 function readAllWords(wordarray){
+    if (wordarray.length ===0) { return [];}
     let words =[];
     for (arr of wordarray){
         words.push(readWord(arr));
@@ -495,14 +509,15 @@ function play(){//makes tiles stuck when play button is pressed
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 document.getElementById("play").addEventListener("click", play);
-//listen to drag event, not dragstart!
-// document.querySelector(".draggable").addEventListener("drag", (e)=>{
-//     e.target.classList.add("dragging");
-//   });
-//   document.querySelector(".draggable").addEventListener("dragend", (e)=>{
-//     e.target.classList.remove("dragging");
-//   });
 
+
+//TODO
+/*  
+- Animation for play button
+- two players with different racks which toggle upon play
+- calculate scores
+- don't allow moves with non-adjacent tiles
+*/
 
 
 
