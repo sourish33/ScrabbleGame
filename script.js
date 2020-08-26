@@ -551,7 +551,6 @@ document.getElementById("play").addEventListener("click", play);
 - Animation for play button
 - two players with different racks which toggle upon play
 - calculate scores
-- don't allow moves with non-adjacent tiles
 */
 
 
