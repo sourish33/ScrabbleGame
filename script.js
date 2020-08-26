@@ -418,18 +418,16 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
     return wordbag;
 }
 
-function getPlayedRows(){
-    //find rows of new letters placed on the board
-    let played = getTilesPlayedNotSubmitted();
+function getPlayedRows(played){
+    //find rows of new letters placed on the board from the list of played tiles (played)
     let rows =[];
     played.forEach((tile)=>{rows.push(tile.id[0]);});
     rows = getUniques(rows);
     return rows;
 }
 
-function getPlayedCols(){
-    //find cols of new letters placed on the board
-    let played = getTilesPlayedNotSubmitted();
+function getPlayedCols(played){
+    //find cols of new letters placed on the board from the list of played tiles (played)
     let cols =[];
     played.forEach((tile)=>{cols.push(tile.id.substring(1));})
     cols = getUniques(cols);
@@ -438,9 +436,9 @@ function getPlayedCols(){
 
 function getAllHorWords(){
 
-
+    let played = getTilesPlayedNotSubmitted();
     // gets all new horizontal words
-    let rows = getPlayedRows();
+    let rows = getPlayedRows(played);
     if (rows.length ===0) { return;}
     
     let allHorWords = [];
@@ -455,7 +453,8 @@ function getAllHorWords(){
 function getAllVerWords(){
 
     //gets all new vertical words
-    let cols = getPlayedCols();
+    let played = getTilesPlayedNotSubmitted();
+    let cols = getPlayedCols(played);
     if (cols.length ===0) { return;}
 
     let allVerWords = [];
@@ -498,7 +497,7 @@ function readAllWords(wordarray){
 
 function isContiguous(arr){//takes an array of letters or numbers and returns true if they are contiguous
 
-    if (arr.length <2) {return;}
+    if (arr.length <2) {return true;}
     
     if (isNaN(arr[0])) { //an array of letters
         arr.sort();
@@ -527,6 +526,13 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
 
 function play(){//makes tiles stuck when play button is pressed
     let tiles = getTilesPlayedNotSubmitted();
+    let cols = getPlayedCols(tiles);
+    let rows = getPlayedRows(tiles);
+    if (!isContiguous(rows) || !isContiguous(cols)) { 
+        alert("All your tiles are not contiguous");
+        return;
+    }
+
     for (tile of tiles) {
         tile.classList.remove("played-not-submitted");
         tile.classList.add("submitted");
