@@ -169,7 +169,7 @@ function getLettersOnSquare(whichSquare){//check if the square has TW, DL etc
     if (Array.isArray(whichSquare)) {
         let u = [];
         for (elem of whichSquare){
-            u.push(boosters[elem]);
+            u.push(getLettersOnSquare(elem));
         }
         return u;
 
