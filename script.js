@@ -1,35 +1,21 @@
 
 
-var boosters = {};
+let boosters = {};
 (boosters = function fillBoosters() {
-boosters["a1"]=boosters["a8"]=boosters["a15"]=boosters["h1"]=boosters["h15"]="TW";
-boosters["o1"]=boosters["o8"]=boosters["o15"]="TW";
-boosters["a4"]=boosters["a12"]="DL";
-boosters["c8"]=boosters["c10"]="DL";
-boosters["d1"]=boosters["d8"]=boosters["d15"]="DL";
-boosters["g3"]=boosters["g7"]=boosters["g9"]=boosters["g13"]="DL";
-boosters["h4"]=boosters["h12"]="DL";
-boosters["i3"]=boosters["i7"]=boosters["i9"]=boosters["i13"]="DL";
-boosters["11"]=boosters["l8"]=boosters["l15"]="DL";
-boosters["m7"]=boosters["m9"]="DL";
-boosters["o3"]=boosters["o12"]="DL";
-boosters["b6"]=boosters["b12"]="TL";
-boosters["f2"]=boosters["f6"]=boosters["f10"]=boosters["f13"]="TL";
-boosters["j2"]=boosters["j6"]=boosters["j10"]=boosters["j13"]="TL";
-boosters["m6"]=boosters["m12"]="TL";
-boosters["b2"]=boosters["b14"]="DL";
-boosters["c3"]=boosters["c13"]="DL";
-boosters["d4"]=boosters["d12"]="DL";
-boosters["e5"]=boosters["e11"]="DL";
-boosters["k5"]=boosters["k11"]="DL";
-boosters["l4"]=boosters["l12"]="DL";
-boosters["m3"]=boosters["m13"]="DL";
-boosters["n2"]=boosters["n14"]="DL";
-boosters["h8"]="&bigstar;";
-})();
+    let rows = ["a", "b", "c", "d","e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"];
+    let cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"];
+    for (let row of rows){
+        for (let col of cols) {
+            let square_id = row+col;
+            // console.log(`boosters[${square_id}]`);
+            let writtenOnSquare = document.getElementById(square_id).innerHTML;
+            boosters[square_id] = writtenOnSquare; 
+        }
+    }
+    })();
 
-let boosterValue = {};
-boosterValue[" "]
+// let boosterValue = {};
+// boosterValue[" "]
 
 
 let tilesArray;
