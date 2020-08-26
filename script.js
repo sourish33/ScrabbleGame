@@ -28,7 +28,11 @@ boosters["n2"]=boosters["n14"]="DL";
 boosters["h8"]="&bigstar;";
 })();
 
-var tilesArray;
+let boosterValue = {};
+boosterValue[" "]
+
+
+let tilesArray;
 (tilesArray = function makeTileList(){
 
     tilesArray=[];
@@ -162,8 +166,17 @@ function getTheTile(square){//square is the object (div) that holds the tile
 
 
 function getLettersOnSquare(whichSquare){//check if the square has TW, DL etc
-    u = boosters[whichSquare];
-    return (u!=null ? u : "");
+    if (Array.isArray(whichSquare)) {
+        let u = [];
+        for (elem of whichSquare){
+            u.push(boosters[elem]);
+        }
+        return u;
+
+    } else {
+        let u = boosters[whichSquare];
+        return (u!=null ? u : "");
+    }
 }
 
 function move(fromWhere, toWhere) {
