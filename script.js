@@ -496,6 +496,35 @@ function readAllWords(wordarray){
     return words;
 }
 
+function isContiguous(arr){//takes an array of letters or numbers and returns true if they are contiguous
+
+    if (arr.length <2) {return;}
+    
+    if (isNaN(arr[0])) { //an array of letters
+        arr.sort();
+        for (i=0;i<arr.length-1; i++){ 
+            let u = arr[i].charCodeAt(0);  
+            let v = arr[i+1].charCodeAt(0);
+            // console.log(`${i}-th is ${u} and ${i+1}-th is ${v}`);
+            if (v!=u+1) {return false;}  
+            }
+        }
+
+        if (!isNaN(arr[0])) { //an array of numbers NOT READY YET
+            arr.sort(function(a, b){return a - b});
+            for (i=0;i<arr.length-1; i++) { 
+                let u = parseInt(arr[i]);
+                let v = parseInt(arr[i+1]);
+               // console.log(`${i}-th is ${u} and ${i+1}-th is ${v}`);
+                if (v!=u+1) {return false;}  
+            }
+        }
+        return true;
+    }
+
+
+
+
 function play(){//makes tiles stuck when play button is pressed
     let tiles = getTilesPlayedNotSubmitted();
     for (tile of tiles) {
