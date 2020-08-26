@@ -151,6 +151,24 @@ body {
       height: 100vw;
   }
 
+  .submitted {
+    animation-name: animate;
+    animation-duration: .3s;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
+  }
+
+  @keyframes animate
+  {     
+          from {
+          transform: scale(1);
+          }
+
+          to {
+            transform: scale(1.2); 
+          }
+  }
+
 
   @media only screen and (max-width: 1000px) {
     .grid-container {

@@ -538,6 +538,7 @@ function play(){//makes tiles stuck when play button is pressed
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
+        // tile.classList.add("played");
     }
 }
 
