@@ -548,7 +548,6 @@ document.getElementById("play").addEventListener("click", play);
 
 //TODO
 /*  
-- Animation for play button
 - two players with different racks which toggle upon play
 - calculate scores
 */
