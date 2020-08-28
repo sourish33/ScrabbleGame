@@ -2,8 +2,10 @@
 
 let boosters = {};
 (boosters = function fillBoosters() {
-    let rows = ["a", "b", "c", "d","e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"];
-    let cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"];
+    // let rows = ["a", "b", "c", "d","e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"];
+    // let cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"];
+    let rows = generateRows();
+    let cols = generateCols();
     for (let row of rows){
         for (let col of cols) {
             let square_id = row+col;
@@ -118,6 +120,34 @@ function subtractArrays(arr1,arr2){
     return sarr;
 }
 
+function multiplyArrays(arr1, arr2){//dot product
+    if (arr1.length !== arr2.length){
+        console.log("cant multiply arrays of different sizes");
+        return null;
+    }
+    var result=0;
+    for (var i=0; i<arr1.length;i++){
+        result+=arr1[i]*arr2[i];   
+    }
+    return result;
+}
+
+function multiplyScalar(a, b) {
+    let num, arr;
+    if (Array.isArray(a)){
+        arr = a;
+        num = b;
+    } else {
+        arr = b;
+        num =a;
+    }
+    let result = [];
+    for (let i=0; i<arr.length;i++){
+        result.push(arr[i]*num);
+    }
+    return result;
+}
+
 
 function generateRows(){
     let rows = [];
@@ -140,7 +170,16 @@ function includes(strToCheck, word) {
     return (word.indexOf(strToCheck) > -1 ? true : false)
 }
 
+function isEmptyOnBoard(space_id){
+    let u = document.getElementById(space_id).children;
+    return (u.length ===0 ? true : false) 
+}
+
 function getTileAt(address){
+    if (isEmptyOnBoard(address)){
+        console.log(`No tile exists at ${address}`);
+        return null;
+    }
     let square = document.getElementById(address);
     return getTheTile(square);
 }
@@ -205,6 +244,7 @@ function move(fromWhere, toWhere) {
 }
 
 function placeTileOnRack(space_id){
+    //pick a tile from the bag and put it on the rack
     if (tilesArray.length==0) {return;}
     space = document.getElementById(space_id);
     tile = getTheTile(space);
@@ -485,6 +525,7 @@ function readWord(arr){
     return word.join('');
 }
 
+
 function readPoints(arr){
     //reads off the point values of the letters of a word
     let points =[];
@@ -496,8 +537,6 @@ function readPoints(arr){
     }
     return points;
 }
-
-
 
 
 
@@ -562,13 +601,52 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
+
+        let whereItIs = tile.id;
+
         // tile.classList.add("played");
     }
 }
 
 function wordScore(arr){//TODO
     //given a word e.g ["g1", "g2", "g3"] find its score
-    //TODO
+    let points = readPoints(arr);
+    let place_vals = getLettersOnSquare(arr);
+    let multipliers = [];
+    let boosters = 1;
+
+    for (let val of place_vals) {
+        switch(val) {
+            case "":
+              multipliers.push(1);
+              break;
+            case "DL":
+                multipliers.push(2);
+              break;
+            case "TL":
+                multipliers.push(3);
+              break;
+            case "DW":
+                multipliers.push(1);
+                boosters = 2;
+              break;
+            case "TW":
+                multipliers.push(1);
+                boosters = 3;
+              break;
+            case getLettersOnSquare("h8") :
+                multipliers.push(1);
+                boosters = 2;
+              break;
+              
+            default:
+                multipliers.push(1);
+                console.log(`Strange place value of ${val}`)
+          }
+    }
+
+    let dotProduct = multiplyArrays(points, multipliers);
+    return boosters*dotProduct;
 }
 
 function score(){//find the scores of all the words in the list
