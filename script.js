@@ -240,6 +240,8 @@ function move(fromWhere, toWhere) {
 
     }
 
+    score()
+
 }
 
 function placeTileOnRack(space_id){
@@ -272,6 +274,18 @@ function placeTileOnRack(space_id){
         let space = document.getElementById(space_id);
         let tile = getTheTile(space);
         return tile.classList.contains("ghost") ? true : false;
+    }
+
+    function rackEmpty(){
+        let rackSquares = [];
+        for (let j=1;j<8;j++) {
+            let space_id = "s"+j.toString();
+            rackSquares.push(space_id);
+        }
+        for (rackSquare of rackSquares){
+            if (!isEmptyOnRack(rackSquare)) {return false; }
+        }
+        return true;
     }
 
 
@@ -578,7 +592,7 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
         let cols = getPlayedCols(tiles);
         let rows = getPlayedRows(tiles);
         if (!(rows.length ===1 || cols.length ===1)) {
-            console.log("not in the same row or col")
+            console.log("letters submitted are not in the same row or col")
             return false;
         }
         return true;
@@ -594,13 +608,14 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         return;
     }
 
-
     for (tile of tiles) {
         tile.classList.remove("played-not-submitted");
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
     }
+    //reset the possible points 
+    document.getElementById("points").innerHTML = 0;
 }
 
 function wordScore(arr){
@@ -617,7 +632,6 @@ function wordScore(arr){
         if (t.classList.contains("submitted")) {
             place_vals[i] = "";
         }
-    
 
     }
 
@@ -657,8 +671,16 @@ function wordScore(arr){
 }
 
 function score(){//find the scores of all the words in the list
+    let tiles = getTilesPlayedNotSubmitted();
+    if (!checkLegalPlacement(tiles)) {return;}
     let wordsToScore = getAllNewWords();
-    //// TODO
+    let totalPoints = 0;
+    for (word of wordsToScore) {
+        totalPoints += wordScore(word);
+    }
+    if (rackEmpty()) { totalPoints += 50;}
+
+    document.getElementById("points").innerHTML = totalPoints;
 }
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
