@@ -485,6 +485,22 @@ function readWord(arr){
     return word.join('');
 }
 
+function readPoints(arr){
+    //reads off the point values of the letters of a word
+    let points =[];
+    for (space_id of arr){
+        let tile = getTileAt(space_id);
+        let point =tile.children[2].innerHTML;
+        point = parseInt(point);
+        points.push(point);
+    }
+    return points;
+}
+
+
+
+
+
 function readAllWords(wordarray){
     if (wordarray.length ===0) { return [];}
     let words =[];
@@ -520,17 +536,26 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
         return true;
     }
 
+    function checkLegalPlacement(tiles){
+        let cols = getPlayedCols(tiles);
+        let rows = getPlayedRows(tiles);
+        if (!(rows.length ===1 || cols.length ===1)) {
+            console.log("not in the same row or col")
+            return false;
+        }
+        return true;
+    }
 
 
 
-function play(){//makes tiles stuck when play button is pressed
+
+function play(){//makes tiles stuck and animates new tiles when play button is pressed
     let tiles = getTilesPlayedNotSubmitted();
-    let cols = getPlayedCols(tiles);
-    let rows = getPlayedRows(tiles);
-    if (!isContiguous(rows) || !isContiguous(cols)) { 
-        alert("All your tiles are not contiguous");
+    if (!checkLegalPlacement(tiles)) {
+        alert("Tile placement illegal");
         return;
     }
+
 
     for (tile of tiles) {
         tile.classList.remove("played-not-submitted");
@@ -541,6 +566,16 @@ function play(){//makes tiles stuck when play button is pressed
     }
 }
 
+function wordScore(arr){//TODO
+    //given a word e.g ["g1", "g2", "g3"] find its score
+    //TODO
+}
+
+function score(){//find the scores of all the words in the list
+    let wordsToScore = getAllNewWords();
+    //// TODO
+}
+
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 document.getElementById("play").addEventListener("click", play);
@@ -549,7 +584,9 @@ document.getElementById("play").addEventListener("click", play);
 //TODO
 /*  
 - two players with different racks which toggle upon play
+- check new letter placement
 - calculate scores
+- use interact.js for drag and drop
 */
 
 
