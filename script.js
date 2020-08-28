@@ -177,7 +177,6 @@ function isEmptyOnBoard(space_id){
 
 function getTileAt(address){
     if (isEmptyOnBoard(address)){
-        console.log(`No tile exists at ${address}`);
         return null;
     }
     let square = document.getElementById(address);
@@ -601,21 +600,29 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
-
-        let whereItIs = tile.id;
-
-        // tile.classList.add("played");
     }
 }
 
-function wordScore(arr){//TODO
+function wordScore(arr){
     //given a word e.g ["g1", "g2", "g3"] find its score
     let points = readPoints(arr);
     let place_vals = getLettersOnSquare(arr);
     let multipliers = [];
     let boosters = 1;
 
+    //disregard boosters and multipliers for already-submitted tiles
+    for (let i=0;i<place_vals.length; i++){
+        let sq_id = arr[i];
+        let t=document.getElementById(sq_id);
+        if (t.classList.contains("submitted")) {
+            place_vals[i] = "";
+        }
+    
+
+    }
+
     for (let val of place_vals) {
+
         switch(val) {
             case "":
               multipliers.push(1);
