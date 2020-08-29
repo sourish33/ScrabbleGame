@@ -16,8 +16,10 @@ let boosters = {};
     }
     })();
 
-// let boosterValue = {};
-// boosterValue[" "]
+
+let legalPositions = getlegalPositions();
+
+
 
 
 let tilesArray;
@@ -105,6 +107,10 @@ function getUniques(arr){//returns unique elements in an array
 function subtractArrays(arr1,arr2){
     return arr1.filter(value => !arr2.includes(value));
  }
+
+ function arrayRemove(arr, value) { //removes value from array
+     return arr.filter(function(element){ return element != value; });
+    }
 
  function shuffle(arr){
 
@@ -392,17 +398,18 @@ function getTilesPlayedNotSubmitted(){
     return Object.values(u);
 }
 
-// function getSquareNumber(s) {//converts a cell address to a numerical value i.e. a1 = 1 , o15 = 225 etc
-//     let firstDigit = s.charCodeAt(0)-97;
-//     let secondDigit = parseInt(s.substr(1));
-//     return firstDigit*15+secondDigit;
-// }
+function getSquareNumber(s) {//converts a cell address to a numerical value i.e. a1 = 1 , o15 = 225 etc
+    let firstDigit = s.charCodeAt(0)-97;
+    let secondDigit = parseInt(s.substr(1));
+    return firstDigit*15+secondDigit;
+}
 
-// function getCellAddress(s) {
-//     let firstchar = String.fromCharCode(parseInt(s/15)+97);
-//     let lastdigit = (s%15).toString();
-//     return firstchar+lastdigit;
-// }
+function getCellAddress(s) {
+    if (s<1 || s>225) {return null;}
+    let firstchar = String.fromCharCode(parseInt((s-1)/15)+97);
+    let lastdigit = (s%15 === 0 ? 15 : s%15);
+    return firstchar+lastdigit.toString();
+}
 
 
 
@@ -595,14 +602,39 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
             console.log("letters submitted are not in the same row or col")
             return false;
         }
+
+        if (getAllIslandWords().length!==0) {
+            console.log("illegal words")
+            return false;
+        }
+ 
+        
         return true;
+    }
+
+    function getAllIslandWords()
+    {
+        let newWords = getAllNewWords();
+        let illegals = [];
+        for (word of newWords) {
+            let intersection = word.filter(x => legalPositions.includes(x));
+            if (intersection.length ===0) {
+                illegals.push(word);
+            }
+        }
+
+        return illegals;
+
     }
 
 
 
 
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
+
     let tiles = getTilesPlayedNotSubmitted();
+    if (tiles.length === 0) {return;} //nothing submitted yet
+
     if (!checkLegalPlacement(tiles)) {
         alert("Tile placement illegal");
         return;
@@ -616,6 +648,8 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     }
     //reset the possible points 
     document.getElementById("points").innerHTML = 0;
+    //update the list of legal positions
+    legalPositions = getlegalPositions();
 }
 
 function wordScore(arr){
@@ -672,8 +706,18 @@ function wordScore(arr){
 
 function score(){//find the scores of all the words in the list
     let tiles = getTilesPlayedNotSubmitted();
-    if (!checkLegalPlacement(tiles)) {return;}
+    // if (!checkLegalPlacement(tiles)) {return;}
     let wordsToScore = getAllNewWords();
+    let illegalWords = getAllIslandWords();
+    if (illegalWords.length!==0) {
+        for (let badword of illegalWords){
+            wordsToScore.pop(badword);
+        }
+    }
+
+
+    if (wordsToScore.length===0) {return;}//no legal words
+
     let totalPoints = 0;
     for (word of wordsToScore) {
         totalPoints += wordScore(word);
@@ -681,6 +725,44 @@ function score(){//find the scores of all the words in the list
     if (rackEmpty()) { totalPoints += 50;}
 
     document.getElementById("points").innerHTML = totalPoints;
+}
+
+function getlegalPositions(){
+    let tiles = getTilesSubmitted();
+    if (tiles.length===0) { return "h8";}
+
+    let tile_ids = [];
+    tiles.forEach((tile)=>{tile_ids.push(tile.id);})
+    
+    let allNeighbors = []
+    for (id of tile_ids) {
+        allNeighbors.push(neighbors(id));
+    }
+    allNeighbors=allNeighbors.flat();
+    let notFilled = subtractArrays(allNeighbors,tile_ids);
+    return getUniques(notFilled);
+
+}
+
+function neighbors(sq_id){
+
+    let val = getSquareNumber(sq_id);
+    let left = val-1;
+    let right = val+1;
+    let t = val-15;
+    let b = val+15;
+    if (val%15===1) {left=-1;}
+    if (val%15===0) {right = -1;}
+    if (val>210) {b = -1;}
+    if (val<16) { t=-1;}
+    // console.log(`${left}, ${right}, ${t}, ${b}`);
+    let neighbors = [];
+    for (x of [left, right, t, b]) {
+        if (getCellAddress(x)!==null) { 
+            neighbors.push(getCellAddress(x));
+        }
+    }
+    return neighbors;
 }
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
@@ -692,8 +774,11 @@ document.getElementById("play").addEventListener("click", play);
 /*  
 - two players with different racks which toggle upon play
 - check new letter placement
-- calculate scores
+- calculate scores -check for correctness
 - use interact.js for drag and drop
+- list of legal positions updated for every move 
+- all words should have one letter in a legal position
+- recall button to bring back all placed tiles using playedThisTurn which stores moves since last play
 */
 
 
