@@ -498,7 +498,7 @@ function getAllHorWords(){
     let played = getTilesPlayedNotSubmitted();
     // gets all new horizontal words
     let rows = getPlayedRows(played);
-    if (rows.length ===0) { return;}
+    if (rows.length ===0) { return [];}
     
     let allHorWords = [];
     for (row of rows){
@@ -514,7 +514,7 @@ function getAllVerWords(){
     //gets all new vertical words
     let played = getTilesPlayedNotSubmitted();
     let cols = getPlayedCols(played);
-    if (cols.length ===0) { return;}
+    if (cols.length ===0) { return [];}
 
     let allVerWords = [];
     for (col of cols){
@@ -615,8 +615,10 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
     function getAllIslandWords()
     {
         let newWords = getAllNewWords();
+        if (newWords.length ===0) {return [];}
+
         let illegals = [];
-        for (word of newWords) {
+        for (let word of newWords) {
             let intersection = word.filter(x => legalPositions.includes(x));
             if (intersection.length ===0) {
                 illegals.push(word);
