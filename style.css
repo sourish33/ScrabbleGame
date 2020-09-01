@@ -158,6 +158,11 @@ body {
     animation-direction: alternate;
   }
 
+  #points {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5em;
+  }
+
   @keyframes animate
   {     
           from {

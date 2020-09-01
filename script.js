@@ -246,7 +246,7 @@ function move(fromWhere, toWhere) {
 
     }
 
-    score()
+    score();
 
 }
 
@@ -432,7 +432,7 @@ function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a"
     wordbag.push(word);
     if (wordbag.length ===0) {return [];}
     for (x of wordbag) {//only keep two letter words and above
-        if (x.length ===0 || x.length ===1) {
+        if (x.length ===0 || x.length ===1) { // 
             wordbag = wordbag.filter(function(item) {
                 return item !== x;
             })
@@ -708,19 +708,26 @@ function wordScore(arr){
 
 function score(){//find the scores of all the words in the list
     let tiles = getTilesPlayedNotSubmitted();
-    // if (!checkLegalPlacement(tiles)) {return;}
-    let wordsToScore = getAllNewWords();
-    let illegalWords = getAllIslandWords();
-    if (illegalWords.length!==0) {
-        for (let badword of illegalWords){
-            wordsToScore.pop(badword);
-        }
-    }
-
-
-    if (wordsToScore.length===0) {return;}//no legal words
-
     let totalPoints = 0;
+    if (!checkLegalPlacement(tiles)) {
+        document.getElementById("points").innerHTML = totalPoints;
+        return;
+    }
+    // let wordsToScore = getAllNewWords();
+    // let illegalWords = getAllIslandWords();
+    // if (illegalWords.length!==0) {
+    //     for (let badword of illegalWords){
+    //         wordsToScore.pop(badword);
+    //     }
+    // }
+
+    let wordsToScore = getAllNewWords();
+    if (wordsToScore.length===0) {
+        document.getElementById("points").innerHTML = totalPoints;
+        return;
+        }//no legal words
+
+    
     for (word of wordsToScore) {
         totalPoints += wordScore(word);
     }
@@ -780,7 +787,7 @@ document.getElementById("play").addEventListener("click", play);
 - use interact.js for drag and drop
 - list of legal positions updated for every move 
 - all words should have one letter in a legal position
-- recall button to bring back all placed tiles using playedThisTurn which stores moves since last play
+- recall button to bring back all placed tiles
 */
 
 
