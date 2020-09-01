@@ -116,7 +116,7 @@ function subtractArrays(arr1,arr2){
  function shuffle(arr){
 
     let L = arr.length -1;
-    let sarr = arr;
+    let sarr = Array.from(arr);
 
     for(let i = L; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
@@ -380,9 +380,10 @@ function exchangeTiles(slot1, slot2){
 }
 
 function shuffle_rack(){
-    let newOrder = shuffle(["s1","s2","s3","s4","s5","s6","s7"]);
+    let oldOrder =getRackIds();
+    let newOrder = shuffle(oldOrder);
     for (let i=1;i<8;i++){
-        let curLoc = "s"+i.toString();
+        let curLoc = oldOrder[i-1];
         let newLoc = newOrder[i-1];
         if (!isEmptyOnRack(curLoc) && !isEmptyOnRack(newLoc))
             {exchangeTiles(curLoc,newLoc);}
