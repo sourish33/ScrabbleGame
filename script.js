@@ -22,6 +22,7 @@ let legalPositions = getlegalPositions();
 
 
 
+
 let tilesArray;
 (tilesArray = function makeTileList(){
 
@@ -169,6 +170,17 @@ function generateCols() {
         cols.push(i.toString());
     }
     return cols;
+}
+
+function getRackIds() {//finds the rack element and grabs the ids of the slots
+    let rackid = document.getElementsByClassName("holder")[0].id;
+    let rack = document.getElementById(rackid);
+    let rackSlots = rack.children;
+    let rackSlotIds = [];
+    for (slot of rackSlots) {
+        rackSlotIds.push(slot.id);
+    }
+    return rackSlotIds;
 }
 
 
@@ -578,17 +590,15 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
         for (i=0;i<arr.length-1; i++){ 
             let u = arr[i].charCodeAt(0);  
             let v = arr[i+1].charCodeAt(0);
-            // console.log(`${i}-th is ${u} and ${i+1}-th is ${v}`);
             if (v!=u+1) {return false;}  
             }
         }
 
-        if (!isNaN(arr[0])) { //an array of numbers NOT READY YET
+        if (!isNaN(arr[0])) { //an array of numbers
             arr.sort(function(a, b){return a - b});
             for (i=0;i<arr.length-1; i++) { 
                 let u = parseInt(arr[i]);
                 let v = parseInt(arr[i+1]);
-               // console.log(`${i}-th is ${u} and ${i+1}-th is ${v}`);
                 if (v!=u+1) {return false;}  
             }
         }
@@ -713,13 +723,7 @@ function score(){//find the scores of all the words in the list
         document.getElementById("points").innerHTML = totalPoints;
         return;
     }
-    // let wordsToScore = getAllNewWords();
-    // let illegalWords = getAllIslandWords();
-    // if (illegalWords.length!==0) {
-    //     for (let badword of illegalWords){
-    //         wordsToScore.pop(badword);
-    //     }
-    // }
+
 
     let wordsToScore = getAllNewWords();
     if (wordsToScore.length===0) {
@@ -782,12 +786,12 @@ document.getElementById("play").addEventListener("click", play);
 //TODO
 /*  
 - two players with different racks which toggle upon play
-- check new letter placement
-- calculate scores -check for correctness
 - use interact.js for drag and drop
-- list of legal positions updated for every move 
-- all words should have one letter in a legal position
 - recall button to bring back all placed tiles
+- remove explicit references to "s1", "s2" -instead use rack.children
+-code getrackspaces()
+-fix shufflerack, rackempty and replensihrack using getrackspaces()
+-rack and rackslots should be named after player
 */
 
 
