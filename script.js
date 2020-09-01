@@ -305,15 +305,14 @@ function placeTileOnRack(space_id){
 
     function findEmptyRackPosition(){//Find an empty position on the rack   
         let emptySlot;
-        for (let j=1;j<8;j++) {
-            let space_id = "s"+j.toString();
-            if (isEmptyOnRack(space_id)) { 
-                emptySlot=space_id;
+        let rackSlots = getRackIds();
+        for (slot of rackSlots) {
+            if (isEmptyOnRack(slot)) { 
+                emptySlot=slot;
                 break;
             }
         }
         return emptySlot;
-
     }
 
     function populateBoard(n) {//Place n tiles on the board 
