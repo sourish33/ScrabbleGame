@@ -116,7 +116,7 @@ function subtractArrays(arr1,arr2){
  function shuffle(arr){
 
     let L = arr.length -1;
-    let sarr = Array.from(arr);
+    let sarr = Array.from(arr);//cannot use = cuz JS passes by reference in this case
 
     for(let i = L; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
@@ -774,8 +774,24 @@ function neighbors(sq_id){
     return neighbors;
 }
 
+function returnToRack() {
+    let tiles = getTilesPlayedNotSubmitted();
+    if (tiles.length > 7 || tiles.length<1) {
+        console.log(" no tiles or more than 7 tiles on board!");
+        return;
+    }
+    
+    for (tile of tiles){
+        let towhere = findEmptyRackPosition();
+        if (towhere!== null){ 
+            move(tile.id, towhere);
+        }
+    }
+}
+
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
+document.getElementById("recall").addEventListener("click", returnToRack);
 document.getElementById("play").addEventListener("click", play);
 
 
