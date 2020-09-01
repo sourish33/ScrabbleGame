@@ -267,7 +267,7 @@ function placeTileOnRack(space_id){
     if (tilesArray.length==0) {return;}
     space = document.getElementById(space_id);
     tile = getTheTile(space);
-    if (!tile.classList.contains("ghost")) {return;}
+    if (!tile.classList.contains("ghost")) {return;}//Not putting a tile there if one already exists
     tile.classList.remove("ghost");
     let pickedTile = pickRandomTile();
     let picked = [pickedTile[1], pickedTile[2]];
@@ -282,9 +282,9 @@ function placeTileOnRack(space_id){
     function replenishRack() {
 
         if (tilesArray.length ==0) {return;}
-        for (let j=1;j<8;j++){
-            rackpos = "s"+j.toString();
-            placeTileOnRack(rackpos);
+        let rackSlots = getRackIds();
+        for (slot of rackSlots){
+            placeTileOnRack(slot);
         }
     }
 
