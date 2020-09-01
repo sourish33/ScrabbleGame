@@ -295,11 +295,7 @@ function placeTileOnRack(space_id){
     }
 
     function rackEmpty(){
-        let rackSquares = [];
-        for (let j=1;j<8;j++) {
-            let space_id = "s"+j.toString();
-            rackSquares.push(space_id);
-        }
+        let rackSquares = getRackIds();
         for (rackSquare of rackSquares){
             if (!isEmptyOnRack(rackSquare)) {return false; }
         }
