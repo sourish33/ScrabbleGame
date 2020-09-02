@@ -97,6 +97,7 @@ function onDrop(event) {
     if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
     origin = u.parentElement.id;
     move(origin,destination);
+    score()
     // event.dataTransfer.clearData();
 }
 
@@ -257,8 +258,6 @@ function move(fromWhere, toWhere) {
         origin.classList.remove("played-not-submitted")
 
     }
-
-    score();
 
 }
 
@@ -789,6 +788,23 @@ function returnToRack() {
     }
 }
 
+let player = {
+    name: '__', 
+    number: 0,
+    score: 0,
+
+    displayData: function() {  // Method which will display type of Animal
+      console.log(`I am player ${this.name}, my number is ${this.number} and I have scored ${this.score} points`);
+    },
+    addPoints: function(points){
+        this.score+=points;
+    },
+  };
+
+let player1 = Object.create(player);
+player1.name = "Sourish";
+player1.number =1;
+
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 document.getElementById("recall").addEventListener("click", returnToRack);
@@ -797,13 +813,13 @@ document.getElementById("play").addEventListener("click", play);
 
 //TODO
 /*  
-- two players with different racks which toggle upon play
-- use interact.js for drag and drop
-- recall button to bring back all placed tiles
-- remove explicit references to "s1", "s2" -instead use rack.children
--code getrackspaces()
--fix shufflerack, rackempty and replensihrack using getrackspaces()
--rack and rackslots should be named after player
+- 
+- 
+- create a player object with name, playerNo, score and methods updateScore, createRack, saveToRack, TransferFromRack
+- each player has an individual hidden "rack". Once play is pressed, tiles are moved back to that players hideen rack and tiles from next players hidden rack are broght to the display rack
+- create the hidden rack as a div with 7 divs inside it using JS, create "targeted transfer" function to move pieces (i.e s1 gies to 1s1 etc)
+-
+-use interact.js for drag and drop
 */
 
 
