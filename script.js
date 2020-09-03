@@ -805,9 +805,27 @@ let player = {
     },
 
    /////TODO makerack()
+   makerack: function() {
+       let rname = this.rackname;
+       let pnum = this.number.toString();
+       if (document.getElementById(rname)) {return;}
+       let rack= document.createElement("div");
+       let slot;
+       rack.id = this.rackname;
+       rack.classList.add("ghost");
+       for (let n=1;n<8;n++){
+           slot = document.createElement("div");
+           slot.id = pnum+"s"+n.toString();
+        //    console.log(`n=${n} and the slotid is ${slot.id}`)
+           rack.appendChild(slot);
+       }
+       document.body.appendChild(rack);
+       if (!document.getElementById(rname)) { console.log("rack creation failed"); } 
+
+   },
 
    ////TODO removepieces()
-   ///TDO returnpieces()
+   ///TODO returnpieces()
 
   };
 
@@ -819,6 +837,7 @@ function whoseMove(move,numPlayers){
     let player = move%numPlayers;
     player = (player === 0 ? numPlayers : player);
     console.log(`It is the turn of player ${player}`)
+    return player;
 }
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
