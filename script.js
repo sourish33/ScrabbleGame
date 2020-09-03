@@ -60,6 +60,7 @@ let tilesArray;
     for (x of specs) { 
         for (let i=0;i<x[0];i++){ 
             newlist = [count,x[1], x[2].toString()];
+            // console.log(`[${count},${x[1]}, ${x[2]}]`);
             tilesArray.push(newlist);
             count++;
         }
@@ -273,6 +274,9 @@ function placeTileOnRack(space_id){
     tile.children[1].innerHTML = picked[0];
     tile.children[2].innerHTML = picked[1];
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
+    if(document.getElementById("newid")){
+        alert("Duplicate pulled")
+    }
     tile.id = newid;
 }
 
@@ -353,14 +357,22 @@ function placeTileOnRack(space_id){
 
 
 
+// function pickRandomTile() {
+//     if (tilesArray.length ==0) {return;}
+//     // if (tilesArray.length % 5==0){ tilesArray = shuffle(tilesArray);		}
+//     tilesArray = Array.from(shuffle(tilesArray));
+//     pickedTile= tilesArray.pop();
+//     document.getElementById("tile-counter").innerHTML = tilesArray.length;
+//     return pickedTile;
+// }
+
 function pickRandomTile() {
     if (tilesArray.length ==0) {return;}
-    if (tilesArray.length % 5==0){ tilesArray = shuffle(tilesArray);		}
-    pickedTile= tilesArray.pop()
+    let n = Math.floor(Math.random() * tilesArray.length); 
+    pickedTile = tilesArray.splice(n,1);
     document.getElementById("tile-counter").innerHTML = tilesArray.length;
-    return pickedTile;
+    return pickedTile.flat();
 }
-
 
 function exchangeTiles(slot1, slot2){
     if (slot1===slot2) {return;}
@@ -819,7 +831,7 @@ let player = {
         //    console.log(`n=${n} and the slotid is ${slot.id}`)
            rack.appendChild(slot);
        }
-       document.body.appendChild(rack);
+       document.body.append(rack);
        if (!document.getElementById(rname)) { console.log("rack creation failed"); } 
 
    },
@@ -832,6 +844,16 @@ let player = {
 let player1 = Object.create(player);
 player1.name = "Sourish";
 player1.number =1;
+player1.makerack();
+
+let player2 = Object.create(player);
+player2.name = "Maia";
+player2.number =2;
+player2.makerack();
+
+let players = {};
+players[1] = player1;
+players[2] = player2;
 
 function whoseMove(move,numPlayers){
     let player = move%numPlayers;
