@@ -786,12 +786,16 @@ function returnToRack() {
             move(tile.id, towhere);
         }
     }
+    document.getElementById("points").innerHTML = 0;  
 }
 
 let player = {
     name: '__', 
     number: 0,
     score: 0,
+    get rackname(){
+        return ("rack" + this.number);},
+    // a way of computing an object property from other properties
 
     displayData: function() {  // Method which will display type of Animal
       console.log(`I am player ${this.name}, my number is ${this.number} and I have scored ${this.score} points`);
@@ -799,11 +803,23 @@ let player = {
     addPoints: function(points){
         this.score+=points;
     },
+
+   /////TODO makerack()
+
+   ////TODO removepieces()
+   ///TDO returnpieces()
+
   };
 
 let player1 = Object.create(player);
 player1.name = "Sourish";
 player1.number =1;
+
+function whoseMove(move,numPlayers){
+    let player = move%numPlayers;
+    player = (player === 0 ? numPlayers : player);
+    console.log(`It is the turn of player ${player}`)
+}
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
