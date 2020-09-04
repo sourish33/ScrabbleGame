@@ -180,6 +180,13 @@ body {
     font-weight: bold;
   }
 
+  #verdict-bad {
+    color: red;
+  }
+  #verdict-good {
+    color: green;
+  }
+
 
   #points {
     font-family: 'Orbitron', sans-serif;
