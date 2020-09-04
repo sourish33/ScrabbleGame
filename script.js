@@ -550,6 +550,7 @@ function getAllVerWords(){
 
     //gets all new vertical words
     let played = getTilesPlayedNotSubmitted();
+    let played_ids = getPlayedIds(played);
     let cols = getPlayedCols(played);
     if (cols.length ===0) { return [];}
 
@@ -558,7 +559,16 @@ function getAllVerWords(){
         let u = getVerWords(col);
         if (u.length!==0){ allVerWords.push(u);}  
     }
-    return allVerWords.flat();
+    allVerWords= allVerWords.flat();
+    let allVerWords_fin =[];
+    for (word of allVerWords){//words should have at least one new letter
+        let intersection = word.filter(x => played_ids.includes(x));
+        if (intersection.length !== 0){ 
+            allVerWords_fin.push(word);
+        }
+    }
+
+    return allVerWords_fin;
 
 }
 
