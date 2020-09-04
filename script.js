@@ -839,18 +839,18 @@ let player = {
    },
 
    ////TODO removepieces()
-//    removePieces: function(){
-//        let rackslots = getRackIds();
-//        for (let slot of rackSlots) {
-//            if (!isEmptyOnRack(slot)){
-//                let num = slot.substr(1);
-//                let toWhere = this.number+"s"+num;
-//                move(slot,toWhere);
-//            }
+   removePieces: function(){
+       let rackSlots = getRackIds();
+       for (let slot of rackSlots) {
+           if (!isEmptyOnRack(slot)){
+               let num = slot.substr(1);
+               let toWhere = this.number+"s"+num;
+               move(slot,toWhere);
+           }
 
-//        }
+       }
 
-//    },
+   },
    ///TODO returnpieces()
 
   };
@@ -858,12 +858,12 @@ let player = {
 let player1 = Object.create(player);
 player1.name = "Sourish";
 player1.number =1;
-// player1.makeRack();
+player1.makeRack();
 
 let player2 = Object.create(player);
 player2.name = "Maia";
 player2.number =2;
-// player2.makeRack();
+player2.makeRack();
 
 let players = {};
 players[1] = player1;
