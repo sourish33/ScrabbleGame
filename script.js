@@ -764,7 +764,7 @@ function getlegalPositions(){
 
 }
 
-function neighbors(sq_id){
+function neighbors(sq_id){//get the upper,lower,left and right neighbors of the slot
 
     let val = getSquareNumber(sq_id);
     let left = val-1;
@@ -817,16 +817,18 @@ let player = {
     },
 
    /////TODO makerack()
-   makerack: function() {
+   makeRack: function() {
        let rname = this.rackname;
        let pnum = this.number.toString();
        if (document.getElementById(rname)) {return;}
+       let originalRack = document.getElementById("rack");
+       let originalSlot = originalRack.children[0];
        let rack= document.createElement("div");
        let slot;
        rack.id = this.rackname;
        rack.classList.add("ghost");
        for (let n=1;n<8;n++){
-           slot = document.createElement("div");
+           slot = originalSlot.cloneNode(true);
            slot.id = pnum+"s"+n.toString();
         //    console.log(`n=${n} and the slotid is ${slot.id}`)
            rack.appendChild(slot);
@@ -837,6 +839,18 @@ let player = {
    },
 
    ////TODO removepieces()
+//    removePieces: function(){
+//        let rackslots = getRackIds();
+//        for (let slot of rackSlots) {
+//            if (!isEmptyOnRack(slot)){
+//                let num = slot.substr(1);
+//                let toWhere = this.number+"s"+num;
+//                move(slot,toWhere);
+//            }
+
+//        }
+
+//    },
    ///TODO returnpieces()
 
   };
@@ -844,12 +858,12 @@ let player = {
 let player1 = Object.create(player);
 player1.name = "Sourish";
 player1.number =1;
-player1.makerack();
+// player1.makeRack();
 
 let player2 = Object.create(player);
 player2.name = "Maia";
 player2.number =2;
-player2.makerack();
+// player2.makeRack();
 
 let players = {};
 players[1] = player1;
