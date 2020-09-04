@@ -684,7 +684,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
     alert(`Please pass to ${players[who].name}`);
-    document.getElementById("who is playing").innerHTML=players[who].name;
+    document.getElementById("who-is-playing").innerHTML=players[who].name;
     players[who].returnPieces();
     replenishRack();
 
@@ -908,12 +908,12 @@ let player = {
   };
 
     let player1 = Object.create(player);
-    player1.name = "Sourish";
+    player1.name = "His T";
     player1.number =1;
     player1.makeRack();
 
     let player2 = Object.create(player);
-    player2.name = "Maia";
+    player2.name = "Her T";
     player2.number =2;
     player2.makeRack();
 
@@ -949,18 +949,20 @@ document.getElementById("play").addEventListener("click", play);
 
 updateScoreBoard();
 who= whoseMove(moveNumber,numPlayers);
-document.getElementById("who is playing").innerHTML=players[who].name;
+document.getElementById("who-is-playing").innerHTML=players[who].name;
 replenishRack();
 
 
 //TODO
 /*  
 - 
-- 
-- create a player object with name, playerNo, score and methods updateScore, createRack, saveToRack, TransferFromRack
-- each player has an individual hidden "rack". Once play is pressed, tiles are moved back to that players hideen rack and tiles from next players hidden rack are broght to the display rack
-- create the hidden rack as a div with 7 divs inside it using JS, create "targeted transfer" function to move pieces (i.e s1 gies to 1s1 etc)
--
+- handle the blank tile
+- exchanging tiles
+- dictionary checking
+- word check box
+- initial data page
+- ending of the game
+- animations
 -use interact.js for drag and drop
 */
 

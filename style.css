@@ -162,6 +162,25 @@ body {
     animation-direction: alternate;
   }
 
+  .mytable {
+    border: 2px solid black;
+  }
+
+   td, th{
+    border: 2px solid black;
+    padding:10px;
+  }
+
+  table {
+    border: 2px solid black;
+    width:50%;
+  }
+
+  #who-is-playing {
+    font-weight: bold;
+  }
+
+
   #points {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.5em;
@@ -240,6 +259,8 @@ body {
     .control-btns{
       flex-direction: row !important;
     }
+
+
 
   
   }
