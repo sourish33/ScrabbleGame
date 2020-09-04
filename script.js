@@ -174,8 +174,7 @@ function generateCols() {
     return cols;
 }
 
-function getRackIds() {//finds the rack element and grabs the ids of the slots
-    let rackid = document.getElementsByClassName("holder")[0].id;
+function getRackIds(rackid) {//finds the rack element and grabs the ids of the slots
     let rack = document.getElementById(rackid);
     let rackSlots = rack.children;
     let rackSlotIds = [];
@@ -285,7 +284,7 @@ function placeTileOnRack(space_id){
     function replenishRack() {
 
         if (tilesArray.length ==0) {return;}
-        let rackSlots = getRackIds();
+        let rackSlots = getRackIds("rack");
         for (slot of rackSlots){
             placeTileOnRack(slot);
         }
@@ -297,8 +296,8 @@ function placeTileOnRack(space_id){
         return tile.classList.contains("ghost") ? true : false;
     }
 
-    function rackEmpty(){
-        let rackSquares = getRackIds();
+    function rackEmpty(rack_id){
+        let rackSquares = getRackIds(rack_id);
         for (rackSquare of rackSquares){
             if (!isEmptyOnRack(rackSquare)) {return false; }
         }
@@ -308,7 +307,7 @@ function placeTileOnRack(space_id){
 
     function findEmptyRackPosition(){//Find an empty position on the rack   
         let emptySlot;
-        let rackSlots = getRackIds();
+        let rackSlots = getRackIds("rack");
         for (slot of rackSlots) {
             if (isEmptyOnRack(slot)) { 
                 emptySlot=slot;
@@ -391,7 +390,7 @@ function exchangeTiles(slot1, slot2){
 }
 
 function shuffle_rack(){
-    let oldOrder =getRackIds();
+    let oldOrder =getRackIds("rack");
     let newOrder = shuffle(oldOrder);
     for (let i=1;i<8;i++){
         let curLoc = oldOrder[i-1];
@@ -742,7 +741,7 @@ function score(){//find the scores of all the words in the list
     for (word of wordsToScore) {
         totalPoints += wordScore(word);
     }
-    if (rackEmpty()) { totalPoints += 50;}
+    if (rackEmpty("rack")) { totalPoints += 50;}
 
     document.getElementById("points").innerHTML = totalPoints;
 }
@@ -801,6 +800,17 @@ function returnToRack() {
     document.getElementById("points").innerHTML = 0;  
 }
 
+        
+function moveRackToRack(rack1, rack2){
+        let aSlots = getRackIds(rack1);
+        let bSlots = getRackIds(rack2);
+        for (let i=0;i<aSlots.length;i++){
+            if(!isEmptyOnRack(aSlots[i])){
+                move(aSlots[i],bSlots[i]);
+            }
+        }
+}
+
 let player = {
     name: '__', 
     number: 0,
@@ -840,17 +850,16 @@ let player = {
 
    ////TODO removepieces()
    removePieces: function(){
-       let rackSlots = getRackIds();
-       for (let slot of rackSlots) {
-           if (!isEmptyOnRack(slot)){
-               let num = slot.substr(1);
-               let toWhere = this.number+"s"+num;
-               move(slot,toWhere);
-           }
-
+       if(!rackEmpty("rack")){
+            moveRackToRack("rack",this.rackname);
        }
-
    },
+
+   returnPieces: function(){
+    if(!rackEmpty(this.rackname)){
+        moveRackToRack(this.rackname,"rack");
+        }
+   }
    ///TODO returnpieces()
 
   };
