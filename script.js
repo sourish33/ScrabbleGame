@@ -230,6 +230,10 @@ function move(fromWhere, toWhere) {
     if (origin===destination){return;}
     if (origin==null || destination==null) {return;}
     let tile = getTheTile(origin);
+
+    let blankTile = false;
+    if (tile.children[2].innerHTML==="0"){ blankTile=true;}
+
     let tileAlreadyThere = getTheTile(destination);
 
     if (tileAlreadyThere != null) { 
@@ -246,20 +250,50 @@ function move(fromWhere, toWhere) {
     destination.appendChild(tile);
     origin.innerHTML=getLettersOnSquare(fromWhere);
     //create and leave behind a ghost tile if starting from the rack
-    if (includes("s", fromWhere)){
+
+    let fromRack = includes("s", fromWhere);
+    let toRack = includes("s", toWhere);
+    let fromBoard = !includes("s", fromWhere);
+    let toBoard = !includes("s", toWhere);
+
+
+    if (fromRack){
         let ghostTile = tile.cloneNode(true);
         ghostTile.removeAttribute('id');
         ghostTile.classList.add("ghost");
         origin.appendChild(ghostTile);
     }
     //add the played-not-submitted class to any tile placed on the board and remove it if the tile is moved.
-    if ( !includes("s", toWhere) ){
+    if ( toBoard ){
         destination.classList.add("played-not-submitted");
     }
-    if (!includes("s", fromWhere)){
+    if (fromBoard){
         origin.classList.remove("played-not-submitted")
 
     }
+    //Handling blank tiles
+    //blank tile moving from rack to board
+
+    // if (blankTile && fromRack && toBoard){
+    //     let newLetter  = prompt("Please choose a letter for this tile:", "_");
+    //     if (newLetter == null || newLetter == "") {
+    //         return;
+    //       } 
+    //     newLetter = newLetter.charAt(0);
+    //     if (!isLetter(newLetter)) {return;}
+    //     tile.children[1].innerHTML = newLetter;
+
+    //     let ghostTile = tile.cloneNode(true);
+    //     ghostTile.removeAttribute('id');
+    //     ghostTile.classList.add("ghost");
+    //     origin.appendChild(ghostTile);
+        
+    //     destination.classList.add("played-not-submitted");
+    // }
+    // //blank tile moving to rack
+    // if (blankTile && toRack){
+    //     tile.children[1].innerHTML = "_";
+    // }
 
 }
 
