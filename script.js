@@ -319,59 +319,40 @@ function placeTileOnRack(space_id){
         return emptySlot;
     }
 
-    function populateBoard(n) {//Place n tiles on the board 
+    // function populateBoard(n) {//Place n tiles on the board 
 
-        if (tilesArray.length ==0) {return;}
-        if (n>tilesArray.length) { n=tilesArray.length;}
-        let squares = document.getElementsByClassName("grid-item");
-        let filledSquares = document.getElementsByClassName("played-not-submitted");
-        let squaresArray = Object.values(squares);//collects all squares into an array
-        let filledSquaresArray = Object.values(filledSquares);//collects filled squares into an array
-        let unfilledSquares = shuffle(subtractArrays(squaresArray, filledSquaresArray));
-        let unfilledSquareIDs =[];
-        for (square of unfilledSquares){
-            unfilledSquareIDs.push(square.id);
-            }
-        //Find an empty position on the rack, place picked tiles there and then move the tiles from there on to the board 
+    //     if (tilesArray.length ==0) {return;}
+    //     if (n>tilesArray.length) { n=tilesArray.length;}
+    //     let squares = document.getElementsByClassName("grid-item");
+    //     let filledSquares = document.getElementsByClassName("played-not-submitted");
+    //     let squaresArray = Object.values(squares);//collects all squares into an array
+    //     let filledSquaresArray = Object.values(filledSquares);//collects filled squares into an array
+    //     let unfilledSquares = shuffle(subtractArrays(squaresArray, filledSquaresArray));
+    //     let unfilledSquareIDs =[];
+    //     for (square of unfilledSquares){
+    //         unfilledSquareIDs.push(square.id);
+    //         }
+    //     //Find an empty position on the rack, place picked tiles there and then move the tiles from there on to the board 
 
-        let unfilledPos = findEmptyRackPosition();
+    //     let unfilledPos = findEmptyRackPosition();
         
-        if (unfilledPos== null) {
-            console.log("No position available on rack");
-            return;
-        }
-        for (let i=0;i<n;i++){
-            placeTileOnRack(unfilledPos);
-            move(unfilledPos,unfilledSquareIDs.pop());
-        }
-
-
-    // replenishRack()
-    // for (let j=0;j<8;j++){
-    //     rackpos = "s"+j.toString();
-    //     move(rackpos,squareIDs.pop());
+    //     if (unfilledPos== null) {
+    //         console.log("No position available on rack");
+    //         return;
+    //     }
+    //     for (let i=0;i<n;i++){
+    //         placeTileOnRack(unfilledPos);
+    //         move(unfilledPos,unfilledSquareIDs.pop());
+    //     }
     // }
 
-}
 
-
-
-
-
-// function pickRandomTile() {
-//     if (tilesArray.length ==0) {return;}
-//     // if (tilesArray.length % 5==0){ tilesArray = shuffle(tilesArray);		}
-//     tilesArray = Array.from(shuffle(tilesArray));
-//     pickedTile= tilesArray.pop();
-//     document.getElementById("tile-counter").innerHTML = tilesArray.length;
-//     return pickedTile;
-// }
 
 function pickRandomTile() {
     if (tilesArray.length ==0) {return;}
     let n = Math.floor(Math.random() * tilesArray.length); 
     pickedTile = tilesArray.splice(n,1);
-    document.getElementById("tile-counter").innerHTML = tilesArray.length;
+    // document.getElementById("tile-counter").innerHTML = tilesArray.length;
     return pickedTile.flat();
 }
 
@@ -698,9 +679,12 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
     }
+    updateScoreBoard();
 
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
+    alert(`Please pass to ${players[who].name}`);
+    document.getElementById("who is playing").innerHTML=players[who].name;
     players[who].returnPieces();
     replenishRack();
 
@@ -766,6 +750,21 @@ function wordScore(arr){
 function displayScore() {
     let u = score();
     document.getElementById("points").innerHTML = u;
+}
+
+// function highLightPlayer(){
+//     let who= whoseMove(moveNumber,numPlayers);
+//     let namid = "pl"+who;
+//     // let scorid = "pl"+who;
+//     let namcell = document.getElementById(namid).parentElement;
+//     namcell.classList.add("highlight");
+// }
+
+function updateScoreBoard(){
+    document.getElementById("pl1 points").innerHTML = players[1].score;
+    document.getElementById("pl2 points").innerHTML = players[2].score;
+    document.getElementById("pl1").innerHTML = players[1].name;
+    document.getElementById("pl2").innerHTML = players[2].name;
 }
 
 function score(){//find the scores of all the words in the list
@@ -943,10 +942,15 @@ let player = {
 
 
 
-document.getElementById("replenish").addEventListener("click", replenishRack);
+// document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 document.getElementById("recall").addEventListener("click", returnToRack);
 document.getElementById("play").addEventListener("click", play);
+
+updateScoreBoard();
+who= whoseMove(moveNumber,numPlayers);
+document.getElementById("who is playing").innerHTML=players[who].name;
+replenishRack();
 
 
 //TODO
@@ -959,7 +963,4 @@ document.getElementById("play").addEventListener("click", play);
 -
 -use interact.js for drag and drop
 */
-
-
-
 

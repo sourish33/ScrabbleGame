@@ -108,6 +108,10 @@ body {
     visibility: hidden;
   }
 
+  .highlight {
+    background: yellow;
+  }
+
   .slot {
     /* border: 2px solid  #855E42;
     border-radius: 5px;
