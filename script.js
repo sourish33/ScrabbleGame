@@ -18,6 +18,8 @@ let boosters = {};
 
 
 let legalPositions = getlegalPositions();
+let moveNumber =1;
+let numPlayers = 2;
 
 
 
@@ -98,7 +100,7 @@ function onDrop(event) {
     if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
     origin = u.parentElement.id;
     move(origin,destination);
-    score()
+    displayScore();
     // event.dataTransfer.clearData();
 }
 
@@ -495,6 +497,13 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
     return wordbag;
 }
 
+function getPlayedIds(played){
+    //find rows of new letters placed on the board from the list of played tiles (played)
+    let ids =[];
+    played.forEach((tile)=>{ids.push(tile.id);});
+    return ids;
+}
+
 function getPlayedRows(played){
     //find rows of new letters placed on the board from the list of played tiles (played)
     let rows =[];
@@ -514,6 +523,7 @@ function getPlayedCols(played){
 function getAllHorWords(){
 
     let played = getTilesPlayedNotSubmitted();
+    let played_ids = getPlayedIds(played);
     // gets all new horizontal words
     let rows = getPlayedRows(played);
     if (rows.length ===0) { return [];}
@@ -523,7 +533,16 @@ function getAllHorWords(){
         let u = getHorWords(row);
         if (u.length!==0){ allHorWords.push(u);}  
     }
-    return allHorWords.flat();
+    allHorWords = allHorWords.flat();
+    let allHorWords_fin =[];
+    for (word of allHorWords){//words should have at least one new letter
+        let intersection = word.filter(x => played_ids.includes(x));
+        if (intersection.length !== 0){ 
+            allHorWords_fin.push(word);
+        }
+    }
+
+    return allHorWords_fin;
 
 }
 
@@ -631,6 +650,7 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
     function getAllIslandWords()
     {
         let newWords = getAllNewWords();
+        let played = getTilesPlayedNotSubmitted()
         if (newWords.length ===0) {return [];}
 
         let illegals = [];
@@ -658,12 +678,23 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         return;
     }
 
+    let who= whoseMove(moveNumber,numPlayers);
+    players[who].addPoints(score());
+    players[who].removePieces();
+
     for (tile of tiles) {
         tile.classList.remove("played-not-submitted");
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
     }
+
+    moveNumber++;
+    who= whoseMove(moveNumber,numPlayers);
+    players[who].returnPieces();
+    replenishRack();
+
+
     //reset the possible points 
     document.getElementById("points").innerHTML = 0;
     //update the list of legal positions
@@ -722,19 +753,23 @@ function wordScore(arr){
     return boosters*dotProduct;
 }
 
+function displayScore() {
+    let u = score();
+    document.getElementById("points").innerHTML = u;
+}
+
 function score(){//find the scores of all the words in the list
     let tiles = getTilesPlayedNotSubmitted();
     let totalPoints = 0;
     if (!checkLegalPlacement(tiles)) {
-        document.getElementById("points").innerHTML = totalPoints;
-        return;
+        return totalPoints;
     }
 
 
     let wordsToScore = getAllNewWords();
     if (wordsToScore.length===0) {
         document.getElementById("points").innerHTML = totalPoints;
-        return;
+        return totalPoints;
         }//no legal words
 
     
@@ -743,7 +778,7 @@ function score(){//find the scores of all the words in the list
     }
     if (rackEmpty("rack")) { totalPoints += 50;}
 
-    document.getElementById("points").innerHTML = totalPoints;
+    return totalPoints;
 }
 
 function getlegalPositions(){
@@ -848,7 +883,6 @@ let player = {
 
    },
 
-   ////TODO removepieces()
    removePieces: function(){
        if(!rackEmpty("rack")){
             moveRackToRack("rack",this.rackname);
@@ -864,26 +898,40 @@ let player = {
 
   };
 
-let player1 = Object.create(player);
-player1.name = "Sourish";
-player1.number =1;
-player1.makeRack();
+    let player1 = Object.create(player);
+    player1.name = "Sourish";
+    player1.number =1;
+    player1.makeRack();
 
-let player2 = Object.create(player);
-player2.name = "Maia";
-player2.number =2;
-player2.makeRack();
+    let player2 = Object.create(player);
+    player2.name = "Maia";
+    player2.number =2;
+    player2.makeRack();
 
-let players = {};
-players[1] = player1;
-players[2] = player2;
+    let players = {};
+    players[1] = player1;
+    players[2] = player2;
 
-function whoseMove(move,numPlayers){
-    let player = move%numPlayers;
-    player = (player === 0 ? numPlayers : player);
-    console.log(`It is the turn of player ${player}`)
-    return player;
-}
+    function whoseMove(moveNumber,numPlayers){
+        let player = moveNumber%numPlayers;
+        player = (player === 0 ? numPlayers : player);
+        // console.log(`It is the turn of player ${player}`);
+        return player;
+    }
+
+    // function gameAdvance() {
+    //     let who= whoseMove(moveNumber,numPlayers);
+    //     players[who].addPoints(score());
+    //     players[who].removePieces();
+
+    //     moveNumber++;
+    //     who= whoseMove(moveNumber,numPlayers);
+    //     players[who].returnPieces();
+    //     replenishRack();
+
+    // }
+
+
 
 document.getElementById("replenish").addEventListener("click", replenishRack);
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
