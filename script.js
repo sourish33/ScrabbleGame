@@ -224,7 +224,20 @@ function getLettersOnSquare(whichSquare){//check if the square has TW, DL etc
     }
 }
 
+function isLetter(c) {
+    return c.toLowerCase() != c.toUpperCase();
+  }
+
+
+
 function move(fromWhere, toWhere) {
+
+    let fromRack = includes("s", fromWhere);
+    let toRack = includes("s", toWhere);
+    let fromBoard = !includes("s", fromWhere);
+    let toBoard = !includes("s", toWhere);
+
+
     let origin = document.getElementById(fromWhere);
     let destination = document.getElementById(toWhere);
     if (origin===destination){return;}
@@ -233,6 +246,17 @@ function move(fromWhere, toWhere) {
 
     let blankTile = false;
     if (tile.children[2].innerHTML==="0"){ blankTile=true;}
+
+    if (tile.children[1].innerHTML==="_" && toBoard){// untouched blank tile at origin
+        let newLetter  = prompt("Please choose a letter for this tile:", "_");
+        if (newLetter == null || newLetter == "") {
+            return;
+          } 
+        newLetter = newLetter.charAt(0);
+        if (!isLetter(newLetter)) {return;}
+        tile.children[1].innerHTML = newLetter.toUpperCase();
+
+    }
 
     let tileAlreadyThere = getTheTile(destination);
 
@@ -251,10 +275,11 @@ function move(fromWhere, toWhere) {
     origin.innerHTML=getLettersOnSquare(fromWhere);
     //create and leave behind a ghost tile if starting from the rack
 
-    let fromRack = includes("s", fromWhere);
-    let toRack = includes("s", toWhere);
-    let fromBoard = !includes("s", fromWhere);
-    let toBoard = !includes("s", toWhere);
+
+
+    if (blankTile && toRack){
+        tile.children[1].innerHTML = "_";
+    }
 
 
     if (fromRack){
