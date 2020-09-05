@@ -415,6 +415,29 @@ function pickRandomTile() {
     return pickedTile.flat();
 }
 
+function pickSpecificTile(n) {
+    if (tilesArray.length ==0) {return;}
+    pickedTile = tilesArray.splice(n,1);
+    return pickedTile.flat();
+}
+
+function placeSpecificTileOnRack(space_id, pickedTile){
+    //pick a tile from the bag and put it on the rack
+    if (tilesArray.length==0) {return;}
+    space = document.getElementById(space_id);
+    tile = getTheTile(space);
+    if (!tile.classList.contains("ghost")) {return;}//Not putting a tile there if one already exists
+    tile.classList.remove("ghost");
+    let picked = [pickedTile[1], pickedTile[2]];
+    tile.children[1].innerHTML = picked[0];
+    tile.children[2].innerHTML = picked[1];
+    newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
+    if(document.getElementById("newid")){
+        alert("Duplicate pulled")
+    }
+    tile.id = newid;
+}
+
 function exchangeTiles(slot1, slot2){
     if (slot1===slot2) {return;}
     let origin = document.getElementById(slot1);
