@@ -1046,7 +1046,7 @@ replenishRack();
 - 
 - 
 - exchanging tiles
-- dictionary checking
+- returnToBag function which first uses recall and then sends each tile from rack back to bag
 - initial data page
 - ending of the game
 - animations
