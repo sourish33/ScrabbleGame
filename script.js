@@ -408,13 +408,14 @@ function pickRandomTile() {
     if (tilesArray.length ==0) {return;}
     let n = Math.floor(Math.random() * tilesArray.length); 
     pickedTile = tilesArray.splice(n,1);
-    // document.getElementById("tile-counter").innerHTML = tilesArray.length;
+    document.getElementById("tile-counter").innerHTML = tilesArray.length;
     return pickedTile.flat();
 }
 
 function pickSpecificTile(n) {
     if (tilesArray.length ==0) {return;}
     pickedTile = tilesArray.splice(n,1);
+    document.getElementById("tile-counter").innerHTML = tilesArray.length;
     return pickedTile.flat();
 }
 
