@@ -361,13 +361,23 @@
 					AA, AB, AD, AE, AG, AH, AI, AL, AM, AN, AR, AS, AT, AW, AX, AY, BA, BE, BI, BO, BY, DA, DE, DO, ED, EF, EH, EL, EM, EN, ER, ES, ET, EX, 
 					FA, FE, GI, GO, HA, HE, HI, HM, HO, ID, IF, IN, IS, IT, JO, KA, KI, LA, LI, LO, MA, ME, MI, MM, MO, MU, MY, NA, NE, NO, NU, OD, OE, OF, OH, OI, OK, OM, ON, OP, OR, OS, OW, OX, OY, PA, PE, PI, PO, QI, RE, SH, SI, SO, TA, TE, TI, TO, UH, UM, UN, UP, US, UT, WE, WO, XI, XU, YA, YE, YO, ZA
 				</p>
-				<form>
+				<!-- <form>
 					<div class="form-group">
 					  <label for="dictionary">Check Dictionary</label>
 					  <input type="text" class="form-control" id="checkdic" placeholder="not a word">
 					</div>
+				</form> -->
+				
+				<form id="submittedWord">
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" placeholder="Not a word"   name="word"   aria-label="Recipient's username" aria-describedby="basic-addon2">
+							<div class="input-group-append">
+							<button class="btn btn-outline-secondary" id="checkdic" type="button">Check</button>
+							</div>
+						</div>
 				</form>
-				<p id="verdict-bad"><span id="searched">BANDOOSH</span> is not a valid word</p>
+				
+				<p class="searchresult"></p>
 				</div>
 				
 
@@ -489,7 +499,8 @@
 	</div>
 		</div>
 
-		
+	
+	<script src="dictionary.js"></script>
 	<script src="script.js"></script>
 
 </body>

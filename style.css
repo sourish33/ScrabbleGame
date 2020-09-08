@@ -180,10 +180,10 @@ body {
     font-weight: bold;
   }
 
-  #verdict-bad {
+  .verdict-bad {
     color: red;
   }
-  #verdict-good {
+  .verdict-good {
     color: green;
   }
 

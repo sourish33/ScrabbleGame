@@ -334,9 +334,6 @@ function placeTileOnRack(space_id){
     tile.children[1].innerHTML = picked[0];
     tile.children[2].innerHTML = picked[1];
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
-    if(document.getElementById("newid")){
-        alert("Duplicate pulled")
-    }
     tile.id = newid;
 }
 
@@ -432,9 +429,6 @@ function placeSpecificTileOnRack(space_id, pickedTile){
     tile.children[1].innerHTML = picked[0];
     tile.children[2].innerHTML = picked[1];
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
-    if(document.getElementById("newid")){
-        alert("Duplicate pulled")
-    }
     tile.id = newid;
 }
 
@@ -740,7 +734,6 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
 
 
 
-
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
     let tiles = getTilesPlayedNotSubmitted();
@@ -762,6 +755,8 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.classList.add("unselectable");
     }
     updateScoreBoard();
+    let searchresult = document.getElementsByClassName("searchresult")[0];
+    searchresult.innerHTML ="";
 
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
@@ -1024,10 +1019,11 @@ let player = {
 
 
 
-// document.getElementById("replenish").addEventListener("click", replenishRack);
+
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 document.getElementById("recall").addEventListener("click", returnToRack);
 document.getElementById("play").addEventListener("click", play);
+document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 
 updateScoreBoard();
 who= whoseMove(moveNumber,numPlayers);
@@ -1038,10 +1034,9 @@ replenishRack();
 //TODO
 /*  
 - 
-- handle the blank tile
+- 
 - exchanging tiles
 - dictionary checking
-- word check box
 - initial data page
 - ending of the game
 - animations
