@@ -178,7 +178,10 @@ body {
 
   #who-is-playing {
     font-weight: bold;
+    background:yellow;
   }
+
+ 
 
   .verdict-bad {
     color: red;

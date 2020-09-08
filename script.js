@@ -296,29 +296,6 @@ function move(fromWhere, toWhere) {
         origin.classList.remove("played-not-submitted")
 
     }
-    //Handling blank tiles
-    //blank tile moving from rack to board
-
-    // if (blankTile && fromRack && toBoard){
-    //     let newLetter  = prompt("Please choose a letter for this tile:", "_");
-    //     if (newLetter == null || newLetter == "") {
-    //         return;
-    //       } 
-    //     newLetter = newLetter.charAt(0);
-    //     if (!isLetter(newLetter)) {return;}
-    //     tile.children[1].innerHTML = newLetter;
-
-    //     let ghostTile = tile.cloneNode(true);
-    //     ghostTile.removeAttribute('id');
-    //     ghostTile.classList.add("ghost");
-    //     origin.appendChild(ghostTile);
-        
-    //     destination.classList.add("played-not-submitted");
-    // }
-    // //blank tile moving to rack
-    // if (blankTile && toRack){
-    //     tile.children[1].innerHTML = "_";
-    // }
 
 }
 
@@ -1005,6 +982,41 @@ let player = {
         // console.log(`It is the turn of player ${player}`);
         return player;
     }
+    
+    function returnToBag (space_id){
+        if (!includes("s", space_id)){return;}//only works for tiles on rack
+        if (isEmptyOnRack(space_id)){return;}//empty slot
+
+        let tile = getTileAt(space_id);
+        let tile_id = tile.id;
+        tile.removeAttribute('id');
+        tile.classList.add("ghost");
+        numberPattern = /\d+/g;
+        letterPattern = /\D/g;
+        nums = tile_id.match(numberPattern);
+        letters = tile_id.match(letterPattern);
+        newlist = [parseInt(nums[0]),letters[0], nums[1]];
+        tilesArray.push(newlist);
+        document.getElementById("tile-counter").innerHTML = tilesArray.length;
+    }
+
+    function reissue (slotlist) {
+        
+        //add checks that slotlist is ok
+        returnToRack();
+        if (!Array.isArray(slotlist)){
+            console.log("reissue requires array")
+            return;}
+        slotnos = slotlist.map(String);
+        space_ids =[];
+        for (slot of slotlist){
+            space_ids.push("s"+slot);
+        }
+        for (id of space_ids){
+            returnToBag(id);
+        }
+        replenishRack();
+    }
 
     // function gameAdvance() {
     //     let who= whoseMove(moveNumber,numPlayers);
@@ -1026,6 +1038,7 @@ document.getElementById("recall").addEventListener("click", returnToRack);
 document.getElementById("play").addEventListener("click", play);
 document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 
+//call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
 let myform = document.getElementById("submittedWord");
 myform.addEventListener('keypress',function(event){
     if(event.keyCode == 13) {
