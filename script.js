@@ -1025,6 +1025,15 @@ document.getElementById("recall").addEventListener("click", returnToRack);
 document.getElementById("play").addEventListener("click", play);
 document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 
+let myform = document.getElementById("submittedWord");
+myform.addEventListener('keypress',function(event){
+    if(event.keyCode == 13) {
+        event.preventDefault();
+        getWordToCheck();
+    }
+});
+
+
 updateScoreBoard();
 who= whoseMove(moveNumber,numPlayers);
 document.getElementById("who-is-playing").innerHTML=players[who].name;
