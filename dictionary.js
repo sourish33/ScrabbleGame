@@ -7,7 +7,7 @@ for (word of dict){
 
 
 function checkDict(txt) {
-  return scrabbledict.has(txt);
+  return scrabbledict.has(txt.toUpperCase());
 }
 
 function getWordToCheck() {

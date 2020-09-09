@@ -20,6 +20,7 @@ let boosters = {};
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let numPlayers = 2;
+let dictionaryChecking = true;
 
 
 
@@ -696,6 +697,14 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
         return true;
     }
 
+    function checkIfLegal(wordarray) {//returns a list of words not in the scrabble dictionary
+        let bads =[];
+        for (word of wordarray){
+            if (!checkDict(word)) {bads.push(word);}
+        }
+        return bads;
+    }
+
     function getAllIslandWords()//find words which are illegal because they are not adjacent to played letters
     {
         let newWords = getAllNewWords();
@@ -724,6 +733,16 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     if (!checkLegalPlacement(tiles)) {
         alert("Tile placement illegal");
         return;
+    }
+
+    if (dictionaryChecking) {
+        let wordarray = readAllWords(getAllNewWords());
+        let notAWords = checkIfLegal(wordarray);
+        if (notAWords.length!==0){
+            let msg =`${notAWords.join(", ")} not valid` ;
+            alert(msg);
+            return;
+        }
     }
 
     let who= whoseMove(moveNumber,numPlayers);
