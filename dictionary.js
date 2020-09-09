@@ -13,6 +13,7 @@ function checkDict(txt) {
 function getWordToCheck() {
     let myform = document.getElementById("submittedWord");
     let inputword = myform[0].value.toUpperCase();
+    if (inputword==="") {return;}
     // console.log(`${inputword} was checked and found to be ${checkDict(inputword)}`)
     
     if (checkDict(inputword)){

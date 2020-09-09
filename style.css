@@ -193,6 +193,7 @@ body {
 
   #points {
     font-size: 1.5em;
+    color: green;
   }
 
   @keyframes animate

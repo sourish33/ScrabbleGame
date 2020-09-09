@@ -311,15 +311,21 @@
 
 				<div class="row ">
 					<div class="col d-flex flex-column">
-						<div class="p-2">
-							<button type="button" class="btn btn-primary" id="shuffle">Shuffle</button>
-						</div>
-						<div class="p-2">
-							<button type="button" class="btn btn-primary" id="recall">Recall</button>
-						</div>
-						<div class="p-2">
-							<button type="button" class="btn btn-primary">Exchange</button>
-						</div>
+							<div class="p-2">
+								<button type="button" class="btn btn-primary" id="shuffle">Shuffle</button>
+							</div>
+							<div class="p-2">
+								<button type="button" class="btn btn-primary" id="recall">Recall</button>
+							</div>
+
+							<div class="p-2">
+								<button type="button" class="btn btn-primary" id="exchange">Exchange</button>
+							</div>
+							<div class="p-2">
+								<button type="button" class="btn btn-primary" id="pass">Pass</button>
+							</div>
+
+						
 					</div>
 					<div class="col d-flex flex-column">
 						<div class="p-2">
@@ -340,8 +346,8 @@
 							</table>
 						</div>
 						<div class="p-2">
-							<p id="plqyingbox">Playing: <span id="who-is-playing"></span></p>
-							<p>Tiles remaining:  <span id="tile-counter">0</span></p>
+							<p id="playingbox">Playing: <span id="who-is-playing"></span></p>
+							<!-- <p>Tiles remaining:  <span id="tile-counter">0</span></p> -->
 						</div>
 
 					</div>
@@ -349,15 +355,12 @@
 					
 				</div>
 
-				<div class="p-2">
-					<p>Points possible this turn: <span id="points">0</span></p>
+				<div>
+					<p>Points possible this turn: <span id="points">0</span><br>Tiles remaining:  <span id="tile-counter">0</span></p>
 				</div>
 
 
-
-
-				<div class="p-2 2lw" >
-					<h4>Two Letter Words</h4>
+				<div class="p-2" id="2lw-list" >
 				<p>
 					AA, AB, AD, AE, AG, AH, AI, AL, AM, AN, AR, AS, AT, AW, AX, AY, BA, BE, BI, BO, BY, DA, DE, DO, ED, EF, EH, EL, EM, EN, ER, ES, ET, EX, 
 					FA, FE, GI, GO, HA, HE, HI, HM, HO, ID, IF, IN, IS, IT, JO, KA, KI, LA, LI, LO, MA, ME, MI, MM, MO, MU, MY, NA, NE, NO, NU, OD, OE, OF, OH, OI, OK, OM, ON, OP, OR, OS, OW, OX, OY, PA, PE, PI, PO, QI, RE, SH, SI, SO, TA, TE, TI, TO, UH, UM, UN, UP, US, UT, WE, WO, XI, XU, YA, YE, YO, ZA
@@ -368,21 +371,19 @@
 					  <input type="text" class="form-control" id="checkdic" placeholder="not a word">
 					</div>
 				</form> -->
-				
-				<form id="submittedWord">
-						<div class="input-group mb-3">
-							<input type="text" class="form-control" placeholder="Not a word"   name="word"   aria-label="Recipient's username" aria-describedby="basic-addon2">
-							<div class="input-group-append">
-							<button class="btn btn-outline-secondary" id="checkdic" type="button">Check</button>
-							</div>
-						</div>
-				</form>
-				
-				<p class="searchresult"></p>
 				</div>
-				
-
-
+				<div class="p2">
+					<form id="submittedWord">
+							<div class="input-group mb-3">
+								<input type="text" class="form-control" placeholder="Check dictionary"   name="word"   aria-label="Recipient's username" aria-describedby="basic-addon2">
+								<div class="input-group-append">
+								<button class="btn btn-outline-secondary" id="checkdic" type="button">Check</button>
+								</div>
+							</div>
+					</form>
+					<p class="searchresult"></p>
+				</div>
+			
 				<div class="mt-auto p-2">
 					<button type="button" class="btn btn-primary" id="play">Play</button>
 				</div>

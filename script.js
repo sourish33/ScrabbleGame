@@ -228,6 +228,10 @@ function isLetter(c) {
     return c.toLowerCase() != c.toUpperCase();
   }
 
+function isNumeric(value) {
+    return /^\d+$/.test(value);
+}
+
 
 
 function move(fromWhere, toWhere) {
@@ -692,7 +696,7 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
         return true;
     }
 
-    function getAllIslandWords()
+    function getAllIslandWords()//find words which are illegal because they are not adjacent to played letters
     {
         let newWords = getAllNewWords();
         let played = getTilesPlayedNotSubmitted()
@@ -725,6 +729,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     let who= whoseMove(moveNumber,numPlayers);
     players[who].addPoints(score());
     players[who].removePieces();
+    updateScoreBoard();
 
     for (tile of tiles) {
         tile.classList.remove("played-not-submitted");
@@ -732,22 +737,50 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
     }
-    updateScoreBoard();
+
+    //clear the search results
     let searchresult = document.getElementsByClassName("searchresult")[0];
     searchresult.innerHTML ="";
-
+    //advance the movenumber
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
     alert(`Please pass to ${players[who].name}`);
     document.getElementById("who-is-playing").innerHTML=players[who].name;
     players[who].returnPieces();
     replenishRack();
-
-
     //reset the possible points 
     document.getElementById("points").innerHTML = 0;
     //update the list of legal positions
     legalPositions = getlegalPositions();
+
+}
+
+
+function pass()
+{
+    let onboard = getTilesPlayedNotSubmitted();
+    if (onboard.length!==0) {returnToRack();}
+
+    let who= whoseMove(moveNumber,numPlayers);
+    players[who].addPoints(score());
+    players[who].removePieces();
+    updateScoreBoard();
+
+    //clear the search results
+    let searchresult = document.getElementsByClassName("searchresult")[0];
+    searchresult.innerHTML ="";
+    //advance the movenumber
+    moveNumber++;
+    who= whoseMove(moveNumber,numPlayers);
+    alert(`Please pass to ${players[who].name}`);
+    document.getElementById("who-is-playing").innerHTML=players[who].name;
+    players[who].returnPieces();
+    replenishRack();
+    //reset the possible points 
+    document.getElementById("points").innerHTML = 0;
+    //update the list of legal positions
+    legalPositions = getlegalPositions();
+
 }
 
 function wordScore(arr){
@@ -824,6 +857,7 @@ function updateScoreBoard(){
 
 function score(){//find the scores of all the words in the list
     let tiles = getTilesPlayedNotSubmitted();
+    if (tiles.length === 0) {return 0;}
     let totalPoints = 0;
     if (!checkLegalPlacement(tiles)) {
         return totalPoints;
@@ -1000,14 +1034,14 @@ let player = {
         document.getElementById("tile-counter").innerHTML = tilesArray.length;
     }
 
-    function reissue (slotlist) {
+    function returnAllToBag(slotlist) {//takes an array of numbers and returns those tiles to the bag
         
         //add checks that slotlist is ok
-        let onboard = getTilesPlayedNotSubmitted();
-        if (onboard.length!==0) {returnToRack();}
-        if (!Array.isArray(slotlist)){
-            console.log("reissue requires array")
-            return;}
+        if (!Array.isArray(slotlist) || !slotlist.length ===0){
+            console.log("returnAllToBagrequires non-empty array")
+            return;
+        }
+
         slotnos = slotlist.map(String);
         space_ids =[];
         for (slot of slotlist){
@@ -1023,7 +1057,23 @@ let player = {
             returnToBag(id);
         }
 
-        replenishRack();
+        
+    }
+
+
+    function exchangeLetters() {
+        let onboard = getTilesPlayedNotSubmitted();
+        if (onboard.length!==0) {returnToRack();}
+        let toExStr  = prompt("Please indicate which tiles (1-7) to exchange: (e.g. 1,2,6)", "");
+        if (toExStr==null) {return [];} 
+        let toExArr = toExStr.split(",");
+        for (num of toExArr){
+            if (!isNumeric(num) || parseInt(num)<1 || parseInt(num)>7){return [];}
+            }
+        let toExArrUni= getUniques(toExArr); //remove duplicates
+        returnAllToBag(toExArrUni);
+        pass();
+
     }
 
     // function gameAdvance() {
@@ -1045,6 +1095,8 @@ document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 document.getElementById("recall").addEventListener("click", returnToRack);
 document.getElementById("play").addEventListener("click", play);
 document.getElementById("checkdic").addEventListener("click", getWordToCheck);
+document.getElementById("exchange").addEventListener("click", exchangeLetters);
+document.getElementById("pass").addEventListener("click", pass);
 
 //call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
 let myform = document.getElementById("submittedWord");
@@ -1067,6 +1119,7 @@ replenishRack();
 - 
 - 
 - exchanging tiles
+- makee a button for two-letter words
 - returnToBag function which first uses recall and then sends each tile from rack back to bag
 - initial data page
 - ending of the game
