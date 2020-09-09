@@ -11,13 +11,14 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<!-- <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'> -->
 		<link rel="stylesheet" href="style.css">
+
 	</head>
 	<body>
 
 
 
 
-		<div class="container-fluid fit-to-screen" style="border: 1px solid white;">
+		<div class="container-fluid " style="border: 1px solid red;">
 
 		  
 		  <div class="row">
@@ -339,8 +340,8 @@
 								</thead>
 								<tbody>
 								<tr>
-									<td><span id="pl1 points">0</span></td>
-									<td><span id="pl2 points">0</span></td>
+									<td><span id="pl1-points">0</span></td>
+									<td><span id="pl2-points">0</span></td>
 								</tr>
 								</tbody>
 							</table>
@@ -394,118 +395,114 @@
 				  
 					
 		  </div>
-	<div class="row mt-2">
-			<div class="col-lg-8 col-md-8 col-sm-10 d-flex flex-row justify-content-center" style="border: 1px solid white; position:relative;" >
-				<img src="img/rack.png" class="img-fluid  rackimage" alt="rack" >
-				<div class="d-flex flex-row w-75 justify-content-center holder" id="rack">
-					
-					<div id="s1" class="slot"
-					 ondrop="onDrop(event);"
-					 ondragover="onDragOver(event);"
-					 ondragstart="onDragStart(event);">
-						<div class="tile-container ghost" 
-						draggable="true">
-							<img  src="img/tile.png" class="tile-on-board">
-							<div class="centered">Q</div>
-							<div class="bottom-right">10</div>
+			<div class="row mt-2">
+					<div class="col-lg-8 col-md-8 col-sm-10 d-flex flex-row justify-content-center" style="border: 1px solid white; position:relative;" >
+						<img src="img/rack.png" class="img-fluid  rackimage" alt="rack" >
+						<div class="d-flex flex-row w-75 justify-content-center holder" id="rack">
+							
+							<div id="s1" class="slot"
+							ondrop="onDrop(event);"
+							ondragover="onDragOver(event);"
+							ondragstart="onDragStart(event);">
+								<div class="tile-container ghost" 
+								draggable="true">
+									<img  src="img/tile.png" class="tile-on-board">
+									<div class="centered">Q</div>
+									<div class="bottom-right">10</div>
+								</div>
+							</div>
+
+							<div id="s2" class="slot"
+							ondragover="onDragOver(event);"
+							ondrop="onDrop(event);"	
+							ondragstart="onDragStart(event);"
+							>
+								<div class="tile-container ghost" 
+								draggable="true" >					
+									<img src="img/tile.png" class="tile-on-board">
+									<div class="centered">B</div>
+									<div class="bottom-right">1</div>
+								</div>
+							</div>
+
+							<div id="s3" class="slot"
+							ondragover="onDragOver(event);"
+							ondrop="onDrop(event);"	
+							ondragstart="onDragStart(event);"
+							>
+								<div class="tile-container ghost"
+								draggable="true" >
+									<img src="img/tile.png" class="tile-on-board">
+									<div class="centered">J</div>
+									<div class="bottom-right">8</div>
+								</div>
+							</div>
+
+
+							<div id="s4" class="slot"
+							ondragover="onDragOver(event);"
+							ondrop="onDrop(event);"	
+							ondragstart="onDragStart(event);"
+							>
+								<div class="tile-container ghost" 
+								draggable="true">
+									<img src="img/tile.png" class="tile-on-board">
+									<div class="centered">S</div>
+									<div class="bottom-right">2</div>
+								</div>
+							</div>
+
+							<div id="s5" class="slot"
+							ondragover="onDragOver(event);"
+							ondrop="onDrop(event);"	
+							ondragstart="onDragStart(event);"
+							>
+								<div class="tile-container ghost" 
+								draggable="true" >
+									<img src="img/tile.png" class="tile-on-board">
+									<div class="centered">D</div>
+									<div class="bottom-right">3</div>
+								</div>
+							</div>
+
+
+							<div id="s6" class="slot"
+							ondragover="onDragOver(event);"
+							ondrop="onDrop(event);"	
+							ondragstart="onDragStart(event);"
+							>
+								<div class="tile-container ghost" 
+								draggable="true">
+									<img src="img/tile.png" class="tile-on-board">
+									<div class="centered">V</div>
+									<div class="bottom-right">2</div>
+								</div>
+							</div>
+
+							<div id="s7" class="slot"
+							ondragover="onDragOver(event);"
+							ondrop="onDrop(event);"	
+							ondragstart="onDragStart(event);"
+							>
+								<div class="tile-container ghost" 
+								draggable="true">
+									<img src="img/tile.png" class="tile-on-board">
+									<div class="centered">P</div>
+									<div class="bottom-right">2</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
-
-					<div id="s2" class="slot"
-					ondragover="onDragOver(event);"
-					ondrop="onDrop(event);"	
-					ondragstart="onDragStart(event);"
-					>
-						<div class="tile-container ghost" 
-						draggable="true" >					
-							<img src="img/tile.png" class="tile-on-board">
-							<div class="centered">B</div>
-							<div class="bottom-right">1</div>
-						</div>
+				
+					<div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-center" style="border: 1px solid white;">
 					</div>
-
-					<div id="s3" class="slot"
-					ondragover="onDragOver(event);"
-					ondrop="onDrop(event);"	
-					ondragstart="onDragStart(event);"
-					>
-						<div class="tile-container ghost"
-						draggable="true" >
-							<img src="img/tile.png" class="tile-on-board">
-							<div class="centered">J</div>
-							<div class="bottom-right">8</div>
-						</div>
-					</div>
-
-
-					<div id="s4" class="slot"
-					ondragover="onDragOver(event);"
-					ondrop="onDrop(event);"	
-					ondragstart="onDragStart(event);"
-					>
-						<div class="tile-container ghost" 
-						draggable="true">
-							<img src="img/tile.png" class="tile-on-board">
-							<div class="centered">S</div>
-							<div class="bottom-right">2</div>
-						</div>
-					</div>
-
-					<div id="s5" class="slot"
-					ondragover="onDragOver(event);"
-					ondrop="onDrop(event);"	
-					ondragstart="onDragStart(event);"
-					>
-						<div class="tile-container ghost" 
-						draggable="true" >
-							<img src="img/tile.png" class="tile-on-board">
-							<div class="centered">D</div>
-							<div class="bottom-right">3</div>
-						</div>
-					</div>
-
-
-					<div id="s6" class="slot"
-					ondragover="onDragOver(event);"
-					ondrop="onDrop(event);"	
-					ondragstart="onDragStart(event);"
-					>
-						<div class="tile-container ghost" 
-						draggable="true">
-							<img src="img/tile.png" class="tile-on-board">
-							<div class="centered">V</div>
-							<div class="bottom-right">2</div>
-						</div>
-					</div>
-
-					<div id="s7" class="slot"
-					ondragover="onDragOver(event);"
-					ondrop="onDrop(event);"	
-					ondragstart="onDragStart(event);"
-					>
-						<div class="tile-container ghost" 
-						draggable="true">
-							<img src="img/tile.png" class="tile-on-board">
-							<div class="centered">P</div>
-							<div class="bottom-right">2</div>
-						</div>
-					</div>
-
-				  </div>
 			</div>
-			<div>
-
-			</div>
-			
-		    <div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-center" style="border: 1px solid white;">
-			</div>
-
-	</div>
 		</div>
-
-	<script src="dictformatted.js"></script>
-	<script src="dictionary.js"></script>
-	<script src="script.js"></script>
+		<script src="dictformatted.js"></script>
+		<script src="dictionary.js"></script>
+		<script src="script.js"></script>
 
 </body>
+
 </html>

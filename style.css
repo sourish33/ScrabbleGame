@@ -1,11 +1,20 @@
 
 * {
   box-sizing: border-box;
+  /* border: 1px solid red; */
 }
+
+.container-fluid {
+  margin-bottom: 0;
+}
+
+
 
 body {
   font-family: Arial;
   background: #f1f1f1;
+  border: 1px solid green;
+  padding: 0;
 }
 
 .grid-container {
@@ -205,6 +214,10 @@ body {
           to {
             transform: scale(1.2); 
           }
+  }
+
+  .not-there{
+    display: none;
   }
 
 

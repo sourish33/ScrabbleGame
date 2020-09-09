@@ -868,8 +868,8 @@ function displayScore() {
 // }
 
 function updateScoreBoard(){
-    document.getElementById("pl1 points").innerHTML = players[1].score;
-    document.getElementById("pl2 points").innerHTML = players[2].score;
+    document.getElementById("pl1-points").innerHTML = players[1].score;
+    document.getElementById("pl2-points").innerHTML = players[2].score;
     document.getElementById("pl1").innerHTML = players[1].name;
     document.getElementById("pl2").innerHTML = players[2].name;
 }
@@ -988,7 +988,7 @@ let player = {
        let rack= document.createElement("div");
        let slot;
        rack.id = this.rackname;
-       rack.classList.add("ghost");
+       rack.classList.add("not-there");
        for (let n=1;n<8;n++){
            slot = originalSlot.cloneNode(true);
            slot.id = pnum+"s"+n.toString();
