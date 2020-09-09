@@ -1137,9 +1137,8 @@ replenishRack();
 /*  
 - 
 - 
-- exchanging tiles
-- makee a button for two-letter words
-- returnToBag function which first uses recall and then sends each tile from rack back to bag
+- 
+- fix homepage bottom (scrolls down annoyingly)
 - initial data page
 - ending of the game
 - animations
