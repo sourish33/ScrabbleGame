@@ -410,7 +410,7 @@ function placeSpecificTileOnRack(space_id, pickedTile){
     tile.id = newid;
 }
 
-function exchangeTiles(slot1, slot2){
+function switchSpots(slot1, slot2){
     if (slot1===slot2) {return;}
     let origin = document.getElementById(slot1);
     let destination = document.getElementById(slot2);
@@ -433,7 +433,7 @@ function shuffle_rack(){
         let curLoc = oldOrder[i-1];
         let newLoc = newOrder[i-1];
         if (!isEmptyOnRack(curLoc) && !isEmptyOnRack(newLoc))
-            {exchangeTiles(curLoc,newLoc);}
+            {switchSpots(curLoc,newLoc);}
     }
 }
 
@@ -1012,9 +1012,16 @@ let player = {
         for (slot of slotlist){
             space_ids.push("s"+slot);
         }
+        //checking to see if space_ids is a subset of rack ids
+        let r=getRackIds("rack");
+        if (!space_ids.every(element => r.includes(element))){
+            console.log("rack slots to return from not a subset of slots of this rack")
+            return;}
+
         for (id of space_ids){
             returnToBag(id);
         }
+
         replenishRack();
     }
 
