@@ -1003,7 +1003,8 @@ let player = {
     function reissue (slotlist) {
         
         //add checks that slotlist is ok
-        returnToRack();
+        let onboard = getTilesPlayedNotSubmitted();
+        if (onboard.length!==0) {returnToRack();}
         if (!Array.isArray(slotlist)){
             console.log("reissue requires array")
             return;}
