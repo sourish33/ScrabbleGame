@@ -1117,6 +1117,8 @@ document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 document.getElementById("exchange").addEventListener("click", exchangeLetters);
 document.getElementById("pass").addEventListener("click", pass);
 
+
+
 //call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
 let myform = document.getElementById("submittedWord");
 myform.addEventListener('keypress',function(event){
