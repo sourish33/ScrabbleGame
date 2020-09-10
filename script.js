@@ -345,9 +345,9 @@ function placeTileOnRack(space_id){
     }
 
 
-    function findEmptyRackPosition(){//Find an empty position on the rack   
+    function findEmptyRackPosition(rack="rack"){//Find an empty position on the rack, default is "rack"  
         let emptySlot;
-        let rackSlots = getRackIds("rack");
+        let rackSlots = getRackIds(rack);
         for (slot of rackSlots) {
             if (isEmptyOnRack(slot)) { 
                 emptySlot=slot;
@@ -936,6 +936,13 @@ function neighbors(sq_id){//get the upper,lower,left and right neighbors of the 
     return neighbors;
 }
 
+function sendTileBackToRack(space_id){
+    let towhere = findEmptyRackPosition();
+    if (towhere!== null){ 
+        move(space_id, towhere);
+    }
+}
+
 function returnToRack() {
     let tiles = getTilesPlayedNotSubmitted();
     if (tiles.length > 7 || tiles.length<1) {
@@ -944,11 +951,9 @@ function returnToRack() {
     }
     
     for (tile of tiles){
-        let towhere = findEmptyRackPosition();
-        if (towhere!== null){ 
-            move(tile.id, towhere);
+        sendTileBackToRack(tile.id);
         }
-    }
+    
     document.getElementById("points").innerHTML = 0;  
 }
 
