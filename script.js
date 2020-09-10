@@ -1122,6 +1122,16 @@ document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 document.getElementById("exchange").addEventListener("click", exchangeLetters);
 document.getElementById("pass").addEventListener("click", pass);
 
+//double-click tile to return
+let sqrs = document.getElementsByClassName("grid-item");
+for (sqr of sqrs){
+    sqr.addEventListener("dblclick", function(){//if there is a tile sitting there, send it back to the rack, otherwise do nothing
+        if (this.children.length!==0){
+            sendTileBackToRack(this.id);
+        }
+    });
+}
+
 
 
 //call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
