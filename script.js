@@ -19,9 +19,14 @@ let boosters = {};
 
 let legalPositions = getlegalPositions();
 let moveNumber =1;
-let numPlayers = 2;
+// let player1Name = sessionStorage.getItem("player1Name");
+// let player2Name =sessionStorage.getItem("player2Name");
+// let numPlayers = 2;
 let dictionaryChecking = true;
 
+
+let playerNames = getPlayerNames();
+let numPlayers  = playerNames.length;
 
 
 
@@ -70,6 +75,17 @@ let tilesArray;
     }
 
 })();
+
+
+function getPlayerNames(){ 
+    let playerNames = []
+    for (let x of ["1","2","3","4"]){
+        let pvar = `player${x}Name`;
+        let theName = sessionStorage.getItem(pvar);
+        if (theName !== "_"){ playerNames.push(theName);}
+    }
+    return playerNames;
+}
 
 //These prevent spurious webpages from opening by dragging
 window.addEventListener("dragover",function(e){
@@ -1020,19 +1036,49 @@ let player = {
 
   };
 
-    let player1 = Object.create(player);
-    player1.name = "His T";
-    player1.number =1;
-    player1.makeRack();
-
-    let player2 = Object.create(player);
-    player2.name = "Her T";
-    player2.number =2;
-    player2.makeRack();
 
     let players = {};
+    let player1 = Object.create(player);
+    player1.name = playerNames[0];
+    player1.number =1;
+    player1.makeRack();
     players[1] = player1;
+
+    let player2 = Object.create(player);
+    player2.name = playerNames[1];
+    player2.number =2;
+    player2.makeRack();
     players[2] = player2;
+
+    
+    if (numPlayers ===3){
+
+        let player3 = Object.create(player);
+        player3.name = playerNames[2];
+        player3.number =3;
+        player3.makeRack();
+        players[3] = player3;
+
+    }
+
+    if (numPlayers ===4){
+
+        let player3 = Object.create(player);
+        player3.name = playerNames[2];
+        player3.number =3;
+        player3.makeRack();
+        players[3] = player3;
+
+        let player4 = Object.create(player);
+        player4.name = playerNames[3];
+        player4.number =4;
+        player4.makeRack();
+        players[4] = player4;
+
+    }
+
+    
+
 
     function whoseMove(moveNumber,numPlayers){
         let player = moveNumber%numPlayers;
