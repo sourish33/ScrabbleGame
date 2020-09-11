@@ -370,34 +370,6 @@ function placeTileOnRack(space_id){
         return emptySlot;
     }
 
-    // function populateBoard(n) {//Place n tiles on the board 
-
-    //     if (tilesArray.length ==0) {return;}
-    //     if (n>tilesArray.length) { n=tilesArray.length;}
-    //     let squares = document.getElementsByClassName("grid-item");
-    //     let filledSquares = document.getElementsByClassName("played-not-submitted");
-    //     let squaresArray = Object.values(squares);//collects all squares into an array
-    //     let filledSquaresArray = Object.values(filledSquares);//collects filled squares into an array
-    //     let unfilledSquares = shuffle(subtractArrays(squaresArray, filledSquaresArray));
-    //     let unfilledSquareIDs =[];
-    //     for (square of unfilledSquares){
-    //         unfilledSquareIDs.push(square.id);
-    //         }
-    //     //Find an empty position on the rack, place picked tiles there and then move the tiles from there on to the board 
-
-    //     let unfilledPos = findEmptyRackPosition();
-        
-    //     if (unfilledPos== null) {
-    //         console.log("No position available on rack");
-    //         return;
-    //     }
-    //     for (let i=0;i<n;i++){
-    //         placeTileOnRack(unfilledPos);
-    //         move(unfilledPos,unfilledSquareIDs.pop());
-    //     }
-    // }
-
-
 
 function pickRandomTile() {
     if (tilesArray.length ==0) {return;}
@@ -881,10 +853,23 @@ function displayScore() {
 // }
 
 function updateScoreBoard(){
-    document.getElementById("pl1-points").innerHTML = players[1].score;
-    document.getElementById("pl2-points").innerHTML = players[2].score;
     document.getElementById("pl1").innerHTML = players[1].name;
+    document.getElementById("pl1-points").innerHTML = players[1].score;
+    
+    document.getElementById("pl2-points").innerHTML = players[2].score;
     document.getElementById("pl2").innerHTML = players[2].name;
+
+    if (numPlayers===3){
+        document.getElementById("pl3-points").innerHTML = players[3].score;
+        document.getElementById("pl3").innerHTML = players[3].name;
+    }
+    if (numPlayers===4){
+        document.getElementById("pl3-points").innerHTML = players[3].score;
+        document.getElementById("pl3").innerHTML = players[3].name;
+
+        document.getElementById("pl4-points").innerHTML = players[4].score;
+        document.getElementById("pl4").innerHTML = players[4].name;
+    }
 }
 
 function score(){//find the scores of all the words in the list
@@ -1034,7 +1019,7 @@ let player = {
   };
 
 function createPlayers(){
-
+    let row;
     let player1 = Object.create(player);
     player1.name = playerNames[0];
     player1.number =1;
@@ -1055,6 +1040,8 @@ function createPlayers(){
         player3.number =3;
         player3.makeRack();
         players[3] = player3;
+        row=document.getElementById("3rdrow");
+        row.classList.remove("not-there");
 
     }
 
@@ -1065,12 +1052,16 @@ function createPlayers(){
         player3.number =3;
         player3.makeRack();
         players[3] = player3;
+        row=document.getElementById("3rdrow");
+        row.classList.remove("not-there");
 
         let player4 = Object.create(player);
         player4.name = playerNames[3];
         player4.number =4;
         player4.makeRack();
         players[4] = player4;
+        row=document.getElementById("4throw");
+        row.classList.remove("not-there");
     }
 }
 
