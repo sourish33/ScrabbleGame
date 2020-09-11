@@ -2,8 +2,6 @@
 
 let boosters = {};
 (boosters = function fillBoosters() {
-    // let rows = ["a", "b", "c", "d","e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"];
-    // let cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"];
     let rows = generateRows();
     let cols = generateCols();
     for (let row of rows){
@@ -23,10 +21,9 @@ let moveNumber =1;
 // let player2Name =sessionStorage.getItem("player2Name");
 // let numPlayers = 2;
 let dictionaryChecking = true;
-
-
 let playerNames = getPlayerNames();
 let numPlayers  = playerNames.length;
+let players = {};
 
 
 
@@ -1036,8 +1033,8 @@ let player = {
 
   };
 
+function createPlayers(){
 
-    let players = {};
     let player1 = Object.create(player);
     player1.name = playerNames[0];
     player1.number =1;
@@ -1074,8 +1071,8 @@ let player = {
         player4.number =4;
         player4.makeRack();
         players[4] = player4;
-
     }
+}
 
     
 
@@ -1189,7 +1186,7 @@ myform.addEventListener('keypress',function(event){
     }
 });
 
-
+createPlayers();
 updateScoreBoard();
 who= whoseMove(moveNumber,numPlayers);
 document.getElementById("who-is-playing").innerHTML=players[who].name;

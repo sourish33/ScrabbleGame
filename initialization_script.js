@@ -49,7 +49,8 @@ function getInitialData() {
     document.getElementById("player3").value ="";
     document.getElementById("player4").value ="";
 
-    window.open('index.html', '_self')
+    // window.open('index.html', '_self')
+    window.open('index.html')
 }
 
 
