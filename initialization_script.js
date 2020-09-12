@@ -20,6 +20,19 @@ function addPlayer(){
     }
 }
 
+function getRadioValue(name){
+        let ele = document.getElementsByName(name); 
+
+        let selected ="";
+        for(let i = 0; i < ele.length; i++) { 
+            if(ele[i].checked) {
+                selected= ele[i].value;}
+ 
+        } 
+    
+        return selected;
+}
+
 
 
 function getInitialData() {
@@ -31,23 +44,39 @@ function getInitialData() {
     let thePlayers = [p1,p2,p3,p4]
     let nonzeros = thePlayers.filter(function(e){ return e === 0 || e });
     if (nonzeros.length <2){return;}
-    let playernum=1;
+    
+    let playernum =1;
     for (player of thePlayers){
+        
         let pvar = `player${playernum}Name`;
 
         if (player!==""){
             sessionStorage.setItem(pvar, player);
-            console.log(`Just stored ${sessionStorage.getItem(pvar)}`);
+            // console.log(`Just stored ${sessionStorage.getItem(pvar)}`);
         } else {
             sessionStorage.setItem(pvar, "_");
-            console.log(`Just stored ${sessionStorage.getItem(pvar)}`);
+            // console.log(`Just stored ${sessionStorage.getItem(pvar)}`);
         }
         playernum++;
+
     }
+
+    //Radio Buttons
+    // let randPlayers = getRadioValue("randPlayers");
+    // let dictCheck = getRadioValue("dictCheck");
+    // let gameType = getRadioValue("gameType");
+
+    sessionStorage.setItem("randomize", getRadioValue("randPlayers"));
+    sessionStorage.setItem("dictionary", getRadioValue("dictCheck"));
+    sessionStorage.setItem("gameend", getRadioValue("gameType"));
+
+
+
     document.getElementById("player1").value ="";
     document.getElementById("player2").value ="";
     document.getElementById("player3").value ="";
     document.getElementById("player4").value ="";
+
 
     // window.open('index.html', '_self')
     window.open('index.html')

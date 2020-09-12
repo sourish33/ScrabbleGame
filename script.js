@@ -20,11 +20,15 @@ let moveNumber =1;
 // let player1Name = sessionStorage.getItem("player1Name");
 // let player2Name =sessionStorage.getItem("player2Name");
 // let numPlayers = 2;
-let dictionaryChecking = true;
+let settings = getSettings();
+let dictionaryChecking = settings[0];
+let randomize = settings[1];
+let endgame = settings[2];
+
 let playerNames = getPlayerNames();
 let numPlayers  = playerNames.length;
+if (randomize) {playerNames= shuffle(playerNames);}
 let players = {};
-
 
 
 
@@ -72,6 +76,17 @@ let tilesArray;
     }
 
 })();
+
+function getSettings(){
+    let d = sessionStorage.getItem("dictionary");
+    let dictcheck = (d === "1" ? true : false);
+
+    let r = sessionStorage.getItem("randomize");
+    let toRandomize = (r === "1" ? true : false);
+
+    let end = sessionStorage.getItem("gameend");
+    return ([dictcheck, toRandomize,end]);
+}
 
 
 function getPlayerNames(){ 
@@ -139,7 +154,7 @@ function subtractArrays(arr1,arr2){
     for(let i = L; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
         const temp = sarr[i];
-        sarr[i] = arr[j];
+        sarr[i] = sarr[j];
         sarr[j] = temp;
     }
     return sarr;
@@ -935,6 +950,9 @@ function neighbors(sq_id){//get the upper,lower,left and right neighbors of the 
 }
 
 function sendTileBackToRack(space_id){
+    //ignore empty squares and submitted tiles
+    if (isEmptyOnBoard(space_id)) {return;}
+    if (!document.getElementById(space_id).classList.contains("played-not-submitted")){return;}
     let towhere = findEmptyRackPosition();
     if (towhere!== null){ 
         move(space_id, towhere);
