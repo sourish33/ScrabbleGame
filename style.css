@@ -199,6 +199,12 @@ body {
     color: green;
   }
 
+  .victory {
+    border: 2px solid blue; 
+    background-color: #107896;
+    color: white;
+  }
+
 
   #points {
     /* font-size: 1.5em; */

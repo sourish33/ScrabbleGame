@@ -29,6 +29,10 @@ let playerNames = getPlayerNames();
 let numPlayers  = playerNames.length;
 if (randomize) {playerNames= shuffle(playerNames);}
 let players = {};
+let maxPoints =50000000;
+if (endgame=="75pt") {maxPoints =75;}
+if (endgame=="150pt") {maxPoints =150;}
+
 
 
 
@@ -724,6 +728,33 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
     }
 
 
+function getTopper(){
+    let currScores = [];
+    for (player of Object.values(players)){
+        currScores.push(player.score);
+    }
+    let maxscore = Math.max(...currScores);
+    let maxscorer;
+
+    for (player of Object.values(players)){
+        if (player.score === maxscore) {
+            maxscorer = player.name;
+        } 
+    }
+    return [maxscorer, maxscore]
+}
+
+function endCheck(){
+
+    let maxscore = getTopper()[1];
+    if (maxscore>=maxPoints) {return 1;}
+
+    if (tilesArray.length===0) {return 2;}
+
+    return 0;
+}
+
+
 
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
@@ -757,21 +788,43 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.classList.add("unselectable");
     }
 
-    //clear the search results
-    let searchresult = document.getElementsByClassName("searchresult")[0];
-    searchresult.innerHTML ="";
-    //advance the movenumber
-    moveNumber++;
-    who= whoseMove(moveNumber,numPlayers);
-    alert(`Please pass to ${players[who].name}`);
-    document.getElementById("who-is-playing").innerHTML=players[who].name;
-    players[who].returnPieces();
-    replenishRack();
-    //reset the possible points 
-    document.getElementById("points").innerHTML = 0;
-    //update the list of legal positions
-    legalPositions = getlegalPositions();
+    //is the game over?
+    let gameCheck = endCheck();
 
+    if (gameCheck===0)
+    {
+        //clear the search results
+        let searchresult = document.getElementsByClassName("searchresult")[0];
+        searchresult.innerHTML ="";
+        //advance the movenumber
+        moveNumber++;
+        who= whoseMove(moveNumber,numPlayers);
+        alert(`Please pass to ${players[who].name}`);
+        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        players[who].returnPieces();
+        replenishRack();
+        //reset the possible points 
+        document.getElementById("points").innerHTML = 0;
+        //update the list of legal positions
+        legalPositions = getlegalPositions();
+    }
+    else {
+        endGameSequence(gameCheck);
+    }
+
+}
+
+function endGameSequence(n) {
+    if (n===1 || n===2){
+        winner =getTopper()[0];
+        let m = document.getElementById("messagebox");
+        m.classList.remove("not-there");
+        document.getElementById("winner").innerHTML=winner;
+        document.getElementById("play").classList.add("not-there");
+        document.getElementById("2lw-list").classList.add("not-there");
+        document.getElementById("submittedWord").classList.add("not-there");
+        document.getElementById("newgame").classList.remove("not-there");
+    }
 }
 
 
@@ -956,6 +1009,7 @@ function sendTileBackToRack(space_id){
     let towhere = findEmptyRackPosition();
     if (towhere!== null){ 
         move(space_id, towhere);
+        displayScore();
     }
 }
 
@@ -1198,6 +1252,7 @@ myform.addEventListener('keypress',function(event){
 createPlayers();
 updateScoreBoard();
 who= whoseMove(moveNumber,numPlayers);
+alert(`Please pass to ${players[who].name}`);
 document.getElementById("who-is-playing").innerHTML=players[who].name;
 replenishRack();
 
