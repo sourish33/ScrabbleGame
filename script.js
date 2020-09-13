@@ -315,9 +315,10 @@ function move(fromWhere, toWhere) {
             {
                 destination.removeChild(tileAlreadyThere);	
             }
-        if (fromWhere[0]==="s" && toWhere[0]==="s")
+        else if (fromWhere[0]==="s" && toWhere[0]==="s")
         {
             console.log(`moving from ${fromWhere} to ${toWhere}`);
+
             return;
         }
     }
