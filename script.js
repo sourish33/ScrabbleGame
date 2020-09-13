@@ -132,8 +132,20 @@ function onDrop(event) {
     let u = document.getElementById(incoming);
     if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
     origin = u.parentElement.id;
+    if (origin==="" || destination==="") {return;}
     move(origin,destination);
     displayScore();
+    // event.dataTransfer.clearData();
+}
+
+function onDropRackTile(event) {
+    let incoming = event.dataTransfer.getData('text');
+    let destination = event.target.parentElement.parentElement.id;
+    let u = document.getElementById(incoming);
+    if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
+    origin = u.parentElement.id;
+    move(origin,destination);
+    
     // event.dataTransfer.clearData();
 }
 
@@ -348,6 +360,7 @@ function fixSizesOfTiles(){
     for (slot of rackslots){
         slot.children[0].children[1].classList.add("centered-on-rack");
         slot.children[0].children[2].classList.add("bottom-right-on-rack");
+        slot.children[0].setAttribute("ondrop", "onDropRackTile(event)");
 
         slot.children[0].children[1].classList.remove("centered");
         slot.children[0].children[2].classList.remove("bottom-right");
@@ -357,6 +370,7 @@ function fixSizesOfTiles(){
     for (tile of tilesOnBoard){
         tile.children[0].children[1].classList.remove("centered-on-rack");
         tile.children[0].children[2].classList.remove("bottom-right-on-rack");
+        tile.children[0].removeAttribute("ondrop");
 
         tile.children[0].children[1].classList.add("centered");
         tile.children[0].children[2].classList.add("bottom-right");
