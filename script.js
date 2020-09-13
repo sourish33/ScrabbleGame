@@ -517,6 +517,7 @@ function pickSpecificTile(n) {
 function placeSpecificTileOnRack(space_id, pickedTile){
     //pick a tile from the bag and put it on the rack
     if (tilesArray.length==0) {return;}
+    if (!checkNameOfLocation(space_id)) {return;}
     space = document.getElementById(space_id);
     tile = getTheTile(space);
     if (!tile.classList.contains("ghost")) {return;}//Not putting a tile there if one already exists
@@ -1114,6 +1115,7 @@ function neighbors(sq_id){//get the upper,lower,left and right neighbors of the 
 
 function sendTileBackToRack(space_id){
     //ignore empty squares and submitted tiles
+    if (!checkNameOfLocation(space_id)) {return;}
     if (isEmptyOnBoard(space_id)) {return;}
     if (!document.getElementById(space_id).classList.contains("played-not-submitted")){return;}
     let towhere = findEmptyRackPosition();
@@ -1258,6 +1260,7 @@ function createPlayers(){
     }
     
     function returnToBag (space_id){
+        if (!checkNameOfLocation(space_id)) {return;}//ignore invalid locations
         if (!includes("s", space_id)){return;}//only works for tiles on rack
         if (isEmptyOnRack(space_id)){return;}//empty slot
 
@@ -1316,6 +1319,14 @@ function createPlayers(){
 
     }
 
+
+    function  setBoardSize(n) {
+        intViewportHeight = window.innerHeight;
+        u=document.getElementsByClassName("grid-container")[0];
+        u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
+        u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
+    }
+
     // function gameAdvance() {
     //     let who= whoseMove(moveNumber,numPlayers);
     //     players[who].addPoints(score());
@@ -1358,7 +1369,7 @@ myform.addEventListener('keypress',function(event){
         getWordToCheck();
     }
 });
-
+setBoardSize(85);
 createPlayers();
 updateScoreBoard();
 who= whoseMove(moveNumber,numPlayers);
