@@ -1320,8 +1320,8 @@ function createPlayers(){
     }
 
 
-    function  setBoardSize(n) {
-        intViewportHeight = window.innerHeight;
+    function  setBoardSize(n=80) {
+        let intViewportHeight = window.innerHeight;
         u=document.getElementsByClassName("grid-container")[0];
         u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
         u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
@@ -1348,6 +1348,7 @@ document.getElementById("play").addEventListener("click", play);
 document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 document.getElementById("exchange").addEventListener("click", exchangeLetters);
 document.getElementById("pass").addEventListener("click", pass);
+window.addEventListener("resize", setBoardSize);
 
 //double-click tile to return
 let sqrs = document.getElementsByClassName("grid-item");
