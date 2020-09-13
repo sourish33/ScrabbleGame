@@ -318,12 +318,24 @@ function move(fromWhere, toWhere) {
         else if (fromWhere[0]==="s" && toWhere[0]==="s")//mmoving tiles around on the rack, making tiles shift  to create space for the incoming tile
         {
             // console.log(`moving from ${fromWhere} to ${toWhere}`);
-            let ni=Math.min(...[fromWhere[1],toWhere[1]]);
-            let nf=Math.max(...[fromWhere[1],toWhere[1]]);
-            for(let c=ni;c<nf;c++){
-                let a = `s${c}`;
-                let b = `s${c+1}`;
-                switchSpots(a,b);
+            // let ni=Math.min(...[fromWhere[1],toWhere[1]]);
+            // let nf=Math.max(...[fromWhere[1],toWhere[1]]);
+            let ni = parseInt(fromWhere[1]);
+            let nf = parseInt(toWhere[1]);
+            if (ni<nf) {
+                    for(let c=ni;c<nf;c++){
+                        let a = `s${c}`;
+                        let b = `s${c+1}`;
+                        console.log(`s${c}<->s${c+1}`);
+                        switchSpots(a,b);
+                    }
+            } else if (ni>nf){
+                    for(let c=ni;c>nf;c--){
+                        let a = `s${c}`;
+                        let b = `s${c-1}`;
+                        console.log(`s${c}<->s${c-1}`);
+                        switchSpots(a,b);
+                    }
             }
 
             return;
