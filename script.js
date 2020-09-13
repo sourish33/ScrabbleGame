@@ -1320,7 +1320,7 @@ function createPlayers(){
     }
 
 
-    function  setBoardSize(n=80) {
+    function  setBoardSize(n=85) {
         let intViewportHeight = window.innerHeight;
         u=document.getElementsByClassName("grid-container")[0];
         u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
