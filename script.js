@@ -333,6 +333,32 @@ function move(fromWhere, toWhere) {
         origin.classList.remove("played-not-submitted")
 
     }
+    fixSizesOfTiles();
+
+}
+
+
+
+function fixSizesOfTiles(){
+    let rack = document.getElementById("rack");
+    let rackslots = rack.children;
+    
+    for (slot of rackslots){
+        slot.children[0].children[1].classList.add("centered-on-rack");
+        slot.children[0].children[2].classList.add("bottom-right-on-rack");
+
+        slot.children[0].children[1].classList.remove("centered");
+        slot.children[0].children[2].classList.remove("bottom-right");
+    }
+
+    let tilesOnBoard = getTilesPlayedNotSubmitted();
+    for (tile of tilesOnBoard){
+        tile.children[0].children[1].classList.remove("centered-on-rack");
+        tile.children[0].children[2].classList.remove("bottom-right-on-rack");
+
+        tile.children[0].children[1].classList.add("centered");
+        tile.children[0].children[2].classList.add("bottom-right");
+    }
 
 }
 
@@ -349,6 +375,7 @@ function placeTileOnRack(space_id){
     tile.children[2].innerHTML = picked[1];
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
     tile.id = newid;
+    fixSizesOfTiles();
 }
 
 
