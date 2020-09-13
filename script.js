@@ -141,6 +141,8 @@ function onDrop(event) {
 function onDropRackTile(event) {
     let incoming = event.dataTransfer.getData('text');
     let destination = event.target.parentElement.parentElement.id;
+    if (destination==="rack") {return;} 
+    console.log(destination);
     let u = document.getElementById(incoming);
     if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
     origin = u.parentElement.id;
@@ -237,6 +239,10 @@ function includes(strToCheck, word) {
 }
 
 function isEmptyOnBoard(space_id){
+    if  (document.getElementById(space_id)==null){
+        console.log(`Bad space_id ${space_id} send to isEmptyOnBoard`);
+        return false;
+    }
     let u = document.getElementById(space_id).children;
     return (u.length ===0 ? true : false) 
 }
@@ -277,9 +283,40 @@ function isNumeric(value) {
     return /^\d+$/.test(value);
 }
 
+function moveOnRack(fromWhere, toWhere){
+    console.log(`moving from ${fromWhere} to ${toWhere}`);
+
+    let ni = parseInt(fromWhere[1]);
+    let nf = parseInt(toWhere[1]);
+    if (ni<nf) {
+            for(let c=ni;c<nf;c++){
+                let a = `s${c}`;
+                let b = `s${c+1}`;
+                console.log(`s${c}<->s${c+1}`);
+                switchSpots(a,b);
+            }
+    } else if (ni>nf){
+            for(let c=ni;c>nf;c--){
+                let a = `s${c}`;
+                let b = `s${c-1}`;
+                console.log(`s${c}<->s${c-1}`);
+                switchSpots(a,b);
+            }
+    }
+
+    return;
+}
+
 
 
 function move(fromWhere, toWhere) {
+
+    if (fromWhere==="rack" || toWhere ==="rack") {return;}
+    if (fromWhere === toWhere) {return;}
+    if (fromWhere[0]==="s" && toWhere[0]==="s") {//mmoving tiles around on the rack, making tiles shift  to create space for the incoming tile
+        moveOnRack(fromWhere, toWhere);
+        return;
+    }
 
     let fromRack = includes("s", fromWhere);
     let toRack = includes("s", toWhere);
@@ -315,31 +352,7 @@ function move(fromWhere, toWhere) {
             {
                 destination.removeChild(tileAlreadyThere);	
             }
-        else if (fromWhere[0]==="s" && toWhere[0]==="s")//mmoving tiles around on the rack, making tiles shift  to create space for the incoming tile
-        {
-            // console.log(`moving from ${fromWhere} to ${toWhere}`);
-            // let ni=Math.min(...[fromWhere[1],toWhere[1]]);
-            // let nf=Math.max(...[fromWhere[1],toWhere[1]]);
-            let ni = parseInt(fromWhere[1]);
-            let nf = parseInt(toWhere[1]);
-            if (ni<nf) {
-                    for(let c=ni;c<nf;c++){
-                        let a = `s${c}`;
-                        let b = `s${c+1}`;
-                        console.log(`s${c}<->s${c+1}`);
-                        switchSpots(a,b);
-                    }
-            } else if (ni>nf){
-                    for(let c=ni;c>nf;c--){
-                        let a = `s${c}`;
-                        let b = `s${c-1}`;
-                        console.log(`s${c}<->s${c-1}`);
-                        switchSpots(a,b);
-                    }
-            }
-
-            return;
-        }
+    
     }
     destination.innerHTML = "";
     destination.appendChild(tile);
@@ -376,8 +389,11 @@ function move(fromWhere, toWhere) {
 function fixSizesAttribs(){
     let rack = document.getElementById("rack");
     let rackslots = rack.children;
+    if (rackslots.length===0) {return;}
     
     for (slot of rackslots){
+        if (slot.children.length ===0) {break;}
+        if (slot.children[0].children[1]==null) {break;}
         slot.children[0].children[1].classList.add("centered-on-rack");
         slot.children[0].children[2].classList.add("bottom-right-on-rack");
         slot.children[0].setAttribute("ondrop", "onDropRackTile(event)");
@@ -387,6 +403,7 @@ function fixSizesAttribs(){
     }
 
     let tilesOnBoard = getTilesPlayedNotSubmitted();
+    if (tilesOnBoard.length===0) {return;}
     for (tile of tilesOnBoard){
         tile.children[0].children[1].classList.remove("centered-on-rack");
         tile.children[0].children[2].classList.remove("bottom-right-on-rack");
