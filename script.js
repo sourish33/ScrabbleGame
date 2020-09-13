@@ -315,9 +315,16 @@ function move(fromWhere, toWhere) {
             {
                 destination.removeChild(tileAlreadyThere);	
             }
-        else if (fromWhere[0]==="s" && toWhere[0]==="s")
+        else if (fromWhere[0]==="s" && toWhere[0]==="s")//mmoving tiles around on the rack, making tiles shift  to create space for the incoming tile
         {
-            console.log(`moving from ${fromWhere} to ${toWhere}`);
+            // console.log(`moving from ${fromWhere} to ${toWhere}`);
+            let ni=Math.min(...[fromWhere[1],toWhere[1]]);
+            let nf=Math.max(...[fromWhere[1],toWhere[1]]);
+            for(let c=ni;c<nf;c++){
+                let a = `s${c}`;
+                let b = `s${c+1}`;
+                switchSpots(a,b);
+            }
 
             return;
         }
@@ -348,13 +355,13 @@ function move(fromWhere, toWhere) {
         origin.classList.remove("played-not-submitted")
 
     }
-    fixSizesOfTiles();
+    fixSizesAttribs();
 
 }
 
 
 
-function fixSizesOfTiles(){
+function fixSizesAttribs(){
     let rack = document.getElementById("rack");
     let rackslots = rack.children;
     
@@ -392,7 +399,7 @@ function placeTileOnRack(space_id){
     tile.children[2].innerHTML = picked[1];
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
     tile.id = newid;
-    fixSizesOfTiles();
+    fixSizesAttribs();
 }
 
 
