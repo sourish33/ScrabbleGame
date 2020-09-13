@@ -303,9 +303,11 @@ function move(fromWhere, toWhere) {
             {
                 destination.removeChild(tileAlreadyThere);	
             }
-        else {
+        if (fromWhere[0]==="s" && toWhere[0]==="s")
+        {
+            console.log(`moving from ${fromWhere} to ${toWhere}`);
             return;
-            }
+        }
     }
     destination.innerHTML = "";
     destination.appendChild(tile);
