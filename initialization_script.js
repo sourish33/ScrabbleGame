@@ -43,7 +43,10 @@ function getInitialData() {
     let p4= document.getElementById("player4").value;
     let thePlayers = [p1,p2,p3,p4]
     let nonzeros = thePlayers.filter(function(e){ return e === 0 || e });
-    if (nonzeros.length <2){return;}
+    if (nonzeros.length <2){
+        alert("At least two player names are required.")
+        return;
+    }
     
     let playernum =1;
     for (player of thePlayers){
@@ -78,8 +81,8 @@ function getInitialData() {
     document.getElementById("player4").value ="";
 
 
-    window.open('game.html', '_self')
-    // window.open('game.html')
+    // window.open('game.html', '_self')
+    window.open('game.html')
 }
 
 

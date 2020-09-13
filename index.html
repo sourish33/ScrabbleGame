@@ -17,35 +17,35 @@
 
         <div class="jumbotron">
             <h1 class="display-3">Scrabble</h1>
-            <p class="lead">A multiplayer scrabble game implementation.</p>
+            <p class="lead">A pass-and-play scrabble game implementation.</p>
           </div>
 
 
     <div class="container">
         <div class="row">
 
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <form>
                 <div class="form-group row" >
-                  <label for="player1" class="col-sm-3 col-form-label">Player 1</label>
+                  <label for="player1" class="col-sm-5 col-form-label">Player 1</label>
                   <div class="col-sm-4">
                     <input type="text" class="form-control"  id="player1" placeholder="Player 1 name">
                   </div>
                 </div>
                 <div class="form-group row">
-                    <label for="player2" class="col-sm-3 col-form-label">Player 2</label>
+                    <label for="player2" class="col-sm-5 col-form-label">Player 2</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control"  id="player2" placeholder="Player 2 name">
                     </div>
                   </div>
                   <div class="form-group row not-there" id="3rdplayer">
-                    <label for="player3" class="col-sm-3 col-form-label">Player 3</label>
+                    <label for="player3" class="col-sm-5 col-form-label">Player 3</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control"  id="player3" placeholder="Player 3 name">
                     </div>
                   </div>
                   <div class="form-group row not-there" id="4thplayer" >
-                    <label for="player4" class="col-sm-3 col-form-label">Player 4</label>
+                    <label for="player4" class="col-sm-5 col-form-label">Player 4</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control"  id="player4" placeholder="Player 4 name">
                     </div>
@@ -58,7 +58,7 @@
                 
                     <fieldset class="form-group">
                     <div class="row">
-                        <legend class="col-form-label col-sm-3 pt-0">Randomize player order</legend>
+                        <legend class="col-form-label col-sm-5 pt-0">Randomize player order</legend>
                         <div class="col-sm-4">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="randPlayers" id="rpY" value="1" checked>
@@ -80,7 +80,7 @@
             
                     <fieldset class="form-group">
                         <div class="row">
-                        <legend class="col-form-label col-sm-3 pt-0">Dictionary checking</legend>
+                        <legend class="col-form-label col-sm-5 pt-0">Dictionary checking</legend>
                         <div class="col-sm-4">
                             <div class="form-check">
                             <input class="form-check-input" type="radio" name="dictCheck" id="dcY" value="1" checked>
@@ -101,7 +101,7 @@
 
                   <fieldset class="form-group">
                     <div class="row">
-                      <legend class="col-form-label col-sm-3 pt-0">Game type</legend>
+                      <legend class="col-form-label col-sm-5 pt-0">Game type</legend>
                       <div class="col-sm-4">
                         <div class="form-check">
                           <input class="form-check-input" type="radio" name="gameType" id="gt75" value="75pt" checked>
@@ -128,10 +128,29 @@
 
                 <div class="form-group row">
                   <div class="col-sm-5">
-                    <button type="button" class="btn btn-primary" id="playbutton" >Play</button>
+                    <button type="button" class="btn btn-primary" id="playbutton" >Start Game</button>
                   </div>
                 </div>
               </form>
+              
+          </div>
+          <div class="col sm-6" style="border: 1px solid blue">
+            <h2>Instructions</h2>
+            <ul>
+              <li>Enter Player Names (at least two required), choose whether to randomize play order, and decide type of game.</li>
+              <li>If dictionary checking is on, each submitted word will be checked against the scrabble dictionary  </li>
+           </ul>
+           <h3>Once game starts</h3>
+           <ul>
+            <li>Move tiles around by dragging and dropping.</li>
+            <li>The Shuffle button shuffles the tiles on the rack.</li>
+            <li>The Exchange button allows you to exchange some/all of your tiles (this costs you your turn).</li>
+            <li>The Recall button brings back all tiles on the board to the rack</li>
+            <li>Double-clicking a tile will bring it back to the rack</li>
+            <li>The Play button submits your tiles.</li>
+            <li>A list of two-letter words and a dictionary interface are provided for convenience.</li>
+         </ul>
+                  
           </div>
 
         </div>
