@@ -1320,11 +1320,13 @@ function createPlayers(){
     }
 
 
-    function  setBoardSize(n=85) {
+    function  setBoardSize() {
+        let n=85;
         let intViewportHeight = window.innerHeight;
         u=document.getElementsByClassName("grid-container")[0];
         u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
         u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
+        console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
     }
 
     // function gameAdvance() {
