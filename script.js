@@ -285,6 +285,17 @@ function isNumeric(value) {
 
 function moveOnRack(fromWhere, toWhere){
     console.log(`moving from ${fromWhere} to ${toWhere}`);
+    let origin = document.getElementById(fromWhere);
+    let destination = document.getElementById(toWhere);
+    let tile = getTheTile(origin);
+    let tileAlreadyThere = getTheTile(destination);
+    if(tile.classList.contains("ghost")){return;}//leave ghost tiles alone
+    if(destination.classList.contains("ghost")){
+        console.log("Handling move to ghost tile")
+        destination.removeChild(tileAlreadyThere);
+        destination.appendChild(tile);
+        origin.removeChild(tile);
+    }
 
     let ni = parseInt(fromWhere[1]);
     let nf = parseInt(toWhere[1]);
@@ -307,14 +318,33 @@ function moveOnRack(fromWhere, toWhere){
     return;
 }
 
+function checkNameOfLocation(loc) {
+    let validOnScreenName = (/^([a-z]\d+)$/.test(loc));
+    let validOffScreenName = (/^(\d+[a-z]\d+)$/.test(loc));
+    if (!validOffScreenName && !validOnScreenName) {
+        console.log(`${loc} is bad location for a move`)
+    }
+    return ((validOnScreenName || validOffScreenName) ? true : false);
+}
+
 
 
 function move(fromWhere, toWhere) {
 
     if (fromWhere==="rack" || toWhere ==="rack") {return;}
+    if (!checkNameOfLocation(fromWhere) || !checkNameOfLocation(toWhere)) {return;}
+
     if (fromWhere === toWhere) {return;}
+    let origin = document.getElementById(fromWhere);
+    let destination = document.getElementById(toWhere);
+    if (origin==null || destination==null) {return;}
+    let tile = getTheTile(origin);
+    let tileAlreadyThere = getTheTile(destination);
+    if(tile.classList.contains("ghost")){return;}//leave ghost tiles alone
+    
+
     if (fromWhere[0]==="s" && toWhere[0]==="s") {//mmoving tiles around on the rack, making tiles shift  to create space for the incoming tile
-        moveOnRack(fromWhere, toWhere);
+             moveOnRack(fromWhere, toWhere);
         return;
     }
 
@@ -324,11 +354,8 @@ function move(fromWhere, toWhere) {
     let toBoard = !includes("s", toWhere);
 
 
-    let origin = document.getElementById(fromWhere);
-    let destination = document.getElementById(toWhere);
-    if (origin===destination){return;}
-    if (origin==null || destination==null) {return;}
-    let tile = getTheTile(origin);
+
+
 
     let blankTile = false;
     if (tile.children[2].innerHTML==="0"){ blankTile=true;}
@@ -344,7 +371,7 @@ function move(fromWhere, toWhere) {
 
     }
 
-    let tileAlreadyThere = getTheTile(destination);
+    
 
     if (tileAlreadyThere != null) { 
         if (tileAlreadyThere.classList.contains("ghost"))
@@ -417,6 +444,7 @@ function fixSizesAttribs(){
 
 function placeTileOnRack(space_id){
     //pick a tile from the bag and put it on the rack
+    if (!checkNameOfLocation(space_id)) {return;}
     if (tilesArray.length==0) {return;}
     space = document.getElementById(space_id);
     tile = getTheTile(space);
@@ -443,6 +471,7 @@ function placeTileOnRack(space_id){
     }
 
     function isEmptyOnRack(space_id){
+        if (!checkNameOfLocation(space_id)) {return;}
         let space = document.getElementById(space_id);
         let tile = getTheTile(space);
         return tile.classList.contains("ghost") ? true : false;
