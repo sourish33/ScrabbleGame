@@ -81,8 +81,8 @@ function getInitialData() {
     document.getElementById("player4").value ="";
 
 
-    // window.open('game.html', '_self')
-    window.open('game.html')
+    window.open('game.html', '_self')
+    // window.open('game.html')
 }
 
 

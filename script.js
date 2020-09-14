@@ -933,7 +933,6 @@ function endGameSequence(n) {
         document.getElementById("play").classList.add("not-there");
         document.getElementById("2lw-list").classList.add("not-there");
         document.getElementById("submittedWord").classList.add("not-there");
-        document.getElementById("newgame").classList.remove("not-there");
         document.getElementById("cat-gif").classList.remove("not-there");
     }
 }
