@@ -27,32 +27,32 @@
           <div class="col-sm-6">
             <form>
                 <div class="form-group row" >
-                  <label for="player1" class="col-sm-5 col-form-label">Player 1</label>
+                  <label for="player1" class="col-sm-3 col-form-label">Player 1</label>
                   <div class="col-sm-4">
                     <input type="text" class="form-control"  id="player1" placeholder="Player 1 name">
                   </div>
                 </div>
                 <div class="form-group row">
-                    <label for="player2" class="col-sm-5 col-form-label">Player 2</label>
+                    <label for="player2" class="col-sm-3 col-form-label">Player 2</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control"  id="player2" placeholder="Player 2 name">
                     </div>
                   </div>
                   <div class="form-group row not-there" id="3rdplayer">
-                    <label for="player3" class="col-sm-5 col-form-label">Player 3</label>
+                    <label for="player3" class="col-sm-3 col-form-label">Player 3</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control"  id="player3" placeholder="Player 3 name">
                     </div>
                   </div>
                   <div class="form-group row not-there" id="4thplayer" >
-                    <label for="player4" class="col-sm-5 col-form-label">Player 4</label>
+                    <label for="player4" class="col-sm-3 col-form-label">Player 4</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control"  id="player4" placeholder="Player 4 name">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-5">
-                      <button type="button" class="btn btn-primary" id="addplayerbutton" >Add Player</button>
+                      <button type="button" class="btn btn-sm btn-primary" id="addplayerbutton" >Add Player</button>
                     </div>
                   </div>
                 
@@ -128,32 +128,36 @@
 
                 <div class="form-group row">
                   <div class="col-sm-5">
-                    <button type="button" class="btn btn-primary" id="playbutton" >Start Game</button>
+                    <button type="button" class="btn btn-lg btn-primary" id="playbutton" >Start Game</button>
                   </div>
                 </div>
               </form>
               
           </div>
-          <div class="col sm-6" style="border: 1px solid blue">
-            <h2>Instructions</h2>
-            <ul>
-              <li>Enter Player Names (at least two required), choose whether to randomize play order, and decide type of game.</li>
-              <li>If dictionary checking is on, each submitted word will be checked against the official Scrabble dictionary  </li>
-           </ul>
-           <h3>Once game starts</h3>
-           <ul>
-            <li>Move tiles around by dragging and dropping.</li>
-            <li>The Shuffle button shuffles the tiles on the rack.</li>
-            <li>The Exchange button allows you to exchange some/all of your tiles (this costs you your turn).</li>
-            <li>The Recall button brings back all tiles on the board to the rack</li>
-            <li>Double-clicking a tile will bring it back to the rack</li>
-            <li>The Play button submits your tiles.</li>
-            <li>A list of two-letter words and a dictionary interface are provided for convenience.</li>
-         </ul>
-                  
-          </div>
+          <div class="col sm-6">
+             <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Instructions</h3>
+                  <ul>
+                    <li>Enter Player Names (at least two required), choose whether to randomize play order, and decide type of game.</li>
+                    <li>If dictionary checking is on, each submitted word will be checked against the official Scrabble dictionary  </li>
+                </ul>
+                <h5>Once game starts</h5>
+                <ul>
+                  <li>Move tiles around by dragging and dropping.</li>
+                  <li>The Shuffle button shuffles the tiles on the rack.</li>
+                  <li>The Exchange button allows you to exchange some/all of your tiles (this costs you your turn).</li>
+                  <li>The Recall button brings back all tiles on the board to the rack</li>
+                  <li>Double-clicking a tile will bring it back to the rack</li>
+                  <li>The Play button submits your tiles.</li>
+                  <li>A list of two-letter words and a dictionary interface are provided for convenience.</li>
+              </ul>
+                </div>
+            </div>
+         </div>         
+          
 
-        </div>
+        
     </div>
     <script src="initialization_script.js"></script>
 </body>
