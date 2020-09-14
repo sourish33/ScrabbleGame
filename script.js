@@ -1329,17 +1329,15 @@ function createPlayers(){
         console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
     }
 
-    // function gameAdvance() {
-    //     let who= whoseMove(moveNumber,numPlayers);
-    //     players[who].addPoints(score());
-    //     players[who].removePieces();
+    function showModal (){
+        let modal = document.getElementById("myModal");
+        modal.style.display="block"
+    }
 
-    //     moveNumber++;
-    //     who= whoseMove(moveNumber,numPlayers);
-    //     players[who].returnPieces();
-    //     replenishRack();
-
-    // }
+    function closeMondal (){
+        let modal = document.getElementById("myModal");
+        modal.style.display="none"
+    }
 
 
 
@@ -1350,7 +1348,15 @@ document.getElementById("play").addEventListener("click", play);
 document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 document.getElementById("exchange").addEventListener("click", exchangeLetters);
 document.getElementById("pass").addEventListener("click", pass);
+document.getElementById("info").addEventListener("click", showModal);
+document.getElementById("closemodal").addEventListener("click", closeMondal);
 window.addEventListener("resize", setBoardSize);
+window.addEventListener("click", function (event){
+    let modal = document.getElementById("myModal");
+    if (event.target == modal) {
+        closeMondal();
+    }
+});
 
 //double-click tile to return
 let sqrs = document.getElementsByClassName("grid-item");

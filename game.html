@@ -22,7 +22,7 @@
 
 		  
 		  <div class="row">
-			<div class="col-lg-8 col-md-8 col-sm-10 " style="border: 1px solid white;" >
+			<div class="col-lg-8 col-md-8 col-sm-10 ">
 					<div class="grid-container ">
 					<!-- row a -->
 
@@ -308,7 +308,7 @@
 		    
 
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-left control-btns" style="border: 1px solid white;">
+			<div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-left control-btns" >
 
 				<div class="row ">
 					<div class="col d-flex flex-column">
@@ -387,7 +387,7 @@
 							<div class="input-group mb-3">
 								<input type="text" class="form-control" placeholder="Check dictionary"   name="word"   aria-label="Recipient's username" aria-describedby="basic-addon2">
 								<div class="input-group-append">
-								<button class="btn btn-outline-secondary" id="checkdic" type="button">Check</button>
+								<button class="btn btn-primary" id="checkdic" type="button">Check</button>
 								</div>
 							</div>
 					</form>
@@ -421,7 +421,7 @@
 					
 		  </div>
 			<div class="row mt-2">
-					<div class="col-lg-8 col-md-8 col-sm-10 d-flex flex-row justify-content-center" style="border: 1px solid white; position:relative;" >
+					<div class="col-lg-8 col-md-8 col-sm-10 d-flex flex-row justify-content-center" style="position:relative;" >
 						<img src="img/rack.png" class="img-fluid  rackimage" alt="rack" >
 						<div class="d-flex flex-row w-75 justify-content-center holder" id="rack">
 							
@@ -520,7 +520,7 @@
 						</div>
 					</div>
 				
-					<div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-center" style="border: 1px solid white;">
+					<div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-center" >
 						<div class="p-2">
 							<div class="btn-toolbar ">
 							<button type="button" class="btn btn-info mb-2 mr-2" id="info">Information</button>
@@ -530,6 +530,31 @@
 					</div>
 			</div>
 		</div>
+		<!-- //////////////////////////////Information Box///////////////////////////////////////////// -->
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+			  <span class="close" id="closemodal">&times;</span>
+			  <h3>Instructions</h3>
+			<ul>
+				<li>Move tiles around by dragging and dropping.</li>
+				<li>The <span class="infobox">Shuffle</span> button shuffles the tiles on the rack.</li>
+				<li>The <span class="infobox">Exchange</span> button allows you to exchange some/all of your tiles (this costs you your turn).</li>
+				<li>The <span class="infobox">Recall</span> button brings back all tiles on the board back to the rack</li>
+				<li>Double-clicking a tile will bring it back to the rack</li>
+				<li><span class="infobox">Points possible</span> shows the points you could earn assuming your words are in the dictionary</li>
+				<li>The <span class="infobox">Play</span> button submits your tiles.</li>
+				<li>A list of two-letter words and a dictionary interface are provided for convenience.</li>
+			</ul>
+			</div>
+		  
+		  </div>
+
+
+
+
+
 		<script src="dictformatted.js"></script>
 		<script src="dictionary.js"></script>
 		<script src="script.js"></script>
