@@ -1338,6 +1338,15 @@ function createPlayers(){
         modal.style.display="none"
     }
 
+    function startGame(){
+        setBoardSize(85);
+        createPlayers();
+        updateScoreBoard();
+        who= whoseMove(moveNumber,numPlayers);
+        alert(`Please pass to ${players[who].name}`);
+        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        replenishRack();
+    }
 
 
 
@@ -1377,13 +1386,12 @@ myform.addEventListener('keypress',function(event){
         getWordToCheck();
     }
 });
-setBoardSize(85);
-createPlayers();
-updateScoreBoard();
-who= whoseMove(moveNumber,numPlayers);
-alert(`Please pass to ${players[who].name}`);
-document.getElementById("who-is-playing").innerHTML=players[who].name;
-replenishRack();
+
+
+startGame();
+
+
+
 
 
 //TODO

@@ -1,0 +1,29 @@
+1) find 7 letter words, 6 letter words, 5 letter words.....
+
+2) Word Slots:
+7 letter slots
+
+for each legal position (e.g eN)
+
+function modifiedAdd(N, a){
+return (N+a > 15 ? 15 : N+a)
+}
+
+function modifiedSubtract(N, a){
+return (N-a < 1 ? 1 : N-a)
+}
+
+Horizontal Bounds: 
+
+lower bound: e{max of (N-6) and 1}
+upper bound: e{min of N+6 and 15}
+
+all submitted e slots (s)
+highers = {s > N}
+if highers not empty, { upper bound: 
+	for all s>N lowest value of s-N or modifiedAdd(N,6)}
+
+else upper bound = modifiedAdd(N,6);
+
+upper bound
+
