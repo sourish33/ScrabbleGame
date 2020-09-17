@@ -38,6 +38,7 @@ body {
 
 .grid-item {
 
+  position: relative;
   display: flex;
 display: -webkit-flex;
 justify-content: center;
@@ -89,7 +90,7 @@ align-items: center;
 .tile-container 
   {
     position: relative;
-    height: 50px;
+    /* height: 50px; */
     text-align: center;
     margin:0;
     padding:2px;
@@ -141,7 +142,7 @@ align-items: center;
     max-width:100%;
     max-height:100%;
     position: relative;
-    top:10%;
+    /* top:10%; */
   }
 
 
