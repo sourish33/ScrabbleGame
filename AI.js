@@ -126,11 +126,11 @@ function clearBoxes(){//removes any dark borders
 	});
 }
 
-function findHorSlots(row="a", n=3){
+function findHorSlots(row, n){
 	let cols = generateCols();
 	let slotList=[];
 	for (let i=1;i<15-n+2;i++){
-		slot =[];
+		let slot =[];
 		let containsSubmitted =false;
 		for (let j=0;j<n;j++){
 			let space_id = row+(i+j).toString();
@@ -144,7 +144,31 @@ function findHorSlots(row="a", n=3){
 		}
 	}
 	if (parseInt(slotList.slice(-1)[0].slice(-1)[0].substr(1))>15){
-		console.log("generated slots out of the board!!!!!!!!!!!!!!!!!!")
+		alert(`findHorSlot made a bad slot ${slotList.slice(-1)[0].slice(-1)[0]}`);
 	}
 	return slotList;
 }
+
+function findVerSlots(col, n){
+	let rows = generateRows();
+	let slotList=[];
+	for (let i=0;i<15-n+1;i++){
+		let slot =[];
+		let containsSubmitted =false;
+		for (let j=0;j<n;j++){
+			// if ((i+j)>rows.length){console.log(`i=${i} and j=${j}`)};//DEBUG LINE
+			let space_id = rows[i+j]+col.toString();
+			// console.log(`space_id is ${space_id}`);//DEBUG LINE
+			if (document.getElementById(space_id).classList.contains("submitted")) {
+				containsSubmitted = true;
+			}
+			slot.push(space_id);
+		}
+		if (!containsSubmitted){
+			slotList.push(slot);
+		}
+	}
+
+	return slotList;
+}
+
