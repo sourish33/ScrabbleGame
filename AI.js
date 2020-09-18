@@ -110,6 +110,9 @@ function combinations(set) {
 	return combs;
 }
 
+
+
+
 function highlightBoxes(arr,flush=true){//puts dark borders around the slots specified in array
 	if (flush) {clearBoxes();}
 	for (el of arr) {
@@ -117,6 +120,20 @@ function highlightBoxes(arr,flush=true){//puts dark borders around the slots spe
 		u.classList.add("highlight-box");
 	}
 }
+
+function findCommonElements(arr1, arr2) { 
+    return arr1.some(item => arr2.includes(item)) 
+} 
+
+function arraysEqual(array1, array2) {//returns true if arrays are isomorphic
+    arr1=array1.sort();
+    arr2=array2.sort();
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+    }
 
 function clearBoxes(){//removes any dark borders
 	let arr = document.getElementsByClassName("highlight-box");
@@ -143,6 +160,33 @@ function findHorSlots(row, n){
 			slotList.push(slot);
 		}
 	}
+	if (slotList.length===0) {return [];}
+	if (parseInt(slotList.slice(-1)[0].slice(-1)[0].substr(1))>15){
+		alert(`findHorSlot made a bad slot ${slotList.slice(-1)[0].slice(-1)[0]}`);
+	}
+	return slotList;
+}
+
+function findHorGapSlots(row, n){
+	let cols = generateCols();
+	let slotList=[];
+	for (let i=1;i<15-n+2;i++){
+		let slot =[];
+		let containsSubmitted =false;
+		let toJumpOver = [];
+		for (let j=0;j<n;j++){
+			let space_id = row+(i+j).toString();
+			if (document.getElementById(space_id).classList.contains("submitted")) {
+				containsSubmitted = true;
+				toJumpOver.push(space_id);
+			}
+			slot.push(row+(i+j).toString());
+		}
+		if (containsSubmitted){
+			slotList.push(subtractArrays(slot, toJumpOver));
+		}
+	}
+	if (slotList.length===0) {return [];}
 	if (parseInt(slotList.slice(-1)[0].slice(-1)[0].substr(1))>15){
 		alert(`findHorSlot made a bad slot ${slotList.slice(-1)[0].slice(-1)[0]}`);
 	}
@@ -172,3 +216,93 @@ function findVerSlots(col, n){
 	return slotList;
 }
 
+function findVerGapSlots(col, n){
+	let rows = generateRows();
+	let slotList=[];
+	for (let i=0;i<15-n+1;i++){
+		let slot =[];
+		let containsSubmitted =false;
+		let toJumpOver = [];
+		for (let j=0;j<n;j++){
+			// if ((i+j)>rows.length){console.log(`i=${i} and j=${j}`)};//DEBUG LINE
+			let space_id = rows[i+j]+col.toString();
+			// console.log(`space_id is ${space_id}`);//DEBUG LINE
+			if (document.getElementById(space_id).classList.contains("submitted")) {
+				containsSubmitted = true;
+				toJumpOver.push(space_id);
+			}
+			slot.push(space_id);
+		}
+		if (containsSubmitted){
+			slotList.push(subtractArrays(slot, toJumpOver));
+		}
+	}
+
+	return slotList;
+}
+
+function findAllHorSlotsOfLength(n) {
+	let allSlots =[];
+	let legalPositions =  getlegalPositions();
+	let rows = [];
+
+    for (pos of legalPositions){
+		rows.push(pos[0]);
+		rows = getUniques(rows);
+	}
+
+	for (row of rows){
+		let horSlots = findHorSlots(row, n);
+		for (horSlot of horSlots){
+			if (findCommonElements(legalPositions, horSlot)) { allSlots.push(horSlot);}
+		}
+	}
+
+	return allSlots;
+}
+
+function findAllVerSlotsOfLength(n) {
+	let allSlots =[];
+	let legalPositions =  getlegalPositions();
+	let cols = [];
+
+    for (pos of legalPositions){
+		cols.push(parseInt(pos.substr(1)));
+		cols = getUniques(cols);
+	}
+
+	for (col of cols){
+		let vslots = findVerSlots(col, n);
+		for (vslot of vslots){
+			if (findCommonElements(legalPositions, vslot)) { allSlots.push(vslot);}
+		}
+	}
+
+	return allSlots;
+}
+
+function getAllHorGapSlots(){
+	let allSlots =[];
+	let legalPositions =  getlegalPositions();
+	let rows = [];
+
+    for (pos of legalPositions){
+		rows.push(pos[0]);
+		rows = getUniques(rows);
+	}
+	for (let row of rows){
+		for (let i=3;i<8;i++) {
+			gapslot = findHorGapSlots(row, i);
+			let len = gapslot.length;
+			if (len>1){
+				allSlots.push(gapslot);
+			}
+		}
+	}
+	//////TODO: drop groups that are adjacent
+	allSlots = allSlots.flat();
+	return allSlots;
+}
+
+//TODO \
+//getALLVerGapSlots
