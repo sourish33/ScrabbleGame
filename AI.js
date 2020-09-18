@@ -20,7 +20,7 @@ function permute(permutation) {
   }
   return result;
 }
-let u =permute([1, 2, 3]);
+
 
 function k_combinations(set, k) {
 	var i, j, combs, head, tailcombs;
@@ -110,6 +110,41 @@ function combinations(set) {
 	return combs;
 }
 
-let v = ["A", "D", "E", "K"];
-let cc = combinations(v);
-console.log(cc.length)
+function highlightBoxes(arr,flush=true){//puts dark borders around the slots specified in array
+	if (flush) {clearBoxes();}
+	for (el of arr) {
+		let u = document.getElementById(el);
+		u.classList.add("highlight-box");
+	}
+}
+
+function clearBoxes(){//removes any dark borders
+	let arr = document.getElementsByClassName("highlight-box");
+	if (arr.length ===0) {return;}
+	Array.from(arr).forEach(element => {
+			element.classList.remove("highlight-box");
+	});
+}
+
+function findHorSlots(row="a", n=3){
+	let cols = generateCols();
+	let slotList=[];
+	for (let i=1;i<15-n+2;i++){
+		slot =[];
+		let containsSubmitted =false;
+		for (let j=0;j<n;j++){
+			let space_id = row+(i+j).toString();
+			if (document.getElementById(space_id).classList.contains("submitted")) {
+				containsSubmitted = true;
+			}
+			slot.push(row+(i+j).toString());
+		}
+		if (!containsSubmitted){
+			slotList.push(slot);
+		}
+	}
+	if (parseInt(slotList.slice(-1)[0].slice(-1)[0].substr(1))>15){
+		console.log("generated slots out of the board!!!!!!!!!!!!!!!!!!")
+	}
+	return slotList;
+}
