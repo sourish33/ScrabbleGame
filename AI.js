@@ -133,7 +133,8 @@ function arraysEqual(array1, array2) {//returns true if arrays are isomorphic
     for(var i = arr1.length; i--;) {
         if(arr1[i] !== arr2[i])
             return false;
-    }
+	}
+}
 
 function clearBoxes(){//removes any dark borders
 	let arr = document.getElementsByClassName("highlight-box");
@@ -299,10 +300,22 @@ function getAllHorGapSlots(){
 			}
 		}
 	}
-	//////TODO: drop groups that are adjacent
 	allSlots = allSlots.flat();
 	return allSlots;
 }
 
-//TODO \
-//getALLVerGapSlots
+function sortHorGapSlots(slots) {
+	let sortedslots ={};
+	for (let i=2;i<8;i++){
+		sortedslots[i]=[];
+	}
+	for (let i=2;i<8;i++){
+		for (let slot of slots){
+			if (slot.length === i){
+				sortedslots[i].push(slot);
+			}
+		}
+	}
+
+	return sortedslots;
+}
