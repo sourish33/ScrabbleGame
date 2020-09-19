@@ -1198,13 +1198,18 @@ let player = {
 
   };
 
+
+function createHumanPlayer(NAME, NUMBER){
+    let playerH = Object.create(player);
+    playerH.name = NAME;
+    playerH.number =NUMBER;
+    playerH.makeRack();
+    return playerH;
+}
+
 function createPlayers(){
     let row;
-    let player1 = Object.create(player);
-    player1.name = playerNames[0];
-    player1.number =1;
-    player1.makeRack();
-    players[1] = player1;
+    players[1] = createHumanPlayer(playerNames[0], 1);
 
     let player2 = Object.create(player);
     player2.name = playerNames[1];
