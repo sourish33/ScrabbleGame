@@ -733,11 +733,20 @@ function getAllNewWords(){
 
 }
 
+function readLetter(space_id){
+    if (includes("s", space_id) && isEmptyOnRack(space_id)){return;}
+    if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
+    let tile = getTileAt(space_id);
+    let letter =tile.children[1].innerHTML;
+    return letter;
+}
+
 function readWord(arr){
     let word =[];
     for (space_id of arr){
-        let tile = getTileAt(space_id);
-        let letter =tile.children[1].innerHTML;
+        // let tile = getTileAt(space_id);
+        // let letter =tile.children[1].innerHTML;
+        let letter = readLetter(space_id)
         word.push(letter);
     }
     return word.join('');
@@ -1256,7 +1265,7 @@ let player = {
         this.bestMove["to"]=[];
     }
 
-    AI_player.ai_move = function(from_locs,to_locs){
+    AI_player.ai_move = function(from_locs,to_locs,blankTileLetter="L"){
         if (typeof(from_locs)!==typeof(to_locs)){return;}
         if (typeof(from_locs) === "string"){
             move(from_locs,to_locs);
