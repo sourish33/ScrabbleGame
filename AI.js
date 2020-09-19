@@ -456,11 +456,16 @@ function createAIPlayer(NAME, NUMBER){
 			this.resetBestMove();
 		}
 
+		AI_player.makeMove = function(){
+			this.trySingles();
+			this.playBestMove();
+		}
+
 
 		AI_player.makeRack();
 		AI_player.resetBestMove();
 		return AI_player;
 }
 
-let rupa = createAIPlayer("Rupa", 3);
+let rupa = createAIPlayer("AI_Rupa", 3);
 
