@@ -134,6 +134,7 @@ function arraysEqual(array1, array2) {//returns true if arrays are isomorphic
         if(arr1[i] !== arr2[i])
             return false;
 	}
+	return true;
 }
 
 function clearBoxes(){//removes any dark borders
@@ -301,10 +302,33 @@ function getAllHorGapSlots(){
 		}
 	}
 	allSlots = allSlots.flat();
-	return allSlots;
+	return sortSlotsByLength(allSlots);
 }
 
-function sortHorGapSlots(slots) {
+function getAllVerGapSlots(){
+	let allSlots =[];
+	let legalPositions =  getlegalPositions();
+	let cols = [];
+
+    for (pos of legalPositions){
+		cols.push(parseInt(pos.substr(1)));
+		cols = getUniques(cols);
+	}
+
+	for (let col of cols){
+		for (let i=3;i<8;i++) {
+			gapslot = findVerGapSlots(col, i);
+			let len = gapslot.length;
+			if (len>1){
+				allSlots.push(gapslot);
+			}
+		}
+	}
+	allSlots = allSlots.flat();
+	return sortSlotsByLength(allSlots);
+}
+
+function sortSlotsByLength(slots) {
 	let sortedslots ={};
 	for (let i=2;i<8;i++){
 		sortedslots[i]=[];
@@ -318,4 +342,36 @@ function sortHorGapSlots(slots) {
 	}
 
 	return sortedslots;
+}
+
+
+// function getAllSlotsSorted(){
+// 	let sortedslots ={};
+// 	for (let i=2;i<8;i++){
+// 		sortedslots[i]=[];
+// 	}
+
+// }
+
+function alreadyContains(s, slots){
+	for(let slot of slots){
+		if (arraysEqual(slot, s)){return true;}
+	}
+	return false;
+}
+
+function mergeWithoutDuplication(slots1, slots2) {
+	let long, short;
+	if (slots1.length > slots2.length){
+		long = Array.from(slots1);
+		short = Array.from(slots2);
+	} else {
+		short = Array.from(slots1);
+		long = Array.from(slots2);
+
+	}
+	for (let s of short){
+		if (!alreadyContains(s, long)) {long.push(s)}
+	}
+	return long;
 }
