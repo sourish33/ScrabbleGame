@@ -1199,6 +1199,75 @@ let player = {
   };
 
 
+  function createAIPlayer(NAME, NUMBER){
+    let AI_player = Object.create(player);
+    AI_player.name = NAME;
+    AI_player.number =NUMBER;
+    AI_player.score =0;
+
+    AI_player.bestMove ={};
+
+    AI_player.resetBestMove = function(){
+        this.bestMove["points"]=0;
+        this.bestMove["from"]=[];
+        this.bestMove["to"]=[];
+    }
+
+    AI_player.ai_move = function(from_locs,to_locs){
+        if (typeof(from_locs)!==typeof(to_locs)){return;}
+        if (typeof(from_locs) === "string"){
+            move(from_locs,to_locs);
+            return;
+        }
+        if (from_locs.length !== to_locs.length) {return;}
+
+        for (let i=0;i<from_locs.length;i++) {
+            move(from_locs[i], to_locs[i]);
+        }
+        
+    }
+    AI_player.trySingles = function(){
+        let rackIds = getRackIds("rack");
+        for (let pos of legalPositions) {
+            for (let rackId of rackIds){
+                this.try_move(rackId, pos);	
+            }
+        }
+    }
+
+    AI_player.try_move= function(rackId, pos){
+        this.ai_move(rackId, pos);
+        if (allValidWords()){
+            let points = score();
+            if (points>this.bestMove["points"]){
+                this.bestMove["from"]=[rackId];
+                this.bestMove["to"] = [pos];
+                this.bestMove["points"] = points;
+            }
+        }
+        this.ai_move(pos, rackId);
+    }
+
+    AI_player.playBestMove = function(){
+        let from = this.bestMove["from"];
+        let to = this.bestMove["to"];
+        this.ai_move(from, to);
+        this.resetBestMove();
+    }
+
+    AI_player.makeMove = function(){
+        this.trySingles();
+        this.playBestMove();
+    }
+
+
+    AI_player.makeRack();
+    AI_player.resetBestMove();
+    return AI_player;
+}
+
+
+
 function createHumanPlayer(NAME, NUMBER){
     let playerH = Object.create(player);
     playerH.name = NAME;
@@ -1207,14 +1276,22 @@ function createHumanPlayer(NAME, NUMBER){
     return playerH;
 }
 
+function createPlayer(n){
+    if (includes("AI_", playerNames[n-1])){
+        players[n] = createAIPlayer(playerNames[n-1], n);
+    } else {
+        players[n] = createHumanPlayer(playerNames[n-1], n);
+    }
+}
+
 function createPlayers(){
     let row;
-    players[1] = createHumanPlayer(playerNames[0], 1);
-    players[2] = createHumanPlayer(playerNames[1], 2);
+    createPlayer(1);
+    createPlayer(2);
 
     
     if (numPlayers ===3){
-        players[3] = createHumanPlayer(playerNames[2], 3);
+        createPlayer(3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
 
@@ -1222,11 +1299,11 @@ function createPlayers(){
 
     if (numPlayers ===4){
 
-        players[3] = createHumanPlayer(playerNames[2], 3);
+        createPlayer(3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
 
-        players[4] = createHumanPlayer(playerNames[3], 4);
+        createPlayer(4);
         row=document.getElementById("4throw");
         row.classList.remove("not-there");
     }
