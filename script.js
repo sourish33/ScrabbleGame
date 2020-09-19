@@ -17,9 +17,6 @@ let boosters = {};
 
 let legalPositions = getlegalPositions();
 let moveNumber =1;
-// let player1Name = sessionStorage.getItem("player1Name");
-// let player2Name =sessionStorage.getItem("player2Name");
-// let numPlayers = 2;
 let settings = getSettings();
 let dictionaryChecking = settings[0];
 let randomize = settings[1];

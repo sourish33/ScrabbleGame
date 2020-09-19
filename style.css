@@ -226,7 +226,9 @@ align-items: center;
     background:yellow;
   }
 
- 
+ #twolw-list{
+   font-size: 1em;
+ }
 
   .verdict-bad {
     color: red;
