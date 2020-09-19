@@ -345,13 +345,27 @@ function sortSlotsByLength(slots) {
 }
 
 
-// function getAllSlotsSorted(){
-// 	let sortedslots ={};
-// 	for (let i=2;i<8;i++){
-// 		sortedslots[i]=[];
-// 	}
+function getAllSlotsSortedByLen(){
+	let sortedslots ={};
+	let allHorGapSlots = getAllHorGapSlots();
+	let allVerGapSlots = getAllVerGapSlots();
+	for (let i=2;i<8;i++){
+		sortedslots[i]=[];
+	}
+	for (let i=2;i<8;i++){
+		let allhorslots = findAllHorSlotsOfLength(i);
+		let horgapslots = allHorGapSlots[i];
+		let Hslots=mergeWithoutDuplication(allhorslots,horgapslots);
+		let allverslots = findAllVerSlotsOfLength(i);
+		let vergapslots = allVerGapSlots[i];
+		let Vslots=mergeWithoutDuplication(allverslots,vergapslots);
+		sortedslots[i].push(Hslots);
+		sortedslots[i].push(Vslots);
+		sortedslots[i]=sortedslots[i].flat();
+	}
 
-// }
+	return sortedslots;
+}
 
 function alreadyContains(s, slots){
 	for(let slot of slots){
@@ -361,6 +375,8 @@ function alreadyContains(s, slots){
 }
 
 function mergeWithoutDuplication(slots1, slots2) {
+	if (slots1.length===0) {return slots2;}
+	if (slots2.length===0) {return slots1;}
 	let long, short;
 	if (slots1.length > slots2.length){
 		long = Array.from(slots1);
@@ -375,3 +391,4 @@ function mergeWithoutDuplication(slots1, slots2) {
 	}
 	return long;
 }
+
