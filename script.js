@@ -861,6 +861,43 @@ function endCheck(){
     return 0;
 }
 
+function AI_play(){
+    let who= whoseMove(moveNumber,numPlayers);
+    players[who].makeMove();
+    let tiles = getTilesPlayedNotSubmitted();
+    if (tiles.length === 0) {
+        console.log(`${players[who]}$ failed to make a move`)
+        return;
+    } //nothing submitted yet
+    players[who].addPoints(score());
+    players[who].removePieces();
+    updateScoreBoard();
+    for (tile of tiles) {
+        tile.classList.remove("played-not-submitted");
+        tile.classList.add("submitted");
+        tile.setAttribute("ondragstart","return false");
+        tile.classList.add("unselectable");
+    }
+    let gameCheck = endCheck();
+    if (gameCheck===0)
+    {
+        //advance the movenumber
+        moveNumber++;
+        who= whoseMove(moveNumber,numPlayers);
+        alert(`Please pass to ${players[who].name}`);
+        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        players[who].returnPieces();
+        replenishRack();
+        //reset the possible points 
+        document.getElementById("points").innerHTML = 0;
+        //update the list of legal positions
+        legalPositions = getlegalPositions();
+    }
+    else {
+        endGameSequence(gameCheck);
+    }
+}
+
 
 
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
@@ -906,7 +943,10 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         //advance the movenumber
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
+
         alert(`Please pass to ${players[who].name}`);
+
+
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
         replenishRack();
@@ -914,6 +954,9 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
         legalPositions = getlegalPositions();
+        if (includes("AI_", players[who].name)) {
+            AI_play();
+        }
     }
     else {
         endGameSequence(gameCheck);
@@ -1404,8 +1447,11 @@ function createPlayers(){
         createPlayers();
         updateScoreBoard();
         who= whoseMove(moveNumber,numPlayers);
-        alert(`Please pass to ${players[who].name}`);
         document.getElementById("who-is-playing").innerHTML=players[who].name;
+        alert(`Please pass to ${players[who].name}`); ;
+        if (includes("AI_", players[who].name)) {
+            AI_play();
+        }
         replenishRack();
     }
 
