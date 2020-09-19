@@ -1210,21 +1210,11 @@ function createHumanPlayer(NAME, NUMBER){
 function createPlayers(){
     let row;
     players[1] = createHumanPlayer(playerNames[0], 1);
-
-    let player2 = Object.create(player);
-    player2.name = playerNames[1];
-    player2.number =2;
-    player2.makeRack();
-    players[2] = player2;
+    players[2] = createHumanPlayer(playerNames[1], 2);
 
     
     if (numPlayers ===3){
-
-        let player3 = Object.create(player);
-        player3.name = playerNames[2];
-        player3.number =3;
-        player3.makeRack();
-        players[3] = player3;
+        players[3] = createHumanPlayer(playerNames[2], 3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
 
@@ -1232,19 +1222,11 @@ function createPlayers(){
 
     if (numPlayers ===4){
 
-        let player3 = Object.create(player);
-        player3.name = playerNames[2];
-        player3.number =3;
-        player3.makeRack();
-        players[3] = player3;
+        players[3] = createHumanPlayer(playerNames[2], 3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
 
-        let player4 = Object.create(player);
-        player4.name = playerNames[3];
-        player4.number =4;
-        player4.makeRack();
-        players[4] = player4;
+        players[4] = createHumanPlayer(playerNames[3], 4);
         row=document.getElementById("4throw");
         row.classList.remove("not-there");
     }
