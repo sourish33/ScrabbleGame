@@ -431,19 +431,22 @@ function createAIPlayer(NAME, NUMBER){
 			let rackIds = getRackIds("rack");
 			for (let pos of legalPositions) {
 				for (let rackId of rackIds){
-					this.ai_move(rackId, pos);
-					if (allValidWords()){
-						let points = score();
-						if (points>this.bestMove["points"]){
-							this.bestMove["from"]=[rackId];
-							this.bestMove["to"] = [pos];
-							this.bestMove["points"] = points;
-						}
-					}
-					this.ai_move(pos, rackId);
-						
+					this.try_move(rackId, pos);	
 				}
 			}
+		}
+
+		AI_player.try_move= function(rackId, pos){
+			this.ai_move(rackId, pos);
+			if (allValidWords()){
+				let points = score();
+				if (points>this.bestMove["points"]){
+					this.bestMove["from"]=[rackId];
+					this.bestMove["to"] = [pos];
+					this.bestMove["points"] = points;
+				}
+			}
+			this.ai_move(pos, rackId);
 		}
 
 		AI_player.playBestMove = function(){
