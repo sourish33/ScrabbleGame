@@ -456,7 +456,8 @@ function createAIPlayer(NAME, NUMBER){
 
 		AI_player.makeRack();
 		AI_player.resetBestMove();
-		AI_player.displayData();
 		return AI_player;
 }
+
+let rupa = createAIPlayer("Rupa", 3);
 
