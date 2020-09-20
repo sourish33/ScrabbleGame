@@ -911,6 +911,11 @@ function AI_play(){
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
         legalPositions = getlegalPositions();
+        if (includes("AI_", players[who].name)) {
+            AI_play();
+        } else{
+            play();
+        }
     }
     else {
         endGameSequence(gameCheck);
@@ -975,6 +980,8 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         legalPositions = getlegalPositions();
         if (includes("AI_", players[who].name)) {
             AI_play();
+        } else{
+            play();
         }
     }
     else {
@@ -1002,11 +1009,7 @@ function pass()
     let onboard = getTilesPlayedNotSubmitted();
     if (onboard.length!==0) {returnToRack();}
 
-    let who= whoseMove(moveNumber,numPlayers);
-    if (includes("AI_", players[who].name)) {
-        AI_play();
-        return;
-    }
+    who= whoseMove(moveNumber,numPlayers);
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
@@ -1025,6 +1028,11 @@ function pass()
     document.getElementById("points").innerHTML = 0;
     //update the list of legal positions
     legalPositions = getlegalPositions();
+    if (includes("AI_", players[who].name)) {
+        AI_play();
+    } else{
+        play();
+    }
 
 }
 
