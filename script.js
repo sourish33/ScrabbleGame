@@ -741,6 +741,15 @@ function readLetter(space_id){
     return letter;
 }
 
+function changeLetter(space_id, letter){
+
+    if (!isLetter(letter) && letter!=="_"){return;}
+    if (includes("s", space_id) && isEmptyOnRack(space_id)){return;}
+    if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
+    let tile = getTileAt(space_id);
+    tile.children[1].innerHTML = letter.toUpperCase();
+}
+
 function readWord(arr){
     let word =[];
     for (space_id of arr){
@@ -871,6 +880,7 @@ function endCheck(){
 }
 
 function AI_play(){
+    legalPositions = getlegalPositions();
     let who= whoseMove(moveNumber,numPlayers);
     players[who].makeMove();
     let tiles = getTilesPlayedNotSubmitted();
@@ -993,6 +1003,10 @@ function pass()
     if (onboard.length!==0) {returnToRack();}
 
     let who= whoseMove(moveNumber,numPlayers);
+    if (includes("AI_", players[who].name)) {
+        AI_play();
+        return;
+    }
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
@@ -1258,14 +1272,18 @@ let player = {
     AI_player.score =0;
 
     AI_player.bestMove ={};
+    AI_player.blank1 =[];
+    AI_player.blank2 =[];
 
     AI_player.resetBestMove = function(){
         this.bestMove["points"]=0;
         this.bestMove["from"]=[];
         this.bestMove["to"]=[];
+        this.bestMove["blank1"]=[];
+        this.bestMove["blank2"]=[];
     }
 
-    AI_player.ai_move = function(from_locs,to_locs,blankTileLetter="L"){
+    AI_player.ai_move = function(from_locs,to_locs,blank1=[],blank2=[]){
         if (typeof(from_locs)!==typeof(to_locs)){return;}
         if (typeof(from_locs) === "string"){
             move(from_locs,to_locs);
@@ -1295,21 +1313,62 @@ let player = {
                 this.bestMove["from"]=[rackId];
                 this.bestMove["to"] = [pos];
                 this.bestMove["points"] = points;
+                this.bestMove["blank1"] = this.blank1;
+                this.bestMove["blank2"] = this.blank2;
             }
         }
         this.ai_move(pos, rackId);
+        if (this.blank1.length!==0){
+            changeLetter(this.blank1[0], this.blank1[1] );
+        }
+        if (this.blank2.length!==0){
+            changeLetter(this.blank2[0], this.blank2[1] );
+        }
     }
 
     AI_player.playBestMove = function(){
         let from = this.bestMove["from"];
         let to = this.bestMove["to"];
+        if (this.bestMove["blank1"].length !==0){
+            changeLetter(this.bestMove["blank1"][0], this.bestMove["blank1"][1] );
+        }
+        if (this.bestMove["blank2"].length !==0){
+            changeLetter(this.bestMove["blank2"][0], this.bestMove["blank2"][1] );
+        }
         this.ai_move(from, to);
         this.resetBestMove();
     }
 
     AI_player.makeMove = function(){
-        this.trySingles();
-        this.playBestMove();
+        let rackIds = getRackIds("rack");
+        blank_ids = []
+        for (id of rackIds){
+            if (readLetter(id)=="_"){
+                blank_ids.push(id);
+            }
+        }
+
+        if (blank_ids.length ===0){
+            this.trySingles();
+            this.playBestMove();
+            return;
+        }
+        
+        if (blank_ids.length===1){
+            alphabet = [...Array(26)].reduce(a=>a+String.fromCharCode(i++),'',i=65);
+            let b1 = blank_ids[0];
+            for (let n=0;n<26;n++){
+                changeLetter(b1, alphabet[n]);
+                this.blank1 = [b1, alphabet[n]];
+                this.trySingles();
+            }
+            this.playBestMove();
+
+            return;
+        }
+
+
+
     }
 
 
