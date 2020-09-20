@@ -1375,6 +1375,24 @@ let player = {
             return;
         }
 
+        if (blank_ids.length===2){
+            alphabet = [...Array(26)].reduce(a=>a+String.fromCharCode(i++),'',i=65);
+            let b1 = blank_ids[0];
+            let b2 = blank_ids[1];
+            for (let n=0;n<26;n++){
+                for (let m=0;m<26;m++){
+                    changeLetter(b1, alphabet[n]);
+                    changeLetter(b2, alphabet[m]);
+                    this.blank1 = [b1, alphabet[n]];
+                    this.blank2 = [b2, alphabet[m]];
+                    this.trySingles();
+                 }
+            }
+            this.playBestMove();
+
+            return;
+        }
+
 
 
     }
