@@ -1295,7 +1295,27 @@ let player = {
         let rackIds = getRackIds("rack");
         for (let pos of legalPositions) {
             for (let rackId of rackIds){
-                this.try_move(rackId, pos);	
+
+                let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                let stop =  false;
+                if (readLetter(rackId)==="_"){
+                    for (let i=0;i<26;i++){
+                        changeLetter(rackId,alphabet[i]);
+                        let curPoints = this.bestMove["points"];
+                        this.try_move_no_blanks(rackId, pos);
+                        if (this.bestMove["points"] > curPoints){
+                            if (this.bestMove["blank1"].length!==0)
+                            {this.bestMove["blank1"] = [rackId, alphabet[i]];}
+                            else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
+                            stop = true;
+
+                        }
+                        changeLetter(rackId,"_");	
+                        if(stop) {break;}
+                    }
+                } else{
+                    this.try_move_no_blanks(rackId, pos);
+                }
             }
         }
     }
@@ -1355,26 +1375,29 @@ let player = {
     AI_player.try_move= function(rackId, pos){/////////////////////WORKING ON THIS NOW//////////////////////
         alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         if (readLetter(rackId)==="_"){
-            // let foundLetter = false;
-            // for (let i=0;i<26;i++){
-            //     changeLetter(rackId,alphabet[i]);
-            //     this.ai_move(rackId, pos);
-            //     if (allValidWords()){
-            //         let points = score();
-            //         if (points>this.bestMove["points"]){
-            //             this.bestMove["from"]=[rackId];
-            //             this.bestMove["to"] = [pos];
-            //             this.bestMove["points"] = points;
-            //             if (this.bestMove["blank1"].length!==0)
-            //                 {this.bestMove["blank1"] = [rackId, alphabet[i]];}
-            //             else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
-            //             foundLetter =true;
-                       
-            //         }
-            //     if (foundLetter) {break;}
-            //     }
-            //     this.ai_move(pos, rackId); 
-
+            let foundLetter = false;
+            for (let i=0;i<26;i++){
+                changeLetter(rackId,alphabet[i]);
+                this.placeCloneTiles(rackId, pos);
+                if (allValidWords()){
+                    let points = score();
+                    if (points>this.bestMove["points"]){
+                        this.bestMove["from"]=[rackId];
+                        this.bestMove["to"] = [pos];
+                        this.bestMove["points"] = points;
+                        if (this.bestMove["blank1"].length!==0)
+                            {this.bestMove["blank1"] = [rackId, alphabet[i]];}
+                        else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
+                        foundLetter =true;
+                    }
+                    
+                    this.removeCloneTiles();
+                    
+                }
+                if (foundLetter) {break;}
+            }
+        
+            changeLetter(rackId,"_");
             
             
         } else {
