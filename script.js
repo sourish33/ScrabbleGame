@@ -1378,19 +1378,23 @@ let player = {
             
             
         } else {
-                this.placeCloneTiles(rackId, pos);
-                if (allValidWords()){
-                    let points = score();
-                    if (points>this.bestMove["points"]){
-                        this.bestMove["from"]=[rackId];
-                        this.bestMove["to"] = [pos];
-                        this.bestMove["points"] = points;
-                    }
-                }
-                this.removeCloneTiles();
+            this.try_move_no_blanks(rackId, pos);
         }
         
 
+    }
+
+    AI_player.try_move_no_blanks = function(rackId, pos){
+        this.placeCloneTiles(rackId, pos);
+        if (allValidWords()){
+            let points = score();
+            if (points>this.bestMove["points"]){
+                this.bestMove["from"]=[rackId];
+                this.bestMove["to"] = [pos];
+                this.bestMove["points"] = points;
+            }
+        }
+        this.removeCloneTiles();
     }
 
     AI_player.playBestMove = function(){
