@@ -1291,6 +1291,36 @@ let player = {
         this.bestMove["blank2"]=[];
     }
 
+    AI_player.trySingles = function(){
+        let rackIds = getRackIds("rack");
+        for (let pos of legalPositions) {
+            for (let rackId of rackIds){
+                this.try_move(rackId, pos);	
+            }
+        }
+    }
+
+    AI_player.placeCloneTile = function(orig_id, dest_id){
+        let origin = document.getElementById(orig_id);
+        let tile = getTheTile(origin);
+        let cloneTile = tile.cloneNode(true);
+        cloneTile.removeAttribute("id");
+        let dest = document.getElementById(dest_id);
+        dest.appendChild(cloneTile);
+        dest.classList.add('played-not-submitted');
+        dest.classList.add('clone');
+        
+    }
+
+    AI_player.removeCloneTiles = function(){
+        let cloneSpots=document.getElementsByClassName("clone");
+        if (cloneSpots.length===0) {return;}
+        for (let cloneSpot of cloneSpots) {
+            cloneTile = cloneSpot.children[0];
+            cloneSpot.removeChild(cloneTile);
+        }
+    }
+
     AI_player.ai_move = function(from_locs,to_locs,blank1=[],blank2=[]){
         if (typeof(from_locs)!==typeof(to_locs)){return;}
         if (typeof(from_locs) === "string"){
@@ -1304,34 +1334,51 @@ let player = {
         }
         
     }
-    AI_player.trySingles = function(){
-        let rackIds = getRackIds("rack");
-        for (let pos of legalPositions) {
-            for (let rackId of rackIds){
-                this.try_move(rackId, pos);	
-            }
-        }
-    }
 
-    AI_player.try_move= function(rackId, pos){
-        this.ai_move(rackId, pos);
-        if (allValidWords()){
-            let points = score();
-            if (points>this.bestMove["points"]){
-                this.bestMove["from"]=[rackId];
-                this.bestMove["to"] = [pos];
-                this.bestMove["points"] = points;
-                this.bestMove["blank1"] = this.blank1;
-                this.bestMove["blank2"] = this.blank2;
+
+    AI_player.try_move= function(rackId, pos){/////////////////////WORKING ON THIS NOW//////////////////////
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (readLetter(rackId)=="_"){
+            let foundLetter = false;
+            for (let i=0;i<26;i++){
+                changeLetter(rackId,alphabet[i]);
+                this.ai_move(rackId, pos);
+                if (allValidWords()){
+                    let points = score();
+                    if (points>this.bestMove["points"]){
+                        this.bestMove["from"]=[rackId];
+                        this.bestMove["to"] = [pos];
+                        this.bestMove["points"] = points;
+                        if (this.bestMove["blank1"].length!==0)
+                            {this.bestMove["blank1"] = [rackId, alphabet[i]];}
+                        else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
+                        foundLetter =true;
+                       
+                    }
+                if (foundLetter) {break;}
+                }
+                this.ai_move(pos, rackId); 
+
             }
+            
+        } else {
+                this.ai_move(rackId, pos);
+                if (allValidWords()){
+                    let points = score();
+                    if (points>this.bestMove["points"]){
+                        this.bestMove["from"]=[rackId];
+                        this.bestMove["to"] = [pos];
+                        this.bestMove["points"] = points;
+                    }
+                }
         }
         this.ai_move(pos, rackId);
-        if (this.blank1.length!==0){
-            changeLetter(this.blank1[0], this.blank1[1] );
-        }
-        if (this.blank2.length!==0){
-            changeLetter(this.blank2[0], this.blank2[1] );
-        }
+        // if (this.blank1.length!==0){
+        //     changeLetter(this.blank1[0], this.blank1[1] );
+        // }
+        // if (this.blank2.length!==0){
+        //     changeLetter(this.blank2[0], this.blank2[1] );
+        // }
     }
 
     AI_player.playBestMove = function(){
@@ -1348,55 +1395,12 @@ let player = {
     }
 
     AI_player.makeMove = function(){
-        let rackIds = getRackIds("rack");
-        blank_ids = []
-        for (id of rackIds){
-            if (readLetter(id)=="_"){
-                blank_ids.push(id);
-            }
-        }
-
-        if (blank_ids.length ===0){
+             
             this.trySingles();
             this.playBestMove();
             return;
         }
         
-        if (blank_ids.length===1){
-            alphabet = [...Array(26)].reduce(a=>a+String.fromCharCode(i++),'',i=65);
-            let b1 = blank_ids[0];
-            for (let n=0;n<26;n++){
-                changeLetter(b1, alphabet[n]);
-                this.blank1 = [b1, alphabet[n]];
-                this.trySingles();
-            }
-            this.playBestMove();
-
-            return;
-        }
-
-        if (blank_ids.length===2){
-            alphabet = [...Array(26)].reduce(a=>a+String.fromCharCode(i++),'',i=65);
-            let b1 = blank_ids[0];
-            let b2 = blank_ids[1];
-            for (let n=0;n<26;n++){
-                for (let m=0;m<26;m++){
-                    changeLetter(b1, alphabet[n]);
-                    changeLetter(b2, alphabet[m]);
-                    this.blank1 = [b1, alphabet[n]];
-                    this.blank2 = [b2, alphabet[m]];
-                    this.trySingles();
-                 }
-            }
-            this.playBestMove();
-
-            return;
-        }
-
-
-
-    }
-
 
     AI_player.makeRack();
     AI_player.resetBestMove();
