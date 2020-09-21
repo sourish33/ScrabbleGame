@@ -1300,15 +1300,27 @@ let player = {
         }
     }
 
-    AI_player.placeCloneTile = function(orig_id, dest_id){
-        let origin = document.getElementById(orig_id);
-        let tile = getTheTile(origin);
-        let cloneTile = tile.cloneNode(true);
-        cloneTile.removeAttribute("id");
-        let dest = document.getElementById(dest_id);
-        dest.appendChild(cloneTile);
-        dest.classList.add('played-not-submitted');
-        dest.classList.add('clone');
+    AI_player.placeCloneTiles = function(orig_id, dest_id){
+        if (typeof(orig_id)!==typeof(dest_id)){return;}
+        if ( !isEmptyOnBoard(dest_id) ){return;}
+        if ( !(typeof(orig_id)==="string" || Array.isArray(orig_id)))   {return;}
+        if (typeof(orig_id) === "string"){
+            let origin = document.getElementById(orig_id);
+            let tile = getTheTile(origin);
+            let cloneTile = tile.cloneNode(true);
+            cloneTile.removeAttribute("id");
+            let dest = document.getElementById(dest_id);
+            dest.appendChild(cloneTile);
+            dest.classList.add('played-not-submitted');
+            dest.classList.add('clone');
+            return;
+        }
+        if (orig_id.length!== dest_id.length) {return;}
+
+        for (let i=0;i<orig_id.length;i++) {
+            this.placeCloneTiles(orig_id[i],dest_id[i]);
+        }
+        
         
     }
 
