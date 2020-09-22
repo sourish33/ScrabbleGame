@@ -1321,13 +1321,62 @@ let player = {
         }
     }
 
+    AI_player.tryNLetterWords = function(n=2){
+        let rackIds = getRackIdsCommonLetters();
+        let rackPerms = getAllRackPermutations(rackIds,n);
+        let legalSlots = getAllSlotsSortedByLen()[n];
+        for (let pos of legalSlots) {
+            for (let rackPerm of rackPerms){
+                if (includes("_", readWord(rackPerm))) {
+                //DO NOTHING FOR NOW
+                // let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                // let stop =  false;
+                // if (readLetter(rackId)==="_"){
+                //     console.log("Blank tile!")
+                //     for (let i=0;i<26;i++){
+                //         changeLetter(rackId,alphabet[i]);
+                //         let curPoints = this.bestMove["points"];
+                //         this.try_move_no_blanks(rackId, pos);
+                //         if (this.bestMove["points"] > curPoints){
+                //             if (this.bestMove["blank1"].length!==0)
+                //             {this.bestMove["blank1"] = [rackId, alphabet[i]];}
+                //             else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
+                //             stop = true;
+                //             console.log(`Choosing ${alphabet[i]} for the blank tile`)
+                //         }
+                //         changeLetter(rackId,"_");	
+                //         if(stop) {break;}
+                //     }
+                } else{
+                    this.try_move_no_blanks(rackPerm, pos);
+                    this.removeCloneTiles();
+                }
+            }
+        }
+    }
+
+    
+    AI_player.try_move_no_blanks = function(rackId, pos){
+        this.placeCloneTiles(rackId, pos);
+        if (allValidWords()){
+            let points = score();
+            if (points>this.bestMove["points"]){
+                this.bestMove["from"]=[rackId];
+                this.bestMove["to"] = [pos];
+                this.bestMove["points"] = points;
+            }
+        }
+        this.removeCloneTiles();
+    }
+
 
 
     AI_player.placeCloneTiles = function(orig_id, dest_id){
         if (typeof(orig_id)!==typeof(dest_id)){return;}
-        if ( !isEmptyOnBoard(dest_id) ){return;}
+        
         if ( !(typeof(orig_id)==="string" || Array.isArray(orig_id)))   {return;}
         if (typeof(orig_id) === "string"){
+            if ( !isEmptyOnBoard(dest_id) ){return;}
             let origin = document.getElementById(orig_id);
             let tile = getTheTile(origin);
             let cloneTile = tile.cloneNode(true);
@@ -1349,16 +1398,24 @@ let player = {
 
     AI_player.removeCloneTiles = function(){
         let cloneSpots=document.getElementsByClassName("clone");
-        if (cloneSpots.length===0) {return;}
-        for (let cloneSpot of cloneSpots) {
-            if (cloneSpot.children.length!==0){
-                cloneTile = cloneSpot.children[0];
-                cloneSpot.removeChild(cloneTile);
+        let pns=document.getElementsByClassName("played-not-submitted");
+        if (cloneSpots.length===0 && pns.length===0) {return;}
+         
+        while (cloneSpots.length>0) {
+                cloneTile = cloneSpots[0].children[0];
+                cloneSpots[0].removeChild(cloneTile);
+                cloneSpots[0].classList.remove("played-not-submitted");
+                cloneSpots[0].classList.remove("clone");
             }
-            cloneSpot.classList.remove("clone");
-            cloneSpot.classList.remove('played-not-submitted');
-        }
+        
+        let remcloneSpots=document.getElementsByClassName("clone");
+        if (remcloneSpots.length !==0){console.log(`${remcloneSpots.length} clone spots not cleared`);}
+
     }
+        
+
+    
+
 
     AI_player.ai_move = function(from_locs,to_locs,blank1=[],blank2=[]){
         if (typeof(from_locs)!==typeof(to_locs)){return;}
@@ -1376,22 +1433,10 @@ let player = {
 
 
 
-    AI_player.try_move_no_blanks = function(rackId, pos){
-        this.placeCloneTiles(rackId, pos);
-        if (allValidWords()){
-            let points = score();
-            if (points>this.bestMove["points"]){
-                this.bestMove["from"]=[rackId];
-                this.bestMove["to"] = [pos];
-                this.bestMove["points"] = points;
-            }
-        }
-        this.removeCloneTiles();
-    }
 
     AI_player.playBestMove = function(){
-        let from = this.bestMove["from"];
-        let to = this.bestMove["to"];
+        let from = this.bestMove["from"].flat();
+        let to = this.bestMove["to"].flat();
         if (this.bestMove["blank1"].length !==0){
             changeLetter(this.bestMove["blank1"][0], this.bestMove["blank1"][1] );
         }
@@ -1404,7 +1449,13 @@ let player = {
 
     AI_player.makeMove = function(){
              
-            this.trySingles();
+            if (moveNumber!==1) {this.trySingles();}
+            this.tryNLetterWords(2);
+            this.tryNLetterWords(3);
+            this.tryNLetterWords(4);
+            this.tryNLetterWords(5);
+            this.tryNLetterWords(6);
+            this.tryNLetterWords(7);
             this.playBestMove();
             return;
         }
