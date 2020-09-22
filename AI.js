@@ -125,9 +125,23 @@ function findCommonElements(arr1, arr2) {
     return arr1.some(item => arr2.includes(item)) 
 } 
 
-function arraysEqual(array1, array2) {//returns true if arrays are isomorphic
-    arr1=array1.sort();
-    arr2=array2.sort();
+function arraysIsomorphic(array1, array2) {//returns true if arrays are isomorphic
+	arr1=Array.from(array1);
+	arr2 =Array.from(array2);
+    arr1.sort();
+    arr2.sort();//Since the only sorting needed is for letters and the strings s1...s7, the built-in sort is ok
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+	}
+	return true;
+}
+
+function arraysExactlyEqual(array1, array2) {//returns false if the ordering of elements is different
+	arr1=Array.from(array1);
+	arr2 =Array.from(array2);
     if(arr1.length !== arr2.length)
         return false;
     for(var i = arr1.length; i--;) {
@@ -369,7 +383,14 @@ function getAllSlotsSortedByLen(){
 
 function alreadyContains(s, slots){
 	for(let slot of slots){
-		if (arraysEqual(slot, s)){return true;}
+		if (arraysIsomorphic(slot, s)){return true;}
+	}
+	return false;
+}
+
+function alreadyContainsExact(s, slots){
+	for(let slot of slots){
+		if (arraysExactlyEqual(slot, s)){return true;}
 	}
 	return false;
 }
@@ -392,6 +413,16 @@ function mergeWithoutDuplication(slots1, slots2) {
 	return long;
 }
 
+function removeDuplicates(v) {
+	let nodup = [];
+	for (el of v){
+		if (!alreadyContainsExact(el, nodup)) {
+		  nodup.push(el)
+	  	}
+	  }
+	return nodup;
+}
+
 function allValidWords(){
 	let words = readAllWords(getAllNewWords());
 	for (let word of words){
@@ -400,6 +431,34 @@ function allValidWords(){
 	return true;
 }
 
+function getAllRackPermutations(rackIds,n){
+
+	if (n<6){
+		combs = k_combinations(rackIds,n);
+		perms = []
+		for (comb of combs){
+			perms.push(permute(comb));
+		}
+		perms= perms.flat();
+	} else{
+		perms = permute(rackIds);
+	}
+	return removeDuplicates(perms);
+}
+
+function getRackIdsCommonLetters(){
+	rackIds = getRackIds("rack");
+	for (let i =0; i<7; i++){
+		for (let j=0;j<7;j++){
+			if (i===j){continue;} 
+			if (readLetter(rackIds[i])=== readLetter(rackIds[j]) && i<j){
+				rackIds[i] = rackIds[j];
+			}
+			
+		}
+	}
+	return rackIds;
+}
 
 // let rupa = createAIPlayer("AI_Rupa", 3);
 
