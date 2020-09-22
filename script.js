@@ -603,7 +603,7 @@ function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a"
     wordbag.push(word);
     if (wordbag.length ===0) {return [];}
     for (x of wordbag) {//only keep two letter words and above
-        if (x.length ===0 || x.length ===1) { // 
+        if (x.length ===0){// || x.length ===1) { // 
             wordbag = wordbag.filter(function(item) {
                 return item !== x;
             })
@@ -638,7 +638,7 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
     wordbag.push(word);
     if (wordbag.length ===0) {return [];}
     for (x of wordbag) {//only keep two letter words and above
-        if (x.length ===0 || x.length ===1) {
+        if (x.length ===0){ //|| x.length ===1) {
             wordbag = wordbag.filter(function(item) {
                 return item !== x;
             })
@@ -813,13 +813,21 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
         let cols = getPlayedCols(tiles);
         let rows = getPlayedRows(tiles);
         if (!(rows.length ===1 || cols.length ===1)) {
-            console.log("letters submitted are not in the same row or col")
+            console.log("letters submitted are not in the same row or col");
             return false;
         }
 
         if (getAllIslandWords().length!==0) {
-            console.log("illegal words")
+            console.log("illegal words");
             return false;
+        }
+
+        let newWords = getAllNewWords();
+        for (word of newWords){
+            if (word.length ===1){
+                console.log("island word of length 1");
+                return false;
+            }
         }
  
         
@@ -1282,6 +1290,7 @@ let player = {
     AI_player.bestMove ={};
     AI_player.blank1 =[];
     AI_player.blank2 =[];
+    AI_player.numMoves =0;
 
     AI_player.resetBestMove = function(){
         this.bestMove["points"]=0;
@@ -1289,6 +1298,7 @@ let player = {
         this.bestMove["to"]=[];
         this.bestMove["blank1"]=[];
         this.bestMove["blank2"]=[];
+        this.numMoves=0;
     }
 
     AI_player.trySingles = function(){
@@ -1298,6 +1308,7 @@ let player = {
 
                 let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 let stop =  false;
+                this.numMoves++;
                 if (readLetter(rackId)==="_"){
                     console.log("Blank tile!")
                     for (let i=0;i<26;i++){
@@ -1327,6 +1338,7 @@ let player = {
         let legalSlots = getAllSlotsSortedByLen()[n];
         for (let pos of legalSlots) {
             for (let rackPerm of rackPerms){
+                this.numMoves++;
                 if (includes("_", readWord(rackPerm))) {
                 //DO NOTHING FOR NOW
                 // let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -1449,13 +1461,22 @@ let player = {
 
     AI_player.makeMove = function(){
              
-            if (moveNumber!==1) {this.trySingles();}
+            if (moveNumber!==1) {
+                this.trySingles();
+                console.log(`${this.numMoves} attempted`)
+            }
             this.tryNLetterWords(2);
+            console.log(`${this.numMoves} attempted`)
             this.tryNLetterWords(3);
+            console.log(`${this.numMoves} attempted`)
             this.tryNLetterWords(4);
+            console.log(`${this.numMoves} attempted`)
             this.tryNLetterWords(5);
+            console.log(`${this.numMoves} attempted`)
             this.tryNLetterWords(6);
+            console.log(`${this.numMoves} attempted`)
             this.tryNLetterWords(7);
+            console.log(`${this.numMoves} attempted`)
             this.playBestMove();
             return;
         }
