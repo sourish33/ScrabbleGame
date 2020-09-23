@@ -198,6 +198,7 @@ function findHorGapSlots(row, n){
 			}
 			slot.push(row+(i+j).toString());
 		}
+
 		if (containsSubmitted){
 			slotList.push(subtractArrays(slot, toJumpOver));
 		}
@@ -458,6 +459,26 @@ function getRackIdsCommonLetters(){
 		}
 	}
 	return rackIds;
+}
+
+function checkLegalPlacementAI(slots){
+	let rows =[];
+	slots.forEach(slot => {rows.push(slot[0])}); 
+	rows = getUniques(rows);
+
+	let cols =[];
+	slots.forEach(slot => {cols.push(slot.substr(1))}); 
+	cols = getUniques(cols);
+
+	if (rows.length!==1 && cols.length!==1){
+		return false;
+	}
+
+	if (rows.length===1 && cols.length===1){
+		return false;
+	}
+
+
 }
 
 // let rupa = createAIPlayer("AI_Rupa", 3);
