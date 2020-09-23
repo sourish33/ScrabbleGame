@@ -603,7 +603,7 @@ function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a"
     wordbag.push(word);
     if (wordbag.length ===0) {return [];}
     for (x of wordbag) {//only keep two letter words and above
-        if (x.length ===0){// || x.length ===1) { // 
+        if (x.length ===0 || x.length ===1) { // 
             wordbag = wordbag.filter(function(item) {
                 return item !== x;
             })
@@ -638,7 +638,7 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
     wordbag.push(word);
     if (wordbag.length ===0) {return [];}
     for (x of wordbag) {//only keep two letter words and above
-        if (x.length ===0){ //|| x.length ===1) {
+        if (x.length ===0 || x.length ===1) {
             wordbag = wordbag.filter(function(item) {
                 return item !== x;
             })
@@ -809,9 +809,28 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
         return true;
     }
 
+    function isolatedLetter(sq_id){
+        for (el of neighbors(sq_id)) {
+            if (!isEmptyOnBoard(el)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function checkForIsolatedLetters(arr){
+        for (el of arr){
+            if (isolatedLetter(el)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function checkLegalPlacement(tiles){
         let cols = getPlayedCols(tiles);
         let rows = getPlayedRows(tiles);
+        let ids = getPlayedIds(tiles);
         if (!(rows.length ===1 || cols.length ===1)) {
             console.log("letters submitted are not in the same row or col");
             return false;
@@ -822,13 +841,11 @@ function isContiguous(arr){//takes an array of letters or numbers and returns tr
             return false;
         }
 
-        let newWords = getAllNewWords();
-        for (word of newWords){
-            if (word.length ===1){
-                console.log("island word of length 1");
-                return false;
-            }
+        if (checkForIsolatedLetters(ids)) {
+            console.log("isolated letters");
+            return false;
         }
+
  
         
         return true;
