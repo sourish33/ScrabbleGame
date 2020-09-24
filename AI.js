@@ -159,32 +159,51 @@ function clearBoxes(){//removes any dark borders
 	});
 }
 
+function doOverlap(arr1,arr2){
+	let overlaps =  arr1.filter(x => arr2.includes(x));
+	return (overlaps.length>0);
+}
+
 function findHorSlots(row, n){
-	let cols = generateCols();
+	if (typeof legalPositions === 'undefined' || legalPositions === null){
+		let legalPositions= getlegalPositions();
+	}
+	let playedTiles=getPlayedIds(getTilesSubmitted());
+	// let cols =[];
+    // legalPositions.forEach((pos)=>{cols.push(pos.substring(1));})
+	// cols = getUniques(cols);
+	cols=generateCols();
 	let slotList=[];
 	for (let i=1;i<15-n+2;i++){
 		let slot =[];
-		let containsSubmitted =false;
 		for (let j=0;j<n;j++){
 			let space_id = row+(i+j).toString();
-			if (document.getElementById(space_id).classList.contains("submitted")) {
-				containsSubmitted = true;
-			}
+			//if (document.getElementById(space_id).classList.contains("submitted")) {
+			// if (playedTiles.includes(space_id)){
+			// 	containsSubmitted = true;
+			// }
 			slot.push(row+(i+j).toString());
 		}
-		if (!containsSubmitted){
+		let containsAtLeastOneLegalSlot = doOverlap(slot,legalPositions);
+		let overlapsSubmitted =  doOverlap(slot,playedTiles)
+		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 			slotList.push(slot);
 		}
+
 	}
-	if (slotList.length===0) {return [];}
-	if (parseInt(slotList.slice(-1)[0].slice(-1)[0].substr(1))>15){
-		alert(`findHorSlot made a bad slot ${slotList.slice(-1)[0].slice(-1)[0]}`);
-	}
+	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+
 	return slotList;
 }
 
+
+
 function findHorGapSlots(row, n){
-	let cols = generateCols();
+	if (typeof legalPositions === 'undefined' || legalPositions === null){
+		let legalPositions= getlegalPositions();
+	}
+
+	cols=generateCols();
 	let slotList=[];
 	for (let i=1;i<15-n+2;i++){
 		let slot =[];
@@ -200,19 +219,30 @@ function findHorGapSlots(row, n){
 		}
 
 		if (containsSubmitted){
-			slotList.push(subtractArrays(slot, toJumpOver));
+			gapSlot = subtractArrays(slot, toJumpOver);
+			let containsAtLeastOneLegalSlot = gapSlot.filter(x => legalPositions.includes(x));
+			if (containsAtLeastOneLegalSlot.length!==0) {slotList.push(gapSlot);}
 		}
 	}
-	if (slotList.length===0) {return [];}
-	if (parseInt(slotList.slice(-1)[0].slice(-1)[0].substr(1))>15){
-		alert(`findHorSlot made a bad slot ${slotList.slice(-1)[0].slice(-1)[0]}`);
-	}
+	// for (slot of slotList){
+	// 	if (!checkLegalitySingleSlot(slot)){
+	// 		arrayRemove(slotList, slot);
+	// 	}
+	// }
+	
+
 	return slotList;
 }
 
 function findVerSlots(col, n){
-	let rows = generateRows();
+	if (typeof legalPositions === 'undefined' || legalPositions === null){
+		let legalPositions= getlegalPositions();
+	}
 	let slotList=[];
+	// let rows =[];
+    // legalPositions.forEach((pos)=>{rows.push(pos[0]);})
+	// rows = getUniques(rows);
+	let rows = generateRows();
 	for (let i=0;i<15-n+1;i++){
 		let slot =[];
 		let containsSubmitted =false;
@@ -225,7 +255,7 @@ function findVerSlots(col, n){
 			}
 			slot.push(space_id);
 		}
-		if (!containsSubmitted){
+		if (!containsSubmitted && checkLegalitySingleSlot(slot)){
 			slotList.push(slot);
 		}
 	}
@@ -234,8 +264,11 @@ function findVerSlots(col, n){
 }
 
 function findVerGapSlots(col, n){
-	let rows = generateRows();
+	if (typeof legalPositions === 'undefined' || legalPositions === null){
+		let legalPositions= getlegalPositions();
+	}
 	let slotList=[];
+	let rows = generateRows();
 	for (let i=0;i<15-n+1;i++){
 		let slot =[];
 		let containsSubmitted =false;
@@ -251,7 +284,8 @@ function findVerGapSlots(col, n){
 			slot.push(space_id);
 		}
 		if (containsSubmitted){
-			slotList.push(subtractArrays(slot, toJumpOver));
+			gapSlot = subtractArrays(slot, toJumpOver);
+			if( checkLegalitySingleSlot(gapSlot)){slotList.push(gapSlot);}
 		}
 	}
 
@@ -461,25 +495,116 @@ function getRackIdsCommonLetters(){
 	return rackIds;
 }
 
-function checkLegalPlacementAI(slots){
-	let rows =[];
-	slots.forEach(slot => {rows.push(slot[0])}); 
-	rows = getUniques(rows);
 
-	let cols =[];
-	slots.forEach(slot => {cols.push(slot.substr(1))}); 
-	cols = getUniques(cols);
-
-	if (rows.length!==1 && cols.length!==1){
-		return false;
+placeClones = function(orig_id, dest_id){
+	if (typeof(orig_id)!==typeof(dest_id)){return;}
+	
+	if ( !(typeof(orig_id)==="string" || Array.isArray(orig_id)))   {return;}
+	if (typeof(orig_id) === "string"){
+		if ( !isEmptyOnBoard(dest_id) ){return;}
+		let origin = document.getElementById(orig_id);
+		let tile = getTheTile(origin);
+		let cloneTile = tile.cloneNode(true);
+		cloneTile.removeAttribute("id");
+		let dest = document.getElementById(dest_id);
+		dest.appendChild(cloneTile);
+		dest.classList.add('played-not-submitted');
+		dest.classList.add('clone');
+		return;
 	}
+	if (orig_id.length!== dest_id.length) {return;}
 
-	if (rows.length===1 && cols.length===1){
-		return false;
+	for (let i=0;i<orig_id.length;i++) {
+		placeClones(orig_id[i],dest_id[i]);
 	}
+	
+	
+}
 
+removeClones = function(){
+	let cloneSpots=document.getElementsByClassName("clone");
+	let pns=document.getElementsByClassName("played-not-submitted");
+	if (cloneSpots.length===0 && pns.length===0) {return;}
+	 
+	while (cloneSpots.length>0) {
+			cloneTile = cloneSpots[0].children[0];
+			cloneSpots[0].removeChild(cloneTile);
+			cloneSpots[0].classList.remove("played-not-submitted");
+			cloneSpots[0].classList.remove("clone");
+		}
+	
+	let remcloneSpots=document.getElementsByClassName("clone");
+	if (remcloneSpots.length !==0){console.log(`${remcloneSpots.length} clone spots not cleared`);}
 
 }
+
+checkLegalitySingleSlot = function(slot){
+	let verdict = false;
+	for (pos of slot){
+		if (![ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k","l","m","n","o"].includes(pos[0])) {
+			console.log(`Cannot place tile on bad slot ${pos}` )
+			return verdict; 
+		}
+		if (![ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", '11', "12","13","14","15" ].includes(pos.substr(1))) {
+			console.log(`Cannot place tile on bad slot ${pos}` )
+			return verdict;  
+		}
+		if (!isEmptyOnBoard(pos)){
+			console.log(`Cannot place tile on occupied slot ${pos}` )
+			removeClones();
+			return verdict; 
+		}
+		placeClones("s1", pos);
+	}
+	let tiles = getTilesPlayedNotSubmitted();
+	verdict = checkLegalPlacement(tiles);
+	if (!verdict){console.log(`Bad Slot: ${slot}`) }
+	removeClones();
+	return verdict;
+}
+
+checkLegalityAll = function(slots){
+	for (slot of slots){
+		if (!checkLegalitySingleSlot(slot)) {
+			console.log(`checkLegalityAll found bad Slot: ${slot}`)
+			return false;
+		}
+	}
+	return true;
+}
+
+// function checkLegalPlacementAI(slots){//NOT COMPLETE - needs to deal with island slots
+// 	let rows =[];
+// 	slots.forEach(slot => {rows.push(slot[0])}); 
+// 	rows = getUniques(rows);
+
+// 	let cols =[];
+// 	slots.forEach(slot => {cols.push(slot.substr(1))}); 
+// 	cols = getUniques(cols);
+
+// 	if (rows.length!==1 && cols.length!==1){
+// 		return false;
+// 	}
+
+// 	if (rows.length===1 && cols.length===1){
+// 		return false;
+// 	}
+
+// 	return true;
+// }
+
+// function getNumGroups(num_array) {//slightly modified from StackOverflow groups adjacent numbers
+// 	return num_array.reduce(function(prev, curr) {
+// 		if (prev.length && curr === prev[prev.length - 1].slice(-1)[0]+1) {
+// 			prev[prev.length - 1].push(curr);
+// 		}
+// 		else {
+// 			prev.push([curr]);
+// 		}
+// 		return prev;
+// 	}, []);
+// }
+
 
 // let rupa = createAIPlayer("AI_Rupa", 3);
 

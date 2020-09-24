@@ -1352,7 +1352,7 @@ let player = {
     AI_player.tryNLetterWords = function(n=2){
         let rackIds = getRackIdsCommonLetters();
         let rackPerms = getAllRackPermutations(rackIds,n);
-        let legalSlots = getAllSlotsSortedByLen()[n];
+        let legalSlots = getAllSlotsSortedByLen()[n];///Check Legality here
         for (let pos of legalSlots) {
             for (let rackPerm of rackPerms){
                 this.numMoves++;
@@ -1397,6 +1397,8 @@ let player = {
         }
         this.removeCloneTiles();
     }
+
+
 
 
 
