@@ -121,7 +121,7 @@ function highlightBoxes(arr,flush=true){//puts dark borders around the slots spe
 	}
 }
 
-function findCommonElements(arr1, arr2) { 
+function findCommonElements(arr1, arr2) { //same as findCommonElements
     return arr1.some(item => arr2.includes(item)) 
 } 
 
@@ -159,10 +159,10 @@ function clearBoxes(){//removes any dark borders
 	});
 }
 
-function doOverlap(arr1,arr2){
-	let overlaps =  arr1.filter(x => arr2.includes(x));
-	return (overlaps.length>0);
-}
+// function findCommonElements(arr1,arr2){
+// 	let overlaps =  arr1.filter(x => arr2.includes(x));
+// 	return (overlaps.length>0);
+// }
 
 function findHorSlots(row, n){
 	if (typeof legalPositions === 'undefined' || legalPositions === null){
@@ -178,14 +178,11 @@ function findHorSlots(row, n){
 		let slot =[];
 		for (let j=0;j<n;j++){
 			let space_id = row+(i+j).toString();
-			//if (document.getElementById(space_id).classList.contains("submitted")) {
-			// if (playedTiles.includes(space_id)){
-			// 	containsSubmitted = true;
-			// }
-			slot.push(row+(i+j).toString());
+
+			slot.push(space_id);
 		}
-		let containsAtLeastOneLegalSlot = doOverlap(slot,legalPositions);
-		let overlapsSubmitted =  doOverlap(slot,playedTiles);
+		let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+		let overlapsSubmitted =  findCommonElements(slot,playedTiles);
 		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 			slotList.push(slot);
 		}
@@ -220,8 +217,8 @@ function findHorGapSlots(row, n){
 
 		if (containsSubmitted){
 			slot = subtractArrays(slot, toJumpOver);
-			let containsAtLeastOneLegalSlot = doOverlap(slot,legalPositions);
-			let overlapsSubmitted =  doOverlap(slot,playedTiles);
+			let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+			let overlapsSubmitted =  findCommonElements(slot,playedTiles);
 			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 				slotList.push(slot);
 			}
@@ -238,27 +235,22 @@ function findVerSlots(col, n){
 		let legalPositions= getlegalPositions();
 	}
 	let slotList=[];
-	// let rows =[];
-    // legalPositions.forEach((pos)=>{rows.push(pos[0]);})
-	// rows = getUniques(rows);
+	let playedTiles=getPlayedIds(getTilesSubmitted());
 	let rows = generateRows();
 	for (let i=0;i<15-n+1;i++){
 		let slot =[];
 		let containsSubmitted =false;
 		for (let j=0;j<n;j++){
-			// if ((i+j)>rows.length){console.log(`i=${i} and j=${j}`)};//DEBUG LINE
 			let space_id = rows[i+j]+col.toString();
-			// console.log(`space_id is ${space_id}`);//DEBUG LINE
-			if (document.getElementById(space_id).classList.contains("submitted")) {
-				containsSubmitted = true;
-			}
 			slot.push(space_id);
 		}
-		if (!containsSubmitted && checkLegalitySingleSlot(slot)){
+		let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+		let overlapsSubmitted =  findCommonElements(slot,playedTiles);
+		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 			slotList.push(slot);
 		}
 	}
-
+	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
 	return slotList;
 }
 
@@ -267,6 +259,7 @@ function findVerGapSlots(col, n){
 		let legalPositions= getlegalPositions();
 	}
 	let slotList=[];
+	let playedTiles=getPlayedIds(getTilesSubmitted());
 	let rows = generateRows();
 	for (let i=0;i<15-n+1;i++){
 		let slot =[];
@@ -282,12 +275,20 @@ function findVerGapSlots(col, n){
 			}
 			slot.push(space_id);
 		}
+		// if (containsSubmitted){
+		// 	gapSlot = subtractArrays(slot, toJumpOver);
+		// 	if( checkLegalitySingleSlot(gapSlot)){slotList.push(gapSlot);}
+		// }
 		if (containsSubmitted){
-			gapSlot = subtractArrays(slot, toJumpOver);
-			if( checkLegalitySingleSlot(gapSlot)){slotList.push(gapSlot);}
+			slot = subtractArrays(slot, toJumpOver);
+			let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+			let overlapsSubmitted =  findCommonElements(slot,playedTiles);
+			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+				slotList.push(slot);
+			}
 		}
 	}
-
+	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
 	return slotList;
 }
 
