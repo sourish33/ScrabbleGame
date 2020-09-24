@@ -185,7 +185,7 @@ function findHorSlots(row, n){
 			slot.push(row+(i+j).toString());
 		}
 		let containsAtLeastOneLegalSlot = doOverlap(slot,legalPositions);
-		let overlapsSubmitted =  doOverlap(slot,playedTiles)
+		let overlapsSubmitted =  doOverlap(slot,playedTiles);
 		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 			slotList.push(slot);
 		}
@@ -202,7 +202,7 @@ function findHorGapSlots(row, n){
 	if (typeof legalPositions === 'undefined' || legalPositions === null){
 		let legalPositions= getlegalPositions();
 	}
-
+	let playedTiles=getPlayedIds(getTilesSubmitted());
 	cols=generateCols();
 	let slotList=[];
 	for (let i=1;i<15-n+2;i++){
@@ -219,17 +219,16 @@ function findHorGapSlots(row, n){
 		}
 
 		if (containsSubmitted){
-			gapSlot = subtractArrays(slot, toJumpOver);
-			let containsAtLeastOneLegalSlot = gapSlot.filter(x => legalPositions.includes(x));
-			if (containsAtLeastOneLegalSlot.length!==0) {slotList.push(gapSlot);}
+			slot = subtractArrays(slot, toJumpOver);
+			let containsAtLeastOneLegalSlot = doOverlap(slot,legalPositions);
+			let overlapsSubmitted =  doOverlap(slot,playedTiles);
+			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+				slotList.push(slot);
+			}
 		}
 	}
-	// for (slot of slotList){
-	// 	if (!checkLegalitySingleSlot(slot)){
-	// 		arrayRemove(slotList, slot);
-	// 	}
-	// }
-	
+
+	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
 
 	return slotList;
 }
