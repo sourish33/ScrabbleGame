@@ -1364,10 +1364,10 @@ let player = {
         let rackIds = getRackIds();
         let rackPerms = getAllRackPermutations(rackIds,n);
         let legalSlots = getAllSlotsSortedByLen()[n];
-
+        let blankspot;
         for (rackId of rackIds){
             if (readLetter(rackId)=="_"){
-                let blankspot = rackId;
+                blankspot = rackId;
             }
         }
         let moves =0;
