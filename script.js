@@ -1360,24 +1360,52 @@ let player = {
     }
 
     AI_player.tryNLetterWords = function(n, maxTries = MaxWords){
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         let rackIds = getRackIds();
         let rackPerms = getAllRackPermutations(rackIds,n);
         let legalSlots = getAllSlotsSortedByLen()[n];
+
+        for (rackId of rackIds){
+            if (readLetter(rackId)=="_"){
+                let blankspot = rackId;
+            }
+        }
         let moves =0;
         for (let pos of legalSlots) {
 
             for (let rackPerm of rackPerms){
                 this.numMoves++;
                 if (includes("_", readWord(rackPerm))) {
+                    console.log("Blank tile!")
+                    for (let i=0;i<26;i++){
+                        changeLetter(blankspot,alphabet[i]);
+                        let curPoints = this.bestMove["points"];
+                        this.try_move_no_blanks(rackPerm, pos);
+                        moves++;
+                        if (this.bestMove["points"] > curPoints){
+                            if (this.bestMove["blank1"].length!==0)
+                            {this.bestMove["blank1"] = [blankspot, alphabet[i]];}
+                            else {this.bestMove["blank2"] = [blankspot, alphabet[i]];}
+                            stop = true;
+                            console.log(`Choosing ${alphabet[i]} for the blank tile`)
+                        }
+                        changeLetter(blankspot,"_");	
+                        if(stop) {break;}
+                    }
+                
+
+
                 //DO NOTHING FOR NOW
+                
 
                 } else{
                     if (checkLegalitySingleSlot(pos)){
                         this.try_move_no_blanks(rackPerm, pos);
+                        moves++;
                         this.removeCloneTiles();
                     }
                 }
-                moves++;
+                
                 if (moves>maxTries || this.haveIwon){
                     // console.log(`${moves} max reached`)
                     return;
