@@ -18,7 +18,7 @@ let boosters = {};
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let settings = getSettings();
-let MaxWords = 500;
+let MaxWords = 5000;
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
@@ -1311,6 +1311,7 @@ let player = {
     AI_player.blank1 =[];
     AI_player.blank2 =[];
     AI_player.numMoves =0;
+    AI_player.haveIwon=false;
 
     AI_player.resetBestMove = function(){
         this.bestMove["points"]=0;
@@ -1350,8 +1351,8 @@ let player = {
                     this.try_move_no_blanks(rackId, pos);
                 }
                 moves++;
-                if (moves>maxTries){
-                    console.log(`${moves} max reached`)
+                if (moves>maxTries || this.haveIwon){
+                    // console.log(`${moves} max reached`)
                     return;
                 }
             }
@@ -1359,9 +1360,6 @@ let player = {
     }
 
     AI_player.tryNLetterWords = function(n, maxTries = MaxWords){
-        let infobox = document.getElementById('AIthinking');
-        infobox.classList.remove("not-there");
-        infobox.innerHTML=`Trying ${n} letter words`;
         let rackIds = getRackIds();
         let rackPerms = getAllRackPermutations(rackIds,n);
         let legalSlots = getAllSlotsSortedByLen()[n];
@@ -1380,8 +1378,8 @@ let player = {
                     }
                 }
                 moves++;
-                if (moves>maxTries){
-                    console.log(`${moves} max reached`)
+                if (moves>maxTries || this.haveIwon){
+                    // console.log(`${moves} max reached`)
                     return;
                 }
             }
@@ -1400,6 +1398,9 @@ let player = {
                     this.bestMove["from"]=[rackId];
                     this.bestMove["to"] = [pos];
                     this.bestMove["points"] = points;
+                    if (this.score+points>maxPoints){
+                        this.haveIwon=true;
+                    }
                 }
             }
         // }
@@ -1493,31 +1494,60 @@ let player = {
     AI_player.makeMove = function(){
 
             
-            let infobox = document.getElementById('AIthinking');
-            infobox.classList.remove("not-there");
-            infobox.innerHTML="Considering single letters";
+
             if (moveNumber!==1) {
                 this.trySingles();
+                console.log(`${this.numMoves} attempted`);
+                
             }
-            infobox.innerHTML="Considering 2 letters";
-            this.tryNLetterWords(2);
-            infobox.innerHTML="Considering 3 letters";
-            this.tryNLetterWords(3);
+            if (!this.haveIwon){
+                this.tryNLetterWords(2);
+                console.log(`${this.numMoves} attempted`);
+               
+            }
+            if (!this.haveIwon){
+                this.tryNLetterWords(3);
+                console.log(`${this.numMoves} attempted`);
+                
+            }
+            if (!this.haveIwon){
+                this.tryNLetterWords(4);
+                console.log(`${this.numMoves} attempted`);
+               
+            }
+            if (!this.haveIwon){
+                this.tryNLetterWords(5);
+                console.log(`${this.numMoves} attempted`);
+                
+            }
+            if (!this.haveIwon){
+                this.tryNLetterWords(6);
+                console.log(`${this.numMoves} attempted`);
+                
+            }
+            if (!this.haveIwon){
+                this.tryNLetterWords(7);
+                console.log(`${this.numMoves} attempted`);
+                
+            }
 
-            console.log(`${this.numMoves} attempted done with 3 letter words`);
-            infobox.innerHTML="Considering 4 letters";
-            this.tryNLetterWords(4);
-            console.log(`${this.numMoves} attempted done with 4 letter words`);
-            infobox.innerHTML="Considering 5 letters";
-            this.tryNLetterWords(5);
-            console.log(`${this.numMoves} attempted done with 5 letter words`);
-            infobox.innerHTML="Considering 6 letters";
-            this.tryNLetterWords(6);
-            console.log(`${this.numMoves} attempted done with 6 letter words`)
-            infobox.innerHTML="Considering 7 letters";
-            this.tryNLetterWords(7);
-            console.log(`${this.numMoves} attempted done with 7 letter words`)
-            infobox.innerHTML=`playing best move out of ${this.numMoves}`;
+            
+            // this.tryNLetterWords(3);
+
+            // console.log(`${this.numMoves} attempted done with 3 letter words`);
+            // infobox.innerHTML="Considering 4 letters";
+            // this.tryNLetterWords(4);
+            // console.log(`${this.numMoves} attempted done with 4 letter words`);
+            // infobox.innerHTML="Considering 5 letters";
+            // this.tryNLetterWords(5);
+            // console.log(`${this.numMoves} attempted done with 5 letter words`);
+            // infobox.innerHTML="Considering 6 letters";
+            // this.tryNLetterWords(6);
+            // console.log(`${this.numMoves} attempted done with 6 letter words`)
+            // infobox.innerHTML="Considering 7 letters";
+            // this.tryNLetterWords(7);
+            // console.log(`${this.numMoves} attempted done with 7 letter words`)
+            // infobox.innerHTML=`playing best move out of ${this.numMoves}`;
             this.playBestMove();
             
             return;
@@ -1670,12 +1700,14 @@ function createPlayers(){
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         
         if (includes("AI_", players[who].name)) {
+            replenishRack();
             AI_play();
         }
         else{
             alert(`Please pass to ${players[who].name}`); 
+            replenishRack();
         }
-        replenishRack();
+        
     }
 
 
