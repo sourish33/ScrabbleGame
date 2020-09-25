@@ -18,6 +18,7 @@ let boosters = {};
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let settings = getSettings();
+let MaxWords = 500;
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
@@ -220,7 +221,7 @@ function generateCols() {
     return cols;
 }
 
-function getRackIds(rackid) {//finds the rack element and grabs the ids of the slots
+function getRackIds(rackid="rack") {//finds the rack element and grabs the ids of the slots
     let rack = document.getElementById(rackid);
     let rackSlots = rack.children;
     let rackSlotIds = [];
@@ -1045,7 +1046,9 @@ function pass()
     //advance the movenumber
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
-    alert(`Please pass device to ${players[who].name}`);
+    if (!includes("AI_", players[who].name)){
+        alert(`Please pass device to ${players[who].name}`);
+    }
     document.getElementById("who-is-playing").innerHTML=players[who].name;
     players[who].returnPieces();
     replenishRack();
@@ -1172,7 +1175,7 @@ function score(){//find the scores of all the words in the list
 
 function getlegalPositions(){
     let tiles = getTilesSubmitted();
-    if (tiles.length===0) { return "h8";}
+    if (tiles.length===0) { return ["h8"];}
 
     let tile_ids = [];
     tiles.forEach((tile)=>{tile_ids.push(tile.id);})
@@ -1318,8 +1321,9 @@ let player = {
         this.numMoves=0;
     }
 
-    AI_player.trySingles = function(){
+    AI_player.trySingles = function(maxTries=MaxWords){
         let rackIds = getRackIds("rack");
+        let moves =0;
         for (let pos of legalPositions) {
             for (let rackId of rackIds){
 
@@ -1345,56 +1349,64 @@ let player = {
                 } else{
                     this.try_move_no_blanks(rackId, pos);
                 }
+                moves++;
+                if (moves>maxTries){
+                    console.log(`${moves} max reached`)
+                    return;
+                }
             }
         }
     }
 
-    AI_player.tryNLetterWords = function(n=2){
-        let rackIds = getRackIdsCommonLetters();
+    AI_player.tryNLetterWords = function(n, maxTries = MaxWords){
+        let infobox = document.getElementById('AIthinking');
+        infobox.classList.remove("not-there");
+        infobox.innerHTML=`Trying ${n} letter words`;
+        let rackIds = getRackIds();
         let rackPerms = getAllRackPermutations(rackIds,n);
-        let legalSlots = getAllSlotsSortedByLen()[n];///Check Legality here
+        let legalSlots = getAllSlotsSortedByLen()[n];
+        let moves =0;
         for (let pos of legalSlots) {
+
             for (let rackPerm of rackPerms){
                 this.numMoves++;
                 if (includes("_", readWord(rackPerm))) {
                 //DO NOTHING FOR NOW
-                // let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                // let stop =  false;
-                // if (readLetter(rackId)==="_"){
-                //     console.log("Blank tile!")
-                //     for (let i=0;i<26;i++){
-                //         changeLetter(rackId,alphabet[i]);
-                //         let curPoints = this.bestMove["points"];
-                //         this.try_move_no_blanks(rackId, pos);
-                //         if (this.bestMove["points"] > curPoints){
-                //             if (this.bestMove["blank1"].length!==0)
-                //             {this.bestMove["blank1"] = [rackId, alphabet[i]];}
-                //             else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
-                //             stop = true;
-                //             console.log(`Choosing ${alphabet[i]} for the blank tile`)
-                //         }
-                //         changeLetter(rackId,"_");	
-                //         if(stop) {break;}
-                //     }
+
                 } else{
-                    this.try_move_no_blanks(rackPerm, pos);
-                    this.removeCloneTiles();
+                    if (checkLegalitySingleSlot(pos)){
+                        this.try_move_no_blanks(rackPerm, pos);
+                        this.removeCloneTiles();
+                    }
+                }
+                moves++;
+                if (moves>maxTries){
+                    console.log(`${moves} max reached`)
+                    return;
                 }
             }
+
         }
     }
 
     
     AI_player.try_move_no_blanks = function(rackId, pos){
         this.placeCloneTiles(rackId, pos);
+        let tiles = getTilesPlayedNotSubmitted();
+        // if (checkLegalPlacement(tiles)){
         if (allValidWords()){
-            let points = score();
-            if (points>this.bestMove["points"]){
-                this.bestMove["from"]=[rackId];
-                this.bestMove["to"] = [pos];
-                this.bestMove["points"] = points;
+                let points = score();
+                if (points>this.bestMove["points"]){
+                    this.bestMove["from"]=[rackId];
+                    this.bestMove["to"] = [pos];
+                    this.bestMove["points"] = points;
+                }
             }
-        }
+        // }
+        // else{
+        //     //console.log(pos)
+        // }
+        
         this.removeCloneTiles();
     }
 
@@ -1479,24 +1491,35 @@ let player = {
     }
 
     AI_player.makeMove = function(){
-             
+
+            
+            let infobox = document.getElementById('AIthinking');
+            infobox.classList.remove("not-there");
+            infobox.innerHTML="Considering single letters";
             if (moveNumber!==1) {
                 this.trySingles();
-                console.log(`${this.numMoves} attempted`)
             }
+            infobox.innerHTML="Considering 2 letters";
             this.tryNLetterWords(2);
-            console.log(`${this.numMoves} attempted`)
+            infobox.innerHTML="Considering 3 letters";
             this.tryNLetterWords(3);
-            console.log(`${this.numMoves} attempted`)
+
+            console.log(`${this.numMoves} attempted done with 3 letter words`);
+            infobox.innerHTML="Considering 4 letters";
             this.tryNLetterWords(4);
-            console.log(`${this.numMoves} attempted`)
+            console.log(`${this.numMoves} attempted done with 4 letter words`);
+            infobox.innerHTML="Considering 5 letters";
             this.tryNLetterWords(5);
-            console.log(`${this.numMoves} attempted`)
+            console.log(`${this.numMoves} attempted done with 5 letter words`);
+            infobox.innerHTML="Considering 6 letters";
             this.tryNLetterWords(6);
-            console.log(`${this.numMoves} attempted`)
+            console.log(`${this.numMoves} attempted done with 6 letter words`)
+            infobox.innerHTML="Considering 7 letters";
             this.tryNLetterWords(7);
-            console.log(`${this.numMoves} attempted`)
+            console.log(`${this.numMoves} attempted done with 7 letter words`)
+            infobox.innerHTML=`playing best move out of ${this.numMoves}`;
             this.playBestMove();
+            
             return;
         }
         
@@ -1645,9 +1668,12 @@ function createPlayers(){
         updateScoreBoard();
         who= whoseMove(moveNumber,numPlayers);
         document.getElementById("who-is-playing").innerHTML=players[who].name;
-        alert(`Please pass to ${players[who].name}`); ;
+        
         if (includes("AI_", players[who].name)) {
             AI_play();
+        }
+        else{
+            alert(`Please pass to ${players[who].name}`); 
         }
         replenishRack();
     }

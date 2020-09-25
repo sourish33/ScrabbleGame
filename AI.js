@@ -405,9 +405,11 @@ function getAllSlotsSortedByLen(){
 		let allhorslots = findAllHorSlotsOfLength(i);
 		let horgapslots = allHorGapSlots[i];
 		let Hslots=mergeWithoutDuplication(allhorslots,horgapslots);
+		Hslots=shuffle(Hslots);
 		let allverslots = findAllVerSlotsOfLength(i);
 		let vergapslots = allVerGapSlots[i];
 		let Vslots=mergeWithoutDuplication(allverslots,vergapslots);
+		Vslots=shuffle(Vslots);
 		sortedslots[i].push(Hslots);
 		sortedslots[i].push(Vslots);
 		sortedslots[i]=sortedslots[i].flat();
@@ -538,19 +540,19 @@ removeClones = function(){
 
 }
 
-checkLegalitySingleSlot = function(slot){
+checkLegalitySingleSlot = function(slot, verbose=false){
 	let verdict = false;
 	for (pos of slot){
 		if (![ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k","l","m","n","o"].includes(pos[0])) {
-			console.log(`Cannot place tile on bad slot ${pos}` )
+			if (verbose){console.log(`Cannot place tile on bad slot ${pos}` )}
 			return verdict; 
 		}
 		if (![ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", '11', "12","13","14","15" ].includes(pos.substr(1))) {
-			console.log(`Cannot place tile on bad slot ${pos}` )
+			if (verbose){console.log(`Cannot place tile on bad slot ${pos}` )}
 			return verdict;  
 		}
 		if (!isEmptyOnBoard(pos)){
-			console.log(`Cannot place tile on occupied slot ${pos}` )
+			if (verbose){console.log(`Cannot place tile on occupied slot ${pos}` )}
 			removeClones();
 			return verdict; 
 		}
@@ -558,7 +560,7 @@ checkLegalitySingleSlot = function(slot){
 	}
 	let tiles = getTilesPlayedNotSubmitted();
 	verdict = checkLegalPlacement(tiles);
-	if (!verdict){console.log(`Bad Slot: ${slot}`) }
+	if (!verdict && verbose){console.log(`Bad Slot: ${slot}`) }
 	removeClones();
 	return verdict;
 }
