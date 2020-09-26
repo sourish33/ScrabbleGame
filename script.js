@@ -18,7 +18,7 @@ let boosters = {};
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let settings = getSettings();
-let MaxWords = 5000;
+let MaxWords = [10000,10000,10000,10000,5000,5000,5000];
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
@@ -1359,10 +1359,10 @@ let player = {
         }
     }
 
-    AI_player.tryNLetterWords = function(n, maxTries = MaxWords){
-        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    AI_player.tryNLetterWords = function(n, maxTries){
+        let alphabet = "AEOS";
         let rackIds = getRackIds();
-        let rackPerms = getAllRackPermutations(rackIds,n);
+        let rackPerms = getAllRackPermutations(n);
         let legalSlots = getAllSlotsSortedByLen()[n];
         let blankspot;
         for (rackId of rackIds){
@@ -1376,8 +1376,8 @@ let player = {
             for (let rackPerm of rackPerms){
                 this.numMoves++;
                 if (includes("_", readWord(rackPerm))) {
-                    console.log("Blank tile!")
-                    for (let i=0;i<26;i++){
+                    // console.log("Blank tile!")
+                    for (let i=0;i<alphabet.length;i++){
                         changeLetter(blankspot,alphabet[i]);
                         let curPoints = this.bestMove["points"];
                         this.try_move_no_blanks(rackPerm, pos);
@@ -1392,10 +1392,7 @@ let player = {
                         changeLetter(blankspot,"_");	
                         if(stop) {break;}
                     }
-                
-
-
-                //DO NOTHING FOR NOW
+            
                 
 
                 } else{
@@ -1516,49 +1513,58 @@ let player = {
             changeLetter(this.bestMove["blank2"][0], this.bestMove["blank2"][1] );
         }
         this.ai_move(from, to);
+        console.log(`found: ${readWord(this.bestMove["to"].flat())} for ${this.bestMove["points"]}`)
         this.resetBestMove();
     }
 
     AI_player.makeMove = function(){
 
             
-
+        let t0 = performance.now()
+        
             if (moveNumber!==1) {
-                this.trySingles();
-                console.log(`${this.numMoves} attempted`);
+                this.trySingles(MaxWords[0]);
+                let t1 = performance.now()
+                console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
                 
             }
             if (!this.haveIwon){
-                this.tryNLetterWords(2);
-                console.log(`${this.numMoves} attempted`);
+                this.tryNLetterWords(2,MaxWords[1]);
+                let t1 = performance.now()
+                console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
                
             }
             if (!this.haveIwon){
-                this.tryNLetterWords(3);
-                console.log(`${this.numMoves} attempted`);
+                this.tryNLetterWords(3, MaxWords[2]);
+                let t1 = performance.now()
+                console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
                 
             }
             if (!this.haveIwon){
-                this.tryNLetterWords(4);
-                console.log(`${this.numMoves} attempted`);
+                this.tryNLetterWords(4, MaxWords[3]);
+                let t1 = performance.now()
+                console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
                
             }
             if (!this.haveIwon){
-                this.tryNLetterWords(5);
-                console.log(`${this.numMoves} attempted`);
+                this.tryNLetterWords(5,MaxWords[4]);
+                let t1 = performance.now()
+                console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
                 
             }
             if (!this.haveIwon){
-                this.tryNLetterWords(6);
-                console.log(`${this.numMoves} attempted`);
+                this.tryNLetterWords(6, MaxWords[5]);
+                let t1 = performance.now()
+                console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
                 
             }
             if (!this.haveIwon){
-                this.tryNLetterWords(7);
-                console.log(`${this.numMoves} attempted`);
+                this.tryNLetterWords(7,MaxWords[6]);
+                let t1 = performance.now()
+                console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
                 
             }
-
+            
             
             // this.tryNLetterWords(3);
 
@@ -1577,7 +1583,7 @@ let player = {
             // console.log(`${this.numMoves} attempted done with 7 letter words`)
             // infobox.innerHTML=`playing best move out of ${this.numMoves}`;
             this.playBestMove();
-            
+           
             return;
         }
         

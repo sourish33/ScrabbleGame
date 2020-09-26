@@ -468,7 +468,42 @@ function allValidWords(){
 	return true;
 }
 
-function getAllRackPermutations(rackIds,n){
+function getAllRackPermutations(n){////////////////////////Need to check this
+	let rackIds=getRackIds();
+	let letters =[];
+	rackIds.forEach(el=>{ letters.push(readLetter(el)); });
+	let perms = unique_k_perms(letters,n);
+	let rackperms =[]
+	for (let perm of perms){
+		let rperm = [];
+		for (let el of perm){
+			let indices = getLocsInArray(letters, el);
+			if (indices.length===1) {
+				rperm.push(rackIds[indices[0]]);
+			}
+			else {
+				 for (index of indices){
+					if (!rperm.includes(rackIds[index])) {
+						rperm.push(rackIds[index]);
+						break;
+             		}
+         		}
+				  
+			}
+		}
+		rackperms.push(rperm);
+	}
+	return rackperms;
+
+}
+
+function getLocsInArray(arr, windex){//returns indices of the element windex in arr
+	let result =[];
+	arr.forEach((el, index) => el === windex ? result.push(index) : null)
+	return result;
+  }
+
+function unique_k_perms(rackIds,n){
 
 	if (n<6){
 		combs = k_combinations(rackIds,n);
@@ -483,19 +518,19 @@ function getAllRackPermutations(rackIds,n){
 	return removeDuplicates(perms);
 }
 
-function getRackIdsCommonLetters(){
-	rackIds = getRackIds("rack");
-	for (let i =0; i<7; i++){
-		for (let j=0;j<7;j++){
-			if (i===j){continue;} 
-			if (readLetter(rackIds[i])=== readLetter(rackIds[j]) && i<j){
-				rackIds[i] = rackIds[j];
-			}
+// function getRackIdsCommonLetters(){
+// 	rackIds = getRackIds("rack");
+// 	for (let i =0; i<7; i++){
+// 		for (let j=0;j<7;j++){
+// 			if (i===j){continue;} 
+// 			if (readLetter(rackIds[i])=== readLetter(rackIds[j]) && i<j){
+// 				rackIds[i] = rackIds[j];
+// 			}
 			
-		}
-	}
-	return rackIds;
-}
+// 		}
+// 	}
+// 	return rackIds;
+// }
 
 
 placeClones = function(orig_id, dest_id){
