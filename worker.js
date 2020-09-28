@@ -2,20 +2,16 @@ importScripts();
 
 
 function readLetter(space_id){
-    if (includes("s", space_id) && isEmptyOnRack(space_id)){return;}
-    if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
-    let tile = getTileAt(space_id);
-    let letter =tile.children[1].innerHTML;
-    return letter;
+    return board[space_id][0];
+}
+
+function readPoint(space_id){
+    return board[space_id][1];
 }
 
 function changeLetter(space_id, letter){
 
-    if (!isLetter(letter) && letter!=="_"){return;}
-    if (includes("s", space_id) && isEmptyOnRack(space_id)){return;}
-    if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
-    let tile = getTileAt(space_id);
-    tile.children[1].innerHTML = letter.toUpperCase();
+    board[space_id][0]=letter;
 }
 
 function readWord(arr){
@@ -29,11 +25,73 @@ function readWord(arr){
     return word.join('');
 }
 
-function getAllHorWords(){
+function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
 
-    let played = getTilesPlayedNotSubmitted();
-    let played_ids = getPlayedIds(played);
-    // gets all new horizontal words
+    let wordbag = [];
+    let word =[];
+
+    for (let i =1; i<16; i++) {
+        let curloc = row+i.toString();
+        if (getTileAt(curloc) ==null) {
+            if (word.length!=0) {
+                wordbag.push(word); 
+                word =[];
+            }
+        } else{
+            word.push(curloc);
+        }
+    }
+    wordbag.push(word);
+    if (wordbag.length ===0) {return [];}
+    for (x of wordbag) {//only keep two letter words and above
+        if (x.length ===0 || x.length ===1) { // 
+            wordbag = wordbag.filter(function(item) {
+                return item !== x;
+            })
+
+        }
+    }
+    return wordbag;
+}
+
+function getVerWords(num) {//finds all 2-letter and higher words in column (e.g "a" or "h")
+
+    if (typeof(num) !== "string"){
+        num = num.toString();
+    }
+
+    let rows = generateRows();
+
+    let wordbag = [];
+    let word =[];
+
+    for (let i =0; i<15; i++) {
+        let curloc = rows[i]+num;
+        if (getTileAt(curloc) ==null) {
+            if (word.length!=0) {
+                wordbag.push(word); 
+                word =[];
+            }
+        } else{
+            word.push(curloc);
+        }
+    }
+    wordbag.push(word);
+    if (wordbag.length ===0) {return [];}
+    for (x of wordbag) {//only keep two letter words and above
+        if (x.length ===0 || x.length ===1) {
+            wordbag = wordbag.filter(function(item) {
+                return item !== x;
+            })
+
+        }
+    }
+    return wordbag;
+}
+
+function getAllHorWords(){///////////////////TODO//////////////////////////
+
+    //played_ids available as a global
     let rows = getPlayedRows(played);
     if (rows.length ===0) { return [];}
     
@@ -189,6 +247,14 @@ function move(from, to){
     return board;
 }
 
+function placeCloneTiles(from, to){
+    //TODO: remember to update tilesPlayedNotSubmitted
+}
+
+function removeCloneTiles(from, to){
+    //TODO: remember to update tilesPlayedNotSubmitted
+}
+
 
 
 
@@ -203,10 +269,12 @@ onmessage = function(e) {
     played_ids = e.data[2];
 
     move("s1", "a15");
-    move("s2", "a1");
-    move("s3","o15");
+    r=readLetter("s4");
+    changeLetter("s4","_");
+    rr = readLetter("s4");
+
     
-    postMessage(board);
+    postMessage([r,rr]);
   }
 
 
