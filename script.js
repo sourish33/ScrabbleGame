@@ -1687,11 +1687,14 @@ function createPlayers(){
     function callWorker(){
         let myWorker = new Worker('worker.js');
         let board = whatsOnTheBoard();
-        myWorker.postMessage(board);
+        let tiles = getTilesSubmitted();
+        let played_ids= getPlayedIds(tiles);
+        
+        myWorker.postMessage([board, getlegalPositions(),played_ids]);
 
         myWorker.onmessage = function(e) {
             result = e.data;
-            console.log('Message received from worker'+result);
+            console.log(result);
           }
     }
 

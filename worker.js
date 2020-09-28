@@ -181,15 +181,32 @@ function getLettersOnSquare(whichSquare){//check if the square has TW, DL etc
     }
 }
 
-onmessage = function(e) {
-    console.log('Message received from main script');
-    let board = e.data;
 
-    workerResult = 'Result: ' + board["s1"][0];
-    console.log('Posting message back to main script:'+workerResult);
-    postMessage(workerResult);
-  }
+function move(from, to){
+    let tile = board[from];
+    board[to] = tile;
+    delete board[from];
+    return board;
+}
+
+
 
 
 
 console.log("Hello I am the worker");
+
+
+onmessage = function(e) {
+    console.log('Message received from main script');
+    board = e.data[0];
+    legalPositions = e.data[1];
+    played_ids = e.data[2];
+
+    move("s1", "a15");
+    move("s2", "a1");
+    move("s3","o15");
+    
+    postMessage(board);
+  }
+
+
