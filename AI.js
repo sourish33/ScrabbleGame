@@ -610,38 +610,3 @@ checkLegalityAll = function(slots){
 	return true;
 }
 
-// function checkLegalPlacementAI(slots){//NOT COMPLETE - needs to deal with island slots
-// 	let rows =[];
-// 	slots.forEach(slot => {rows.push(slot[0])}); 
-// 	rows = getUniques(rows);
-
-// 	let cols =[];
-// 	slots.forEach(slot => {cols.push(slot.substr(1))}); 
-// 	cols = getUniques(cols);
-
-// 	if (rows.length!==1 && cols.length!==1){
-// 		return false;
-// 	}
-
-// 	if (rows.length===1 && cols.length===1){
-// 		return false;
-// 	}
-
-// 	return true;
-// }
-
-// function getNumGroups(num_array) {//slightly modified from StackOverflow groups adjacent numbers
-// 	return num_array.reduce(function(prev, curr) {
-// 		if (prev.length && curr === prev[prev.length - 1].slice(-1)[0]+1) {
-// 			prev[prev.length - 1].push(curr);
-// 		}
-// 		else {
-// 			prev.push([curr]);
-// 		}
-// 		return prev;
-// 	}, []);
-// }
-
-
-// let rupa = createAIPlayer("AI_Rupa", 3);
-
