@@ -1660,19 +1660,29 @@ function createPlayers(){
         
     }
 
-    // function whatsOnTheBoard(){
-    //     let rows = generateRows();
-    //     let cols = generateCols();
-    //     let boardnrack={};
+    function whatsOnTheBoard(){
+        let rows = generateRows();
+        let cols = generateCols();
+        let rackIds = getRackIds();
+        let boardnrack={};
 
-    //     for (row of rows){
-    //         for (col of cols){
-    //             let space_id=row+col.toString();
-    //             if (!isEmptyOnBoard(space_id))
-    //             boardnrack[space_id]=[readLetter(space_id),readPoints]
-    //         }
-    //     }
-    // }
+        for (row of rows){
+            for (col of cols){
+                let space_id=row+col.toString();
+                if (!isEmptyOnBoard(space_id)){
+                    boardnrack[space_id]=[readLetter(space_id),readPoint(space_id)];
+                }
+            }
+        }
+
+        for (rackId of rackIds){
+            if (!isEmptyOnRack(rackId)){
+                boardnrack[rackId]=[readLetter(rackId),readPoint(rackId)];
+            }
+        }
+
+        return boardnrack;
+    }
 
 
     function exchangeLetters() {
