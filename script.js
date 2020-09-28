@@ -1684,6 +1684,17 @@ function createPlayers(){
         return boardnrack;
     }
 
+    function callWorker(){
+        let myWorker = new Worker('worker.js');
+        let board = whatsOnTheBoard();
+        myWorker.postMessage(board);
+
+        myWorker.onmessage = function(e) {
+            result = e.data;
+            console.log('Message received from worker'+result);
+          }
+    }
+
 
     function exchangeLetters() {
         let onboard = getTilesPlayedNotSubmitted();
