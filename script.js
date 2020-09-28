@@ -742,6 +742,15 @@ function readLetter(space_id){
     return letter;
 }
 
+function readPoint(space_id){
+    if (includes("s", space_id) && isEmptyOnRack(space_id)){return;}
+    if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
+    let tile = getTileAt(space_id);
+    let point =tile.children[2].innerHTML;
+    point = parseInt(point);
+    return point;
+}
+
 function changeLetter(space_id, letter){
 
     if (!isLetter(letter) && letter!=="_"){return;}
@@ -767,9 +776,9 @@ function readPoints(arr){
     //reads off the point values of the letters of a word
     let points =[];
     for (space_id of arr){
-        let tile = getTileAt(space_id);
-        let point =tile.children[2].innerHTML;
-        point = parseInt(point);
+        // let tile = getTileAt(space_id);
+        // let point =tile.children[2].innerHTML;
+        let point = readPoint(space_id);
         points.push(point);
     }
     return points;
@@ -1540,6 +1549,7 @@ let player = {
 
 
 
+
         let t1 = performance.now();
         console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
         this.playBestMove();
@@ -1649,6 +1659,20 @@ function createPlayers(){
 
         
     }
+
+    // function whatsOnTheBoard(){
+    //     let rows = generateRows();
+    //     let cols = generateCols();
+    //     let boardnrack={};
+
+    //     for (row of rows){
+    //         for (col of cols){
+    //             let space_id=row+col.toString();
+    //             if (!isEmptyOnBoard(space_id))
+    //             boardnrack[space_id]=[readLetter(space_id),readPoints]
+    //         }
+    //     }
+    // }
 
 
     function exchangeLetters() {
