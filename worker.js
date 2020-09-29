@@ -386,11 +386,13 @@ onmessage = function(e) {
     played_ids = e.data[2];
     submitted_ids = e.data[3];
     boosters = e.data[4];
-
+    let t0=performance.now();
     let p = score();
+    let t1=performance.now();
+    let msg = `calculated ${p} in ${t1-t0} ms`
     // let r = readAllWords(getAllNewWords())
 
-    postMessage(p);
+    postMessage(msg);
   }
 
 
