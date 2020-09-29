@@ -22,6 +22,19 @@ function includes(strToCheck, word) {
     return (word.indexOf(strToCheck) > -1 ? true : false)
 }
 
+
+function multiplyArrays(arr1, arr2){//dot product
+    if (arr1.length !== arr2.length){
+        console.log("cant multiply arrays of different sizes");
+        return null;
+    }
+    var result=0;
+    for (var i=0; i<arr1.length;i++){
+        result+=arr1[i]*arr2[i];   
+    }
+    return result;
+}
+
 function getUniques(arr){//returns unique elements in an array
     return Array.from(new Set(arr));
 }
@@ -39,6 +52,18 @@ function readPoint(space_id){
 function changeLetter(space_id, letter){
 
     board[space_id][0]=letter;
+}
+
+function readPoints(arr){
+    //reads off the point values of the letters of a word
+    let points =[];
+    for (space_id of arr){
+        // let tile = getTileAt(space_id);
+        // let point =tile.children[2].innerHTML;
+        let point = readPoint(space_id);
+        points.push(point);
+    }
+    return points;
 }
 
 function readWord(arr){
@@ -88,8 +113,7 @@ function findAdjRows(arr) {
     return result;
     }
 
-function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
-
+function occupiedSpacesInRow(row){
     let spaces = Object.keys(board);
     let sq_ids =[];
     for (space of spaces){
@@ -97,6 +121,12 @@ function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a"
             sq_ids.push(space);
         }
     }
+    return sq_ids;
+}
+
+function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
+
+    let sq_ids = occupiedSpacesInRow(row);
 
 
     let cols = [];
@@ -231,26 +261,31 @@ function getAllNewWords(){
 
 }
 
-function score(){//find the scores of all the words in the list
-    let tiles = getTilesPlayedNotSubmitted();
-    if (tiles.length === 0) {return 0;}
-    let totalPoints = 0;
-    if (!checkLegalPlacement(tiles)) {
-        return totalPoints;
-    }
+function getLettersOnSquare(whichSquare){//check if the square has TW, DL etc
+    if (Array.isArray(whichSquare)) {
+        let u = [];
+        for (elem of whichSquare){
+            u.push(getLettersOnSquare(elem));
+        }
+        return u;
 
+    } else {
+        let u = boosters[whichSquare];
+        return (u!=null ? u : "");
+    }
+}
+
+function score(){//find the scores of all the words in the list
 
     let wordsToScore = getAllNewWords();
-    if (wordsToScore.length===0) {
-        document.getElementById("points").innerHTML = totalPoints;
-        return totalPoints;
-        }//no legal words
+    let totalPoints=0;
 
-    
     for (word of wordsToScore) {
         totalPoints += wordScore(word);
     }
-    if (rackEmpty("rack")) { totalPoints += 50;}
+    let rackslots=occupiedSpacesInRow("s");
+
+    if (rackslots.length===0) { totalPoints += 50;}
 
     return totalPoints;
 }
@@ -265,8 +300,8 @@ function wordScore(arr){
     //disregard boosters and multipliers for already-submitted tiles
     for (let i=0;i<place_vals.length; i++){
         let sq_id = arr[i];
-        let t=document.getElementById(sq_id);
-        if (t.classList.contains("submitted")) {
+    
+        if ( submitted_ids.includes(sq_id)    ) {
             place_vals[i] = "";
         }
 
@@ -349,8 +384,11 @@ onmessage = function(e) {
     board = e.data[0];
     legalPositions = e.data[1];
     played_ids = e.data[2];
+    submitted_ids = e.data[3];
+    boosters = e.data[4];
 
-    let r = readAllWords(getAllNewWords());
+    // let p = score();
+    let r = readAllWords(getAllNewWords())
 
     postMessage(r);
   }

@@ -1,20 +1,6 @@
 
 
-let boosters = {};
-(boosters = function fillBoosters() {
-    let rows = generateRows();
-    let cols = generateCols();
-    for (let row of rows){
-        for (let col of cols) {
-            let square_id = row+col;
-            // console.log(`boosters[${square_id}]`);
-            let writtenOnSquare = document.getElementById(square_id).innerHTML;
-            boosters[square_id] = writtenOnSquare; 
-        }
-    }
-    })();
-
-
+let boosters = fillBoosters();
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let settings = getSettings();
@@ -78,6 +64,22 @@ let tilesArray;
     }
 
 })();
+
+
+function fillBoosters() {
+        let boosters ={};
+        let rows = generateRows();
+        let cols = generateCols();
+        for (let row of rows){
+            for (let col of cols) {
+                let square_id = row+col;
+                // console.log(`boosters[${square_id}]`);
+                let writtenOnSquare = document.getElementById(square_id).innerHTML;
+                boosters[square_id] = writtenOnSquare; 
+            }
+        }
+        return boosters;
+    }
 
 function getSettings(){
     let d = sessionStorage.getItem("dictionary");
@@ -1689,8 +1691,10 @@ function createPlayers(){
         let board = whatsOnTheBoard();
         let tiles = getTilesPlayedNotSubmitted();
         let played_ids= getPlayedIds(tiles);
-        
-        myWorker.postMessage([board, getlegalPositions(),played_ids]);
+        tiles = getTilesSubmitted();
+        let submitted_ids= getPlayedIds(tiles);
+
+        myWorker.postMessage([board, getlegalPositions(),played_ids,submitted_ids,boosters]);
 
         myWorker.onmessage = function(e) {
             result = e.data;
