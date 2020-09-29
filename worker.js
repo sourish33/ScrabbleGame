@@ -387,10 +387,10 @@ onmessage = function(e) {
     submitted_ids = e.data[3];
     boosters = e.data[4];
 
-    // let p = score();
-    let r = readAllWords(getAllNewWords())
+    let p = score();
+    // let r = readAllWords(getAllNewWords())
 
-    postMessage(r);
+    postMessage(p);
   }
 
 
