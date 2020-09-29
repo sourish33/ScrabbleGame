@@ -1,6 +1,33 @@
 importScripts();
 
 
+function generateRows(){
+    let rows = [];
+    for (let i =97; i<112;i++) { 
+        rows.push(String.fromCharCode(i));
+    }
+    return rows;
+}
+
+function generateCols() {
+    let cols = [];
+    for (let i=1;i<16;i++) {
+        cols.push(i.toString());
+    }
+    return cols;
+}
+
+
+function includes(strToCheck, word) {	
+    return (word.indexOf(strToCheck) > -1 ? true : false)
+}
+
+function getUniques(arr){//returns unique elements in an array
+    return Array.from(new Set(arr));
+}
+
+
+
 function readLetter(space_id){
     return board[space_id][0];
 }
@@ -17,41 +44,88 @@ function changeLetter(space_id, letter){
 function readWord(arr){
     let word =[];
     for (space_id of arr){
-        // let tile = getTileAt(space_id);
-        // let letter =tile.children[1].innerHTML;
         let letter = readLetter(space_id)
         word.push(letter);
     }
     return word.join('');
 }
 
+function readAllWords(wordarray){
+    if (wordarray.length ===0) { return [];}
+    let words =[];
+    for (arr of wordarray){
+        words.push(readWord(arr));
+    }
+    return words;
+}
+
+function findAdjCols(arr) {///////https://stackoverflow.com/questions/26675688/best-way-to-group-adjacent-array-items-by-value
+    ///group adjacent numbers
+    var result = arr.reduce(function(prev, curr) {
+        if (prev.length && curr === prev[prev.length - 1].slice(-1)[0]+1) {
+            prev[prev.length - 1].push(curr);
+        }
+        else {
+            prev.push([curr]);
+        }
+        return prev;
+    }, []);
+    return result;
+}
+
+
+function findAdjRows(arr) {
+    /////group adjacent letters
+    var result = arr.reduce(function(prev, curr) {
+        if (prev.length && curr.charCodeAt(0) === prev[prev.length - 1].slice(-1)[0].charCodeAt(0)+1) {
+            prev[prev.length - 1].push(curr);
+        }
+        else {
+            prev.push([curr]);
+        }
+        return prev;
+    }, []);
+    return result;
+    }
+
 function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
 
-    let wordbag = [];
-    let word =[];
-
-    for (let i =1; i<16; i++) {
-        let curloc = row+i.toString();
-        if (getTileAt(curloc) ==null) {
-            if (word.length!=0) {
-                wordbag.push(word); 
-                word =[];
-            }
-        } else{
-            word.push(curloc);
+    let spaces = Object.keys(board);
+    let sq_ids =[];
+    for (space of spaces){
+        if (includes(row, space)){
+            sq_ids.push(space);
         }
     }
-    wordbag.push(word);
+
+
+    let cols = [];
+    for (id of sq_ids){
+      cols.push( parseInt(id.substr(1)) );
+    }
+    grouped_cols = findAdjCols(cols);
+    let wordbag =[];
+    for (col of grouped_cols){
+      word =[]
+      for (el of col){
+        el =row+el.toString();
+        word.push(el);
+      }
+      wordbag.push(word)
+    }
+
     if (wordbag.length ===0) {return [];}
     for (x of wordbag) {//only keep two letter words and above
-        if (x.length ===0 || x.length ===1) { // 
+        if (x.length ===0 || x.length ===1) {
             wordbag = wordbag.filter(function(item) {
                 return item !== x;
             })
 
         }
     }
+
     return wordbag;
+
 }
 
 function getVerWords(num) {//finds all 2-letter and higher words in column (e.g "a" or "h")
@@ -67,7 +141,7 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
 
     for (let i =0; i<15; i++) {
         let curloc = rows[i]+num;
-        if (getTileAt(curloc) ==null) {
+        if (board[curloc] ==null)  {
             if (word.length!=0) {
                 wordbag.push(word); 
                 word =[];
@@ -92,7 +166,13 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
 function getAllHorWords(){///////////////////TODO//////////////////////////
 
     //played_ids available as a global
-    let rows = getPlayedRows(played);
+    
+    
+    let rows =[];
+    for (id of played_ids){
+        rows.push(id[0])
+    }
+    rows = getUniques(rows);
     if (rows.length ===0) { return [];}
     
     let allHorWords = [];
@@ -116,9 +196,11 @@ function getAllHorWords(){///////////////////TODO//////////////////////////
 function getAllVerWords(){
 
     //gets all new vertical words
-    let played = getTilesPlayedNotSubmitted();
-    let played_ids = getPlayedIds(played);
-    let cols = getPlayedCols(played);
+    let cols =[];
+    for (id of played_ids){
+        cols.push(id.substr(1))
+    }
+    cols = getUniques(cols);
     if (cols.length ===0) { return [];}
 
     let allVerWords = [];
@@ -268,13 +350,9 @@ onmessage = function(e) {
     legalPositions = e.data[1];
     played_ids = e.data[2];
 
-    move("s1", "a15");
-    r=readLetter("s4");
-    changeLetter("s4","_");
-    rr = readLetter("s4");
+    let r = readAllWords(getAllNewWords());
 
-    
-    postMessage([r,rr]);
+    postMessage(r);
   }
 
 

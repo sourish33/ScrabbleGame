@@ -1687,7 +1687,7 @@ function createPlayers(){
     function callWorker(){
         let myWorker = new Worker('worker.js');
         let board = whatsOnTheBoard();
-        let tiles = getTilesSubmitted();
+        let tiles = getTilesPlayedNotSubmitted();
         let played_ids= getPlayedIds(tiles);
         
         myWorker.postMessage([board, getlegalPositions(),played_ids]);
