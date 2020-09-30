@@ -361,10 +361,14 @@ function move(from, to){
     let tile = board[from];
     board[to] = tile;
     delete board[from];
-    return board;
+    // return board;
 }
 
 function placeCloneTiles(from, to){
+    let tile = board[from];
+    let cloneTile = Array.from(tile);
+    cloneTile.push("clone");
+    board[to] = cloneTile;
     //TODO: remember to update tilesPlayedNotSubmitted
 }
 
@@ -376,7 +380,7 @@ function removeCloneTiles(from, to){
 
 
 
-console.log("Hello I am the worker");
+console.log("Hello I am the sexy worker");
 
 
 onmessage = function(e) {
@@ -391,8 +395,8 @@ onmessage = function(e) {
     let t1=performance.now();
     let msg = `calculated ${p} in ${t1-t0} ms`
     // let r = readAllWords(getAllNewWords())
-
-    postMessage(msg);
+    placeCloneTiles("s1","a1")
+    postMessage(board);
   }
 
 
