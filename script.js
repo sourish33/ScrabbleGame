@@ -4,7 +4,7 @@ let boosters = fillBoosters();
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let settings = getSettings();
-let MaxWords = [10000,10000,10000,10000,5000,5000,5000];
+let MaxWords = [10000,10000,10000,10000,10000,5000,5000];
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
@@ -1407,11 +1407,11 @@ let player = {
                 
 
                 } else{
-                    if (checkLegalitySingleSlot(pos)){
+                    // if (checkLegalitySingleSlot(pos)){
                         this.try_move_no_blanks(rackPerm, pos);
                         moves++;
                         this.removeCloneTiles();
-                    }
+                    // }
                 }
                 
                 if (moves>maxTries || this.haveIwon){
@@ -1541,7 +1541,7 @@ let player = {
         }
 
 
-        for (n=2;n<5;n++){
+        for (n=2;n<8;n++){
         if (!this.haveIwon){
             this.tryNLetterWords(n,MaxWords[n-1]);
             }
