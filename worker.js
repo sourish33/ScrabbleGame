@@ -372,7 +372,12 @@ function placeCloneTiles(from, to){
     //TODO: remember to update tilesPlayedNotSubmitted
 }
 
-function removeCloneTiles(from, to){
+function removeCloneTiles(from, to){/////WORKING ON THISS!!!!!!!!!!!!!!!!!!!!
+    let ids = Object.keys(board);
+
+    for (id of ids){
+        if (board[id].length>2) {delete board[id]}
+    }
     //TODO: remember to update tilesPlayedNotSubmitted
 }
 
@@ -390,12 +395,14 @@ onmessage = function(e) {
     played_ids = e.data[2];
     submitted_ids = e.data[3];
     boosters = e.data[4];
-    let t0=performance.now();
-    let p = score();
-    let t1=performance.now();
-    let msg = `calculated ${p} in ${t1-t0} ms`
+    // let t0=performance.now();
+    // let p = score();
+    // let t1=performance.now();
+    // let msg = `calculated ${p} in ${t1-t0} ms`
     // let r = readAllWords(getAllNewWords())
-    placeCloneTiles("s1","a1")
+    placeCloneTiles("s1","a1");
+    placeCloneTiles("s2","a2");
+    removeCloneTiles();
     postMessage(board);
   }
 
