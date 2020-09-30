@@ -39,6 +39,10 @@ function getUniques(arr){//returns unique elements in an array
     return Array.from(new Set(arr));
 }
 
+function arrayRemove(arr, value) { //removes value from array
+    return arr.filter(function(element){ return element != value; });
+   }
+
 
 
 function readLetter(space_id){
@@ -365,10 +369,20 @@ function move(from, to){
 }
 
 function placeCloneTiles(from, to){
-    let tile = board[from];
-    let cloneTile = Array.from(tile);
-    cloneTile.push("clone");
-    board[to] = cloneTile;
+
+    if (typeof(from) === "string"){
+        let tile = board[from];
+        let cloneTile = Array.from(tile);
+        cloneTile.push("clone");
+        board[to] = cloneTile;
+        played_ids.push(to);
+        return;
+    }
+
+    for (let i=0;i<from.length;i++) {
+        placeCloneTiles(from[i],to[i]);
+    }
+
     //TODO: remember to update tilesPlayedNotSubmitted
 }
 
@@ -376,7 +390,11 @@ function removeCloneTiles(from, to){/////WORKING ON THISS!!!!!!!!!!!!!!!!!!!!
     let ids = Object.keys(board);
 
     for (id of ids){
-        if (board[id].length>2) {delete board[id]}
+        if (board[id].length>2) {
+            delete board[id];
+            played_ids=arrayRemove(played_ids, id);
+        }
+        
     }
     //TODO: remember to update tilesPlayedNotSubmitted
 }
@@ -385,11 +403,10 @@ function removeCloneTiles(from, to){/////WORKING ON THISS!!!!!!!!!!!!!!!!!!!!
 
 
 
-console.log("Hello I am the sexy worker");
+console.log("Hello I am the new worker");
 
 
 onmessage = function(e) {
-    console.log('Message received from main script');
     board = e.data[0];
     legalPositions = e.data[1];
     played_ids = e.data[2];
@@ -400,9 +417,12 @@ onmessage = function(e) {
     // let t1=performance.now();
     // let msg = `calculated ${p} in ${t1-t0} ms`
     // let r = readAllWords(getAllNewWords())
+    console.log("placing clone tiles")
     placeCloneTiles("s1","a1");
-    placeCloneTiles("s2","a2");
+    placeCloneTiles(["s2","s3","s7"],["a2","a3","o6"]);
+    console.log(played_ids);
     removeCloneTiles();
+    console.log(played_ids);
     postMessage(board);
   }
 
