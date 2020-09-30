@@ -4,7 +4,7 @@ let boosters = fillBoosters();
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let settings = getSettings();
-let MaxWords = [10000,10000,10000,10000,10000,5000,5000];
+let MaxWords = [10000,10000,10000,50000,50000,50000,50000];
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
@@ -1415,7 +1415,7 @@ let player = {
                 }
                 
                 if (moves>maxTries || this.haveIwon){
-                    // console.log(`${moves} max reached`)
+                    console.log(`${moves} max reached for ${n}-letter words`)
                     return;
                 }
             }

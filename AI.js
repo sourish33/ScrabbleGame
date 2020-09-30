@@ -188,7 +188,7 @@ function findHorSlots(row, n){
 		}
 
 	}
-	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
 
 	return slotList;
 }
@@ -225,7 +225,7 @@ function findHorGapSlots(row, n){
 		}
 	}
 
-	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
 
 	return slotList;
 }
@@ -250,7 +250,7 @@ function findVerSlots(col, n){
 			slotList.push(slot);
 		}
 	}
-	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
 	return slotList;
 }
 
@@ -288,7 +288,7 @@ function findVerGapSlots(col, n){
 			}
 		}
 	}
-	slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
 	return slotList;
 }
 
