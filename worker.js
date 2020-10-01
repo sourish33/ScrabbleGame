@@ -126,6 +126,20 @@ function generateCols() {
     return cols;
 }
 
+function shuffle(arr){
+
+    let L = arr.length -1;
+    let sarr = Array.from(arr);//cannot use = cuz JS passes by reference in this case
+
+    for(let i = L; i > 0; i--) {
+        const j = Math.floor(Math.random() * i);
+        const temp = sarr[i];
+        sarr[i] = sarr[j];
+        sarr[j] = temp;
+    }
+    return sarr;
+}
+
 
 function includes(strToCheck, word) {	
     return (word.indexOf(strToCheck) > -1 ? true : false)
@@ -349,7 +363,183 @@ function findVerGapSlots(col, n){
 	return slotList;
 }
 
+//////************************TO Fix********************************************* */
+function findAllHorSlotsOfLength(n) {
+	let allSlots =[];
+	let rows = [];
 
+    for (pos of legalPositions){
+		rows.push(pos[0]);
+		rows = getUniques(rows);
+	}
+
+	for (row of rows){
+		let horSlots = findHorSlots(row, n);
+		for (horSlot of horSlots){
+			if (findCommonElements(legalPositions, horSlot)) { allSlots.push(horSlot);}
+		}
+	}
+
+	return allSlots;
+}
+
+function findAllVerSlotsOfLength(n) {
+	let allSlots =[];
+	let cols = [];
+
+    for (pos of legalPositions){
+		cols.push(parseInt(pos.substr(1)));
+		cols = getUniques(cols);
+	}
+
+	for (col of cols){
+		let vslots = findVerSlots(col, n);
+		for (vslot of vslots){
+			if (findCommonElements(legalPositions, vslot)) { allSlots.push(vslot);}
+		}
+	}
+
+	return allSlots;
+}
+
+function getAllHorGapSlots(){
+	let allSlots =[];
+	let rows = [];
+
+    for (pos of legalPositions){
+		rows.push(pos[0]);
+		rows = getUniques(rows);
+	}
+	for (let row of rows){
+		for (let i=3;i<8;i++) {
+			gapslot = findHorGapSlots(row, i);
+			let len = gapslot.length;
+			if (len>1){
+				allSlots.push(gapslot);
+			}
+		}
+	}
+	allSlots = allSlots.flat();
+	return sortSlotsByLength(allSlots);
+}
+
+function getAllVerGapSlots(){
+	let allSlots =[];
+	let cols = [];
+
+    for (pos of legalPositions){
+		cols.push(parseInt(pos.substr(1)));
+		cols = getUniques(cols);
+	}
+
+	for (let col of cols){
+		for (let i=3;i<8;i++) {
+			gapslot = findVerGapSlots(col, i);
+			let len = gapslot.length;
+			if (len>1){
+				allSlots.push(gapslot);
+			}
+		}
+	}
+	allSlots = allSlots.flat();
+	return sortSlotsByLength(allSlots);
+}
+
+function sortSlotsByLength(slots) {
+	let sortedslots ={};
+	for (let i=2;i<8;i++){
+		sortedslots[i]=[];
+	}
+	for (let i=2;i<8;i++){
+		for (let slot of slots){
+			if (slot.length === i){
+				sortedslots[i].push(slot);
+			}
+		}
+	}
+
+	return sortedslots;
+}
+
+
+function getAllSlotsSortedByLen(){
+	let sortedslots ={};
+	let allHorGapSlots = getAllHorGapSlots();
+	let allVerGapSlots = getAllVerGapSlots();
+	for (let i=2;i<8;i++){
+		sortedslots[i]=[];
+	}
+	for (let i=2;i<8;i++){
+		let allhorslots = findAllHorSlotsOfLength(i);
+		let horgapslots = allHorGapSlots[i];
+		let Hslots=mergeWithoutDuplication(allhorslots,horgapslots);
+		Hslots=shuffle(Hslots);
+		let allverslots = findAllVerSlotsOfLength(i);
+		let vergapslots = allVerGapSlots[i];
+		let Vslots=mergeWithoutDuplication(allverslots,vergapslots);
+		Vslots=shuffle(Vslots);
+		sortedslots[i].push(Hslots);
+		sortedslots[i].push(Vslots);
+		sortedslots[i]=sortedslots[i].flat();
+	}
+
+	return sortedslots;
+}
+
+function alreadyContains(s, slots){
+	for(let slot of slots){
+		if (arraysIsomorphic(slot, s)){return true;}
+	}
+	return false;
+}
+
+function alreadyContainsExact(s, slots){
+	for(let slot of slots){
+		if (arraysExactlyEqual(slot, s)){return true;}
+	}
+	return false;
+}
+
+function mergeWithoutDuplication(slots1, slots2) {
+	if (slots1.length===0) {return slots2;}
+	if (slots2.length===0) {return slots1;}
+	let long, short;
+	if (slots1.length > slots2.length){
+		long = Array.from(slots1);
+		short = Array.from(slots2);
+	} else {
+		short = Array.from(slots1);
+		long = Array.from(slots2);
+
+	}
+	for (let s of short){
+		if (!alreadyContains(s, long)) {long.push(s)}
+	}
+	return long;
+}
+
+function removeDuplicates(v) {
+	let nodup = [];
+	for (el of v){
+		if (!alreadyContainsExact(el, nodup)) {
+		  nodup.push(el)
+	  	}
+	  }
+	return nodup;
+}
+
+function allValidWords(){
+	let words = readAllWords(getAllNewWords());
+	for (let word of words){
+		if (!checkDict(word)) {return false}
+	}
+	return true;
+}
+
+
+
+
+//////////////////////*********************************** */
 function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
 
     let sq_ids = occupiedSpacesInRow(row);
@@ -643,7 +833,7 @@ onmessage = function(e) {
     // placeCloneTiles("s1","a1");
     // placeCloneTiles(["s2","s3","s7"],["a2","a3","o6"]);
     // removeCloneTiles();
-    let h = findVerSlots(8,5);
+    let h = getAllSlotsSortedByLen()[4];
 
     postMessage(h);
   }
