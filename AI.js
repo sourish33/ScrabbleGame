@@ -360,24 +360,66 @@ function sortSlotsByLength(slots) {
 	return sortedslots;
 }
 
-function hasLetters(slot){
+function hasLetters(slot,which="all"){
 	let letterList = getLettersOnSquare(slot);
-	if(findCommonElements(letterList,["TL","DL","TW","DW"])){
-		return true;
+	if (which==="all"){
+		if(findCommonElements(letterList,["TL","DL","TW","DW"])){
+			return true;
+		}
+			return false;
 	}
-	return false;
+	else{
+		if (letterList.includes(which)){
+			return true;
+		}
+			return false;
+	}
+		
 }
 
 function prioritySort(slotArray){
 	let sArray = Array.from(slotArray);
-	let goodSlots =[];
+	let TW =[];
+	let DW=[];
+	let TL=[];
+	let DL=[];
 	for (slot of sArray){
-		if (hasLetters(slot)){
-			sArray=arrayRemove(sArray,slot);
-			goodSlots.push(slot);
+		if (hasLetters(slot, "TW")){
+			// sArray=arrayRemove(sArray,slot);
+			TW.push(slot);
+			continue;
 		}	
+		if (hasLetters(slot, "DW")){
+			// sArray=arrayRemove(sArray,slot);
+			DW.push(slot);
+			continue;
+		}	
+		if (hasLetters(slot, "TL")){
+			// sArray=arrayRemove(sArray,slot);
+			TL.push(slot);
+			continue;
+		}
+		if (hasLetters(slot, "DL")){
+			// sArray=arrayRemove(sArray,slot);
+			DL.push(slot);
+			continue;
+			}
+		//sArray=arrayRemove(sArray,slot);	
 	}
-	sArray = goodSlots.concat(sArray);
+
+	let goodSlots = TW.concat(DW).concat(TL).concat(DL);
+	let nogoodSlots = subtractArrays(sArray,goodSlots);
+	// console.log(`good: ${goodSlots}`);
+	// console.log(`nogood: ${nogoodSlots}`)
+	// console.log(`TW: ${TW}`)
+	// console.log(`DW: ${DW}`)
+	// console.log(`TL: ${TL}`)
+	// console.log(`DL: ${DL}`)
+	// console.log(`rem: ${sArray}`)
+	sArray = goodSlots.concat(nogoodSlots);
+	if (sArray.length!==slotArray.length){
+		console.log("Ooops!!!!!! prioritySort failed")
+	}
 	return sArray;
 }
 
