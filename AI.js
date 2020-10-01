@@ -45,25 +45,7 @@ function k_combinations(set, k) {
 		return combs;
 	}
 	
-	// Assert {1 < k < set.length}
 	
-	// Algorithm description:
-	// To get k-combinations of a set, we want to join each element
-	// with all (k-1)-combinations of the other elements. The set of
-	// these k-sized sets would be the desired result. However, as we
-	// represent sets with lists, we need to take duplicates into
-	// account. To avoid producing duplicates and also unnecessary
-	// computing, we use the following approach: each element i
-	// divides the list into three: the preceding elements, the
-	// current element i, and the subsequent elements. For the first
-	// element, the list of preceding elements is empty. For element i,
-	// we compute the (k-1)-computations of the subsequent elements,
-	// join each with the element i, and store the joined to the set of
-	// computed k-combinations. We do not need to take the preceding
-	// elements into account, because they have already been the i:th
-	// element so they are already computed and stored. When the length
-	// of the subsequent list drops below (k-1), we cannot find any
-	// (k-1)-combs, hence the upper limit for the iteration:
 	combs = [];
 	for (i = 0; i < set.length - k + 1; i++) {
 		// head is a list that includes only our current element.
@@ -80,22 +62,7 @@ function k_combinations(set, k) {
 }
 
 
-/**
- * Combinations
- * 
- * Get all possible combinations of elements in a set.
- * 
- * Usage:
- *   combinations(set)
- * 
- * Examples:
- * 
- *   combinations([1, 2, 3])
- *   -> [[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]
- * 
- *   combinations([1])
- *   -> [[1]]
- */
+
 function combinations(set) {
 	var k, i, combs, k_combs;
 	combs = [];

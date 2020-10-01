@@ -1,5 +1,114 @@
 importScripts();
 
+function permute(permutation) {
+    var length = permutation.length,
+        result = [permutation.slice()],
+        c = new Array(length).fill(0),
+        i = 1, k, p;
+  
+    while (i < length) {
+      if (c[i] < i) {
+        k = i % 2 && c[i];
+        p = permutation[i];
+        permutation[i] = permutation[k];
+        permutation[k] = p;
+        ++c[i];
+        i = 1;
+        result.push(permutation.slice());
+      } else {
+        c[i] = 0;
+        ++i;
+      }
+    }
+    return result;
+  }
+  
+  
+  function k_combinations(set, k) {
+      var i, j, combs, head, tailcombs;
+      
+      // There is no way to take e.g. sets of 5 elements from
+      // a set of 4.
+      if (k > set.length || k <= 0) {
+          return [];
+      }
+      
+      // K-sized set has only one K-sized subset.
+      if (k == set.length) {
+          return [set];
+      }
+      
+      // There is N 1-sized subsets in a N-sized set.
+      if (k == 1) {
+          combs = [];
+          for (i = 0; i < set.length; i++) {
+              combs.push([set[i]]);
+          }
+          return combs;
+      }
+      
+      
+      combs = [];
+      for (i = 0; i < set.length - k + 1; i++) {
+          // head is a list that includes only our current element.
+          head = set.slice(i, i + 1);
+          // We take smaller combinations from the subsequent elements
+          tailcombs = k_combinations(set.slice(i + 1), k - 1);
+          // For each (k-1)-combination we join it with the current
+          // and store it to the set of k-combinations.
+          for (j = 0; j < tailcombs.length; j++) {
+              combs.push(head.concat(tailcombs[j]));
+          }
+      }
+      return combs;
+  }
+  
+  
+  
+  function combinations(set) {
+      var k, i, combs, k_combs;
+      combs = [];
+      
+      // Calculate all non-empty k-combinations
+      for (k = 1; k <= set.length; k++) {
+          k_combs = k_combinations(set, k);
+          for (i = 0; i < k_combs.length; i++) {
+              combs.push(k_combs[i]);
+          }
+      }
+      return combs;
+  }
+  
+  function findCommonElements(arr1, arr2) { //same as findCommonElements
+    return arr1.some(item => arr2.includes(item)) 
+} 
+
+function arraysIsomorphic(array1, array2) {//returns true if arrays are isomorphic
+	arr1=Array.from(array1);
+	arr2 =Array.from(array2);
+    arr1.sort();
+    arr2.sort();//Since the only sorting needed is for letters and the strings s1...s7, the built-in sort is ok
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+	}
+	return true;
+}
+
+function arraysExactlyEqual(array1, array2) {//returns false if the ordering of elements is different
+	arr1=Array.from(array1);
+	arr2 =Array.from(array2);
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+	}
+	return true;
+}  
+
 
 function generateRows(){
     let rows = [];
@@ -43,7 +152,9 @@ function arrayRemove(arr, value) { //removes value from array
     return arr.filter(function(element){ return element != value; });
    }
 
-
+function subtractArrays(arr1,arr2){
+    return arr1.filter(value => !arr2.includes(value));
+ }
 
 function readLetter(space_id){
     return board[space_id][0];
@@ -128,6 +239,117 @@ function occupiedSpacesInRow(row){
     return sq_ids;
 }
 
+function findHorSlots(row, n){/////////////////WORKING ON THIS///////////////////////////////////
+
+	//legalPositions and played_ids and cols available as globals
+
+	let slotList=[];
+	for (let i=1;i<15-n+2;i++){
+		let slot =[];
+		for (let j=0;j<n;j++){
+			let space_id = row+(i+j).toString();
+
+			slot.push(space_id);
+		}
+		let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+		let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+			slotList.push(slot);
+		}
+
+	}
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+
+	return slotList;
+}
+
+function findHorGapSlots(row, n){
+
+	let slotList=[];
+	for (let i=1;i<15-n+2;i++){
+		let slot =[];
+		let containsSubmitted =false;
+		let toJumpOver = [];
+		for (let j=0;j<n;j++){
+			let space_id = row+(i+j).toString();
+			if (submitted_ids.includes(space_id)) {
+				containsSubmitted = true;
+				toJumpOver.push(space_id);
+			}
+			slot.push(row+(i+j).toString());
+		}
+
+		if (containsSubmitted){
+			slot = subtractArrays(slot, toJumpOver);
+			let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+			let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+				slotList.push(slot);
+			}
+		}
+	}
+
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+
+	return slotList;
+}
+
+
+function findVerSlots(col, n){
+
+	let slotList=[];
+	for (let i=0;i<15-n+1;i++){
+		let slot =[];
+		let containsSubmitted =false;
+		for (let j=0;j<n;j++){
+			let space_id = rows[i+j]+col.toString();
+			slot.push(space_id);
+		}
+		let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+		let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+			slotList.push(slot);
+		}
+	}
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+	return slotList;
+}
+
+function findVerGapSlots(col, n){
+
+	let slotList=[];
+	let rows = generateRows();
+	for (let i=0;i<15-n+1;i++){
+		let slot =[];
+		let containsSubmitted =false;
+		let toJumpOver = [];
+		for (let j=0;j<n;j++){
+			let space_id = rows[i+j]+col.toString();
+			
+			if (submitted_ids.includes(space_id)) {
+				containsSubmitted = true;
+				toJumpOver.push(space_id);
+			}
+			slot.push(space_id);
+		}
+		// if (containsSubmitted){
+		// 	gapSlot = subtractArrays(slot, toJumpOver);
+		// 	if( checkLegalitySingleSlot(gapSlot)){slotList.push(gapSlot);}
+		// }
+		if (containsSubmitted){
+			slot = subtractArrays(slot, toJumpOver);
+			let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
+			let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+				slotList.push(slot);
+			}
+		}
+	}
+	// slotList = slotList.filter(item => (checkLegalitySingleSlot(item)) );
+	return slotList;
+}
+
+
 function getHorWords(row) {//finds all 2-letter and higher words in row (e.g "a" or "h")
 
     let sq_ids = occupiedSpacesInRow(row);
@@ -197,9 +419,7 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
     return wordbag;
 }
 
-function getAllHorWords(){///////////////////TODO//////////////////////////
-
-    //played_ids available as a global
+function getAllHorWords(){
     
     
     let rows =[];
@@ -386,7 +606,7 @@ function placeCloneTiles(from, to){
     //TODO: remember to update tilesPlayedNotSubmitted
 }
 
-function removeCloneTiles(from, to){/////WORKING ON THISS!!!!!!!!!!!!!!!!!!!!
+function removeCloneTiles(from, to){
     let ids = Object.keys(board);
 
     for (id of ids){
@@ -404,6 +624,9 @@ function removeCloneTiles(from, to){/////WORKING ON THISS!!!!!!!!!!!!!!!!!!!!
 
 
 console.log("Hello I am the new worker");
+rackIds=[ "s1", "s2", "s3", "s4", "s5", "s6", "s7" ];
+cols = generateCols();
+rows = generateRows();
 
 
 onmessage = function(e) {
@@ -417,13 +640,12 @@ onmessage = function(e) {
     // let t1=performance.now();
     // let msg = `calculated ${p} in ${t1-t0} ms`
     // let r = readAllWords(getAllNewWords())
-    console.log("placing clone tiles")
-    placeCloneTiles("s1","a1");
-    placeCloneTiles(["s2","s3","s7"],["a2","a3","o6"]);
-    console.log(played_ids);
-    removeCloneTiles();
-    console.log(played_ids);
-    postMessage(board);
+    // placeCloneTiles("s1","a1");
+    // placeCloneTiles(["s2","s3","s7"],["a2","a3","o6"]);
+    // removeCloneTiles();
+    let h = findVerSlots(8,5);
+
+    postMessage(h);
   }
 
 
