@@ -385,37 +385,26 @@ function prioritySort(slotArray){
 	let DL=[];
 	for (slot of sArray){
 		if (hasLetters(slot, "TW")){
-			// sArray=arrayRemove(sArray,slot);
 			TW.push(slot);
 			continue;
 		}	
 		if (hasLetters(slot, "DW")){
-			// sArray=arrayRemove(sArray,slot);
 			DW.push(slot);
 			continue;
 		}	
 		if (hasLetters(slot, "TL")){
-			// sArray=arrayRemove(sArray,slot);
 			TL.push(slot);
 			continue;
 		}
 		if (hasLetters(slot, "DL")){
-			// sArray=arrayRemove(sArray,slot);
 			DL.push(slot);
 			continue;
-			}
-		//sArray=arrayRemove(sArray,slot);	
+			}	
 	}
 
 	let goodSlots = TW.concat(DW).concat(TL).concat(DL);
 	let nogoodSlots = subtractArrays(sArray,goodSlots);
-	// console.log(`good: ${goodSlots}`);
-	// console.log(`nogood: ${nogoodSlots}`)
-	// console.log(`TW: ${TW}`)
-	// console.log(`DW: ${DW}`)
-	// console.log(`TL: ${TL}`)
-	// console.log(`DL: ${DL}`)
-	// console.log(`rem: ${sArray}`)
+
 	sArray = goodSlots.concat(nogoodSlots);
 	if (sArray.length!==slotArray.length){
 		console.log("Ooops!!!!!! prioritySort failed")
@@ -435,14 +424,12 @@ function getAllSlotsSortedByLen(){
 		let allhorslots = findAllHorSlotsOfLength(i);
 		let horgapslots = allHorGapSlots[i];
 		let Hslots=mergeWithoutDuplication(allhorslots,horgapslots);
-		Hslots=prioritySort(Hslots);
 		let allverslots = findAllVerSlotsOfLength(i);
 		let vergapslots = allVerGapSlots[i];
 		let Vslots=mergeWithoutDuplication(allverslots,vergapslots);
-		Vslots=prioritySort(Vslots);
 		sortedslots[i].push(Hslots);
 		sortedslots[i].push(Vslots);
-		sortedslots[i]=sortedslots[i].flat();
+		sortedslots[i]=prioritySort(sortedslots[i].flat());
 	}
 
 	return sortedslots;

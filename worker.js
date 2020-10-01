@@ -473,14 +473,12 @@ function getAllSlotsSortedByLen(){
 		let allhorslots = findAllHorSlotsOfLength(i);
 		let horgapslots = allHorGapSlots[i];
 		let Hslots=mergeWithoutDuplication(allhorslots,horgapslots);
-		Hslots=shuffle(Hslots);
 		let allverslots = findAllVerSlotsOfLength(i);
 		let vergapslots = allVerGapSlots[i];
 		let Vslots=mergeWithoutDuplication(allverslots,vergapslots);
-		Vslots=shuffle(Vslots);
 		sortedslots[i].push(Hslots);
 		sortedslots[i].push(Vslots);
-		sortedslots[i]=sortedslots[i].flat();
+		sortedslots[i]=prioritySort(sortedslots[i].flat());
 	}
 
 	return sortedslots;
@@ -535,6 +533,59 @@ function allValidWords(){
 	}
 	return true;
 }
+
+function hasLetters(slot,which="all"){
+	let letterList = getLettersOnSquare(slot);
+	if (which==="all"){
+		if(findCommonElements(letterList,["TL","DL","TW","DW"])){
+			return true;
+		}
+			return false;
+	}
+	else{
+		if (letterList.includes(which)){
+			return true;
+		}
+			return false;
+	}
+		
+}
+
+function prioritySort(slotArray){
+	let sArray = Array.from(slotArray);
+	let TW =[];
+	let DW=[];
+	let TL=[];
+	let DL=[];
+	for (slot of sArray){
+		if (hasLetters(slot, "TW")){
+			TW.push(slot);
+			continue;
+		}	
+		if (hasLetters(slot, "DW")){
+			DW.push(slot);
+			continue;
+		}	
+		if (hasLetters(slot, "TL")){
+			TL.push(slot);
+			continue;
+		}
+		if (hasLetters(slot, "DL")){
+			DL.push(slot);
+			continue;
+			}	
+	}
+
+	let goodSlots = TW.concat(DW).concat(TL).concat(DL);
+	let nogoodSlots = subtractArrays(sArray,goodSlots);
+
+	sArray = goodSlots.concat(nogoodSlots);
+	// if (sArray.length!==slotArray.length){
+	// 	console.log("Ooops!!!!!! prioritySort failed")
+	// }
+	return sArray;
+}
+
 
 
 
@@ -835,9 +886,9 @@ onmessage = function(e) {
     // removeCloneTiles();
     // let h = getAllSlotsSortedByLen()[7];
     let t0=performance.now();
-    let h = allValidWords();
+    let h = getAllSlotsSortedByLen()[4];
     let t1=performance.now();
-    let msg = `calculated ${h} in ${t1-t0} ms`
+    let msg = `calculated ${h.length} in ${t1-t0} ms`
 
     postMessage(msg);
   }
