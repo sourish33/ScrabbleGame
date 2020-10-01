@@ -1,4 +1,4 @@
-importScripts();
+importScripts("dictformatted.js", "dictionary.js");
 
 function permute(permutation) {
     var length = permutation.length,
@@ -833,9 +833,13 @@ onmessage = function(e) {
     // placeCloneTiles("s1","a1");
     // placeCloneTiles(["s2","s3","s7"],["a2","a3","o6"]);
     // removeCloneTiles();
-    let h = getAllSlotsSortedByLen()[4];
+    // let h = getAllSlotsSortedByLen()[7];
+    let t0=performance.now();
+    let h = allValidWords();
+    let t1=performance.now();
+    let msg = `calculated ${h} in ${t1-t0} ms`
 
-    postMessage(h);
+    postMessage(msg);
   }
 
 

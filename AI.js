@@ -360,6 +360,27 @@ function sortSlotsByLength(slots) {
 	return sortedslots;
 }
 
+function hasLetters(slot){
+	let letterList = getLettersOnSquare(slot);
+	if(findCommonElements(letterList,["TL","DL","TW","DW"])){
+		return true;
+	}
+	return false;
+}
+
+function prioritySort(slotArray){
+	let sArray = Array.from(slotArray);
+	let goodSlots =[];
+	for (slot of sArray){
+		if (hasLetters(slot)){
+			sArray=arrayRemove(sArray,slot);
+			goodSlots.push(slot);
+		}	
+	}
+	sArray = goodSlots.concat(sArray);
+	return sArray;
+}
+
 
 function getAllSlotsSortedByLen(){
 	let sortedslots ={};
@@ -372,11 +393,11 @@ function getAllSlotsSortedByLen(){
 		let allhorslots = findAllHorSlotsOfLength(i);
 		let horgapslots = allHorGapSlots[i];
 		let Hslots=mergeWithoutDuplication(allhorslots,horgapslots);
-		Hslots=shuffle(Hslots);
+		Hslots=prioritySort(Hslots);
 		let allverslots = findAllVerSlotsOfLength(i);
 		let vergapslots = allVerGapSlots[i];
 		let Vslots=mergeWithoutDuplication(allverslots,vergapslots);
-		Vslots=shuffle(Vslots);
+		Vslots=prioritySort(Vslots);
 		sortedslots[i].push(Hslots);
 		sortedslots[i].push(Vslots);
 		sortedslots[i]=sortedslots[i].flat();
