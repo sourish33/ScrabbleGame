@@ -939,6 +939,92 @@ function try_move_no_blanks(rackId, pos){
     removeCloneTiles();
 }
 
+function tryNletters(n, maxTries){
+    let alphabet = "AEOS";
+    let rackPerms = getAllRackPermutations(n);
+    let legalSlots =  getAllSlotsSortedByLen()[n]
+    // console.log(`rackperms: ${rackPerms.length}, legalSlots = ${legalSlots.length}, to try: ${rackPerms.length*legalSlots.length}`)
+    console.log(`Starting ${n}-letter words`)
+    let blankspots=[];
+    let stop = false;
+    for (rackId of rackIds){
+        if (readLetter(rackId)=="_"){
+            blankspots.push[rackId];
+        }
+    }
+    let blank1 ="";
+    let blank2 ="";
+    switch (blankspots.length) {
+        case 0:
+            break;
+        case 1:
+            blank1 = blankspots[0];
+        case 2:
+            blank1 = blankspots[0];
+            blank2 = blankspots[1];
+
+        default:
+            break;
+    }
+    let moves =0;
+    loop1:
+    for (let pos of legalSlots) {
+        loop2:
+        for (let rackPerm of rackPerms){
+            if (blankspots.length===2 && rackPerm.includes(blank1) && rackPerm.includes(blank2)){//ignore xombos with both blankers
+                break loop2;
+            }
+
+
+            if (rackPerm.includes(blank1)) {
+                // console.log("Blank tile!")
+                for (let i=0;i<alphabet.length;i++){
+                    changeLetter(blank1,alphabet[i]);
+                    let curPoints = rupa.bestMove["points"];
+                    try_move_no_blanks(rackPerm, pos);
+                    moves++;
+                    rupa.bestMove["blank1"] = [blank1, alphabet[i]]; 
+                    stop = true;
+                    }
+                    changeLetter(blank1,"_");
+                    console.log(`Choosing ${alphabet[i]} for blank tile`);	
+                    if(stop) {break;}
+                    
+                }
+                if (rackPerm.includes(blank2)) {
+                    // console.log("Blank tile!")
+                    for (let i=0;i<alphabet.length;i++){
+                        changeLetter(blank2,alphabet[i]);
+                        let curPoints = rupa.bestMove["points"];
+                        try_move_no_blanks(rackPerm, pos);
+                        moves++;
+                        rupa.bestMove["blank2"] = [blank2, alphabet[i]]; 
+                        stop = true;
+                        }
+                        changeLetter(blank2,"_");	
+                        console.log(`Choosing ${alphabet[i]} for blank tile`);
+                        if(stop) {break;}
+                    }
+        
+            
+
+             else{
+                // if (checkLegalitySingleSlot(pos)){
+                    try_move_no_blanks(rackPerm, pos);
+                    moves++;
+                    removeCloneTiles();
+                // }
+            }
+            
+            if (moves>maxTries || rupa.haveIwon){
+                console.log(`${moves} max reached for ${n}-letter words`);
+                break loop1;
+            }
+        }
+
+    }
+}
+
 
 
 // console.log("Hello I am the grestest worker");
@@ -955,97 +1041,23 @@ onmessage = function(e) {
     played_ids = e.data[2];
     submitted_ids = e.data[3];
     boosters = e.data[4];
-    n = e.data[5];
-    maxTries= e.data[6];
-    cur_points= e.data[7];
-    maxPoints= e.data[8];
+    maxTries= e.data[5];
+    cur_points= e.data[6];
+    maxPoints= e.data[7];
 
-        rupa.score=cur_points;
-        let alphabet = "AEOS";
-        let rackPerms = getAllRackPermutations(n);
-        let legalSlots =  getAllSlotsSortedByLen()[n]
-        console.log(`rackperms: ${rackPerms.length}, legalSlots = ${legalSlots.length}, to try: ${rackPerms.length*legalSlots.length}`)
-        let blankspots=[];
-        let stop = false;
-        for (rackId of rackIds){
-            if (readLetter(rackId)=="_"){
-                blankspots.push[rackId];
-            }
-        }
-        let blank1 ="";
-        let blank2 ="";
-        switch (blankspots.length) {
-            case 0:
-                break;
-            case 1:
-                blank1 = blankspots[0];
-            case 2:
-                blank1 = blankspots[0];
-                blank2 = blankspots[1];
-
-            default:
-                break;
-        }
-        let moves =0;
-        loop1:
-        for (let pos of legalSlots) {
-            loop2:
-            for (let rackPerm of rackPerms){
-                if (blankspots.length===2 && rackPerm.includes(blank1) && rackPerm.includes(blank2)){//ignore xombos with both blankers
-                    break loop2;
-                }
+    rupa.score=cur_points;
 
 
-                if (rackPerm.includes(blank1)) {
-                    // console.log("Blank tile!")
-                    for (let i=0;i<alphabet.length;i++){
-                        changeLetter(blank1,alphabet[i]);
-                        let curPoints = rupa.bestMove["points"];
-                        try_move_no_blanks(rackPerm, pos);
-                        moves++;
-                        rupa.bestMove["blank1"] = [blank1, alphabet[i]]; 
-                        stop = true;
-                        }
-                        changeLetter(blank1,"_");
-                        console.log(`Choosing ${alphabet[i]} for blank tile`);	
-                        if(stop) {break;}
-                        
-                    }
-                    if (rackPerm.includes(blank2)) {
-                        // console.log("Blank tile!")
-                        for (let i=0;i<alphabet.length;i++){
-                            changeLetter(blank2,alphabet[i]);
-                            let curPoints = rupa.bestMove["points"];
-                            try_move_no_blanks(rackPerm, pos);
-                            moves++;
-                            rupa.bestMove["blank2"] = [blank2, alphabet[i]]; 
-                            stop = true;
-                            }
-                            changeLetter(blank2,"_");	
-                            console.log(`Choosing ${alphabet[i]} for blank tile`);
-                            if(stop) {break;}
-                        }
-            
-                
-
-                 else{
-                    // if (checkLegalitySingleSlot(pos)){
-                        try_move_no_blanks(rackPerm, pos);
-                        moves++;
-                        removeCloneTiles();
-                    // }
-                }
-                
-                if (moves>maxTries || rupa.haveIwon){
-                    console.log(`${moves} max reached for ${n}-letter words`);
-                    break loop1;
-                }
-            }
-
-        }
+    t0=performance.now()
+    tryNletters(2, maxTries)
+    tryNletters(3, maxTries)
+    tryNletters(4, maxTries)
+    tryNletters(5, maxTries)
+    tryNletters(6, maxTries)
+    tryNletters(7, maxTries)
 
 
-        t1=performance.now()
+    t1=performance.now()
     console.log(`rupa's bestmove ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
 
     postMessage(rupa);

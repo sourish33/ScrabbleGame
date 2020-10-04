@@ -1704,7 +1704,7 @@ function createPlayers(){
           }
     }
 
-    function try_n_tiles(n, maxTries){
+    function try_n_tiles(maxTries){
         workers=[];
         let myWorker = new Worker('worker.js');
         let board = whatsOnTheBoard();
@@ -1715,7 +1715,7 @@ function createPlayers(){
         let submitted_ids= getPlayedIds(tiles);
         cur_points=0;//this will be the payer's current points
         let res;
-        myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, n, maxTries, cur_points, maxPoints]);
+        myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
 
         myWorker.onmessage = function(e) {
             result = e.data;
