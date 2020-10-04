@@ -129,7 +129,7 @@ function generateCols() {
 function shuffle(arr){
 
     let L = arr.length -1;
-    let sarr = Array.from(arr);//cannot use = cuz JS passes by reference in this case
+    let sarr = Array.from(arr);//cannot use = cuz JS passes by reference in rupa case
 
     for(let i = L; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
@@ -253,7 +253,7 @@ function occupiedSpacesInRow(row){
     return sq_ids;
 }
 
-function findHorSlots(row, n){/////////////////WORKING ON THIS///////////////////////////////////
+function findHorSlots(row, n){/////////////////WORKING ON rupa///////////////////////////////////
 
 	//legalPositions and played_ids and cols available as globals
 
@@ -586,6 +586,53 @@ function prioritySort(slotArray){
 	return sArray;
 }
 
+function getAllRackPermutations(n){//permutes the tiles without duplication, i.e, LOOK would be counted only once
+	let letters =[];
+	rackIds.forEach(el=>{ letters.push(readLetter(el)); });
+	let perms = unique_k_perms(letters,n);
+	let rackperms =[]
+	for (let perm of perms){
+		let rperm = [];
+		for (let el of perm){
+			let indices = getLocsInArray(letters, el);
+			if (indices.length===1) {
+				rperm.push(rackIds[indices[0]]);
+			}
+			else {
+				 for (index of indices){
+					if (!rperm.includes(rackIds[index])) {
+						rperm.push(rackIds[index]);
+						break;
+             		}
+         		}
+				  
+			}
+		}
+		rackperms.push(rperm);
+	}
+	return rackperms;
+
+}
+
+function getLocsInArray(arr, windex){//returns indices of the element windex in arr
+	let result =[];
+	arr.forEach((el, index) => el === windex ? result.push(index) : null)
+	return result;
+  }
+
+function unique_k_perms(rackIds,n){
+
+	combs = k_combinations(rackIds,n);
+	perms = []
+	for (comb of combs){
+		perms.push(permute(comb));
+	}
+	perms= perms.flat();
+
+	return removeDuplicates(perms);
+}
+
+
 
 
 
@@ -661,7 +708,6 @@ function getVerWords(num) {//finds all 2-letter and higher words in column (e.g 
 }
 
 function getAllHorWords(){
-    
     
     let rows =[];
     for (id of played_ids){
@@ -740,7 +786,7 @@ function getLettersOnSquare(whichSquare){//check if the square has TW, DL etc
     }
 }
 
-function score(){//find the scores of all the words in the list
+function score(allLetters = false){//find the scores of all the words in the list
 
     let wordsToScore = getAllNewWords();
     let totalPoints=0;
@@ -750,7 +796,7 @@ function score(){//find the scores of all the words in the list
     }
     let rackslots=occupiedSpacesInRow("s");
 
-    if (rackslots.length===0) { totalPoints += 50;}
+    if (allLetters) { totalPoints += 50;}
 
     return totalPoints;
 }
@@ -860,22 +906,134 @@ function removeCloneTiles(from, to){
     //TODO: remember to update tilesPlayedNotSubmitted
 }
 
+function createAIPlayer(){
+    let AI_player = {};
+    AI_player.score =0;
+
+    AI_player.bestMove ={};
+    AI_player.bestMove["from"]=[];
+    AI_player.bestMove["to"] = [];
+    AI_player.bestMove["points"] = 0;
+    AI_player.bestMove["blank1"] = [];
+    AI_player.bestMove["blank2"] = [];
+    AI_player.haveIwon=false;
+    return AI_player;
+}
+
+function try_move_no_blanks(rackId, pos){
+    placeCloneTiles(rackId, pos);
+    // console.log(`from: ${rackId}`)
+    // console.log(`to: ${pos}`)
+    // console.log(`pid: ${played_ids}`)
+    allTiles = (rackId.length===7? true : false);
+
+
+    if (allValidWords()){
+            let points = score(allTiles);
+            if (points>rupa.bestMove["points"]){
+                rupa.bestMove["from"]=rackId;
+                rupa.bestMove["to"] = pos;
+                rupa.bestMove["points"] = points;
+                if (rupa.score+points>maxPoints){
+                    rupa.haveIwon=true;
+                }
+            }
+        }
+    removeCloneTiles();
+}
 
 
 
-
-console.log("Hello I am the new worker");
+// console.log("Hello I am the grestest worker");
 rackIds=[ "s1", "s2", "s3", "s4", "s5", "s6", "s7" ];
 cols = generateCols();
 rows = generateRows();
+rupa = createAIPlayer();
 
 
 onmessage = function(e) {
+    t0=performance.now()
     board = e.data[0];
     legalPositions = e.data[1];
     played_ids = e.data[2];
     submitted_ids = e.data[3];
     boosters = e.data[4];
+    n = e.data[5];
+    maxTries= e.data[6];
+    cur_points= e.data[7];
+    maxPoints= e.data[8];
+
+        rupa.score=cur_points;
+        let alphabet = "AEOS";
+        let rackPerms = getAllRackPermutations(n);
+        let legalSlots = getAllSlotsSortedByLen()[n];
+        console.log(`rackperms: ${rackPerms.length}, legalSlots = ${legalSlots.length}, to try: ${rackPerms.length*legalSlots.length}`)
+        let blankspot;
+        let stop = false;
+        for (rackId of rackIds){
+            if (readLetter(rackId)=="_"){
+                blankspot = rackId;
+            }
+        }
+        let moves =0;
+        loop1:
+        for (let pos of legalSlots) {
+            loop2:
+            for (let rackPerm of rackPerms){
+                if (includes("_", readWord(rackPerm))) {
+                    // console.log("Blank tile!")
+                    for (let i=0;i<alphabet.length;i++){
+                        changeLetter(blankspot,alphabet[i]);
+                        let curPoints = rupa.bestMove["points"];
+                        try_move_no_blanks(rackPerm, pos);
+                        moves++;
+                        if (rupa.bestMove["points"] > curPoints){
+                            if (rupa.bestMove["blank1"].length!==0)
+                            {rupa.bestMove["blank1"] = [blankspot, alphabet[i]];}
+                            else {rupa.bestMove["blank2"] = [blankspot, alphabet[i]];}
+                            stop = true;
+                            console.log(`Choosing ${alphabet[i]} for the blank tile`)
+                        }
+                        changeLetter(blankspot,"_");	
+                        if(stop) {break;}
+                    }
+            
+                
+
+                } else{
+                    // if (checkLegalitySingleSlot(pos)){
+                        try_move_no_blanks(rackPerm, pos);
+                        moves++;
+                        removeCloneTiles();
+                    // }
+                }
+                
+                if (moves>maxTries || rupa.haveIwon){
+                    console.log(`${moves} max reached for ${n}-letter words`);
+                    break loop1;
+                }
+            }
+
+        }
+
+
+        t1=performance.now()
+    console.log(`rupa's bestmove ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
+    postMessage(rupa);
+  }
+
+
+
+
+      
+
+
+    // rupa.score=cur_points+100;
+    // rupa.bestMove["from"]=["s1","s2"];
+    // rupa.bestMove["to"] = ["a1","a2"];
+    // rupa.bestMove["points"] = 63;
+    // rupa.haveIwon=true;
+
     // let t0=performance.now();
     // let p = score();
     // let t1=performance.now();
@@ -885,12 +1043,10 @@ onmessage = function(e) {
     // placeCloneTiles(["s2","s3","s7"],["a2","a3","o6"]);
     // removeCloneTiles();
     // let h = getAllSlotsSortedByLen()[7];
-    let t0=performance.now();
-    let h = getAllSlotsSortedByLen()[4];
-    let t1=performance.now();
-    let msg = `calculated ${h.length} in ${t1-t0} ms`
-
-    postMessage(msg);
-  }
+    // let t0=performance.now();
+    // //let h = getAllSlotsSortedByLen()[4];
+    // let h = getAllRackPermutations(6);
+    // let t1=performance.now();
+    // let msg = `calculated ${h.length} in ${t1-t0} ms`
 
 

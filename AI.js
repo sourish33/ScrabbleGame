@@ -522,16 +522,13 @@ function getLocsInArray(arr, windex){//returns indices of the element windex in 
 
 function unique_k_perms(rackIds,n){
 
-	if (n<6){
-		combs = k_combinations(rackIds,n);
-		perms = []
-		for (comb of combs){
-			perms.push(permute(comb));
-		}
-		perms= perms.flat();
-	} else{
-		perms = permute(rackIds);
+	combs = k_combinations(rackIds,n);
+	perms = []
+	for (comb of combs){
+		perms.push(permute(comb));
 	}
+	perms= perms.flat();
+
 	return removeDuplicates(perms);
 }
 
