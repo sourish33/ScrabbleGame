@@ -1350,7 +1350,7 @@ let player = {
                         let curPoints = this.bestMove["points"];
                         this.try_move_no_blanks(rackId, pos);
                         if (this.bestMove["points"] > curPoints){
-                            if (this.bestMove["blank1"].length!==0)
+                            if (this.bestMove["blank1"].length===0)
                             {this.bestMove["blank1"] = [rackId, alphabet[i]];}
                             else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
                             stop = true;
