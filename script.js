@@ -1850,13 +1850,13 @@ startGame();
 
 //TODO
 /*  
+- Animation while program is thinking
+- Multiple workers
 - 
 - 
 - 
-- fix homepage bottom (scrolls down annoyingly)
-- initial data page
-- ending of the game
-- animations
--use interact.js for drag and drop
+- 
+- 
+-
 */
 
