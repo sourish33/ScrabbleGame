@@ -946,7 +946,11 @@ function AI_playGotMove(){
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
         legalPositions = getlegalPositions();
-        play();
+        if (includes("AI_", players[who].name)) {
+            AI_play();
+        } else{
+            play();
+        }
     }
     else {
         endGameSequence(gameCheck);
