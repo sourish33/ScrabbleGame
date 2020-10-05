@@ -1553,14 +1553,7 @@ let player = {
                 this.trySingles(MaxWords[0]);
         }
 
-
-        // for (n=2;n<8;n++){
-        // if (!this.haveIwon){
-        //     this.tryNLetterWords(n,MaxWords[n-1]);
-        //     }
-        // console.log(`${n}-letter words done.`)
-        // }
-        
+       
         let workerResult = await try_n_tiles(350000, this.score);
         
         if (workerResult.bestMove["points"]> this.bestMove["points"]){
