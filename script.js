@@ -917,15 +917,10 @@ function endCheck(){
     return 0;
 }
 
-function AI_play(){
+function AI_playGotMove(){
     legalPositions = getlegalPositions();
     let who= whoseMove(moveNumber,numPlayers);
-    players[who].makeMove();
     let tiles = getTilesPlayedNotSubmitted();
-    if (tiles.length === 0) {
-        console.log(`${players[who]}$ failed to make a move`)
-        return;
-    } //nothing submitted yet
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
@@ -949,15 +944,25 @@ function AI_play(){
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
         legalPositions = getlegalPositions();
-        if (includes("AI_", players[who].name)) {
-            AI_play();
-        } else{
-            play();
-        }
+        play();
     }
     else {
         endGameSequence(gameCheck);
     }
+}
+
+function AI_play(){
+    legalPositions = getlegalPositions();
+    let who= whoseMove(moveNumber,numPlayers);
+    players[who].makeMove();
+    let tiles = getTilesPlayedNotSubmitted();
+    if (tiles.length === 0) {
+        console.log(`${players[who]}$ AI is thinking...`)
+        return;
+    } else {
+        AI_playGotMove();
+    }
+    
 }
 
 
@@ -1005,9 +1010,10 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         //advance the movenumber
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
-
-        alert(`Please pass to ${players[who].name}`);
-
+        if (!includes("AI_", players[who].name)) {
+            alert(`Please pass to ${players[who].name}`);
+        }
+        
 
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
@@ -1558,10 +1564,12 @@ let player = {
             this.bestMove["blank1"]=workers[0].bestMove["blank1"];
             this.bestMove["blank2"]=workers[0].bestMove["blank2"];
             this.playBestMove();
+            AI_playGotMove();
             return;     
         } else {
             console.log("got nothing from worker")
             this.playBestMove();
+            AI_playGotMove();
 
         }
 
