@@ -936,7 +936,9 @@ function AI_playGotMove(){
         //advance the movenumber
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
-        alert(`Please pass to ${players[who].name}`);
+        // if (!includes("AI_", players[who].name)) {
+        //     alert(`Please pass to ${players[who].name}`);
+        // }
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
         replenishRack();
@@ -1720,7 +1722,7 @@ function createPlayers(){
           }
     }
 
-    function try_n_tiles(maxTries, cur_points=0){////WORKING ON THIS NOW
+    function try_n_tiles(maxTries, cur_points=0){
 
         return new Promise((resolve,reject)=>{
 
