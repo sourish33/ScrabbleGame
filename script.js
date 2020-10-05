@@ -1531,10 +1531,9 @@ let player = {
     }
 
 
-    AI_player.makeMove = function(){
+    AI_player.makeMove = async function(){////WORKING ON THIS
 
             
-        let t0 = performance.now();
 
 
         if (moveNumber!==1) {
@@ -1543,23 +1542,32 @@ let player = {
         }
 
 
-        for (n=2;n<8;n++){
-        if (!this.haveIwon){
-            this.tryNLetterWords(n,MaxWords[n-1]);
-            }
-        console.log(`${n}-letter words done.`)
+        // for (n=2;n<8;n++){
+        // if (!this.haveIwon){
+        //     this.tryNLetterWords(n,MaxWords[n-1]);
+        //     }
+        // console.log(`${n}-letter words done.`)
+        // }
+        
+        let workerResult = await try_n_tiles(350000, this.score);
+        
+        if (workerResult.bestMove["points"]> this.bestMove["points"]){
+            this.bestMove["to"]=workers[0].bestMove["to"];
+            this.bestMove["from"]=workers[0].bestMove["from"];
+            this.bestMove["points"]=workers[0].bestMove["points"];
+            this.bestMove["blank1"]=workers[0].bestMove["blank1"];
+            this.bestMove["blank2"]=workers[0].bestMove["blank2"];
+            this.playBestMove();
+            return;     
+        } else {
+            console.log("got nothing from worker")
+            this.playBestMove();
+
         }
 
+    }
 
-
-
-
-        let t1 = performance.now();
-        console.log(`${this.numMoves} attempted in ${t1-t0} ms`);
-        this.playBestMove();
-
-           
-        }
+    
         
 
     AI_player.makeRack();
@@ -1704,26 +1712,32 @@ function createPlayers(){
           }
     }
 
-    function try_n_tiles(maxTries){
-        workers=[];
-        let myWorker = new Worker('worker.js');
-        let board = whatsOnTheBoard();
-        let legalPositions=getlegalPositions();
-        let tiles = getTilesPlayedNotSubmitted();
-        let played_ids= getPlayedIds(tiles);
-        tiles = getTilesSubmitted();
-        let submitted_ids= getPlayedIds(tiles);
-        cur_points=0;//this will be the payer's current points
-        let res;
-        myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
+    function try_n_tiles(maxTries, cur_points=0){////WORKING ON THIS NOW
 
-        myWorker.onmessage = function(e) {
-            result = e.data;
-            // console.log(`Incoming: ${result.bestMove["from"]}`);
-            workers.push(result);
-          }
-   
+        return new Promise((resolve,reject)=>{
+
+            workers=[];
+            let myWorker = new Worker('worker.js');
+            let board = whatsOnTheBoard();
+            let legalPositions=getlegalPositions();
+            let tiles = getTilesPlayedNotSubmitted();
+            let played_ids= getPlayedIds(tiles);
+            tiles = getTilesSubmitted();
+            let submitted_ids= getPlayedIds(tiles);
+
+            myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
+
+            myWorker.onmessage = function(e) {
+                result = e.data;
+                // console.log(`Incoming: ${result.bestMove["from"]}`);
+                workers.push(result);
+                resolve(result);     
+            } 
+
+        })
+
     }
+
 
 
 
