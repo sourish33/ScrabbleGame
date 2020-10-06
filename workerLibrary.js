@@ -1013,7 +1013,8 @@ function tryNletters(n, maxTries){
             
             if (moves>maxTries || rupa.haveIwon){
                 // console.log(`${moves} max reached for ${n}-letter words`);
-                break loop1;
+                //break loop1;
+                return;
             }
         }
 

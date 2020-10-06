@@ -1015,7 +1015,10 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         //advance the movenumber
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
-        alert(`Please pass to ${players[who].name}`);
+        // alert(`Please pass to ${players[who].name}`);
+        if (!includes("AI_", players[who].name)){
+            alert(`Please pass device to ${players[who].name}`);
+        }
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
         replenishRack();
