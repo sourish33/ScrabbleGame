@@ -21,22 +21,34 @@ onmessage = function(e) {
     rupa.score=cur_points;
 
 
-    t0=performance.now()
-    tryNletters(2, maxTries)
-    postMessage("2 letter words complete")
-    tryNletters(3, maxTries)
-    postMessage("3 letter words complete")
-    tryNletters(4, maxTries)
-    postMessage("4 letter words complete")
-    tryNletters(5, maxTries)
-    postMessage("5 letter words complete")
-    tryNletters(6, maxTries)
-    postMessage("6 letter words complete")
-    tryNletters(7, maxTries)
-    postMessage("7 letter words complete")
+    // t0=performance.now()
 
-    t1=performance.now()
-    postMessage(`Best Move Found: ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
+    for (let i=2;i<8;i++){
+        tryNletters(i, maxTries)
+        postMessage(`${i}-letter words complete`)
+        if (rupa.haveIwon){
+            break;
+        }
+
+    }
+
+
+
+    // tryNletters(2, maxTries)
+    // postMessage("2 letter words complete")
+    // tryNletters(3, maxTries)
+    // postMessage("3 letter words complete")
+    // tryNletters(4, maxTries)
+    // postMessage("4 letter words complete")
+    // tryNletters(5, maxTries)
+    // postMessage("5 letter words complete")
+    // tryNletters(6, maxTries)
+    // postMessage("6 letter words complete")
+    // tryNletters(7, maxTries)
+    // postMessage("7 letter words complete")
+
+    // t1=performance.now()
+    // postMessage(`Best Move Found: ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
 
     postMessage(rupa);
   }

@@ -1633,6 +1633,11 @@ let player = {
         if (moveNumber!==1) {
         
                 this.trySingles(MaxWords[0]);
+                if (this.haveIwon){
+                    this.playBestMove();
+                    AI_playGotMove();
+                    return;
+                }
         }
 
        
