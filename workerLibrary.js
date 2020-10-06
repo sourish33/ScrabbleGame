@@ -917,9 +917,6 @@ function createAIPlayer(){
 
 function try_move_no_blanks(rackId, pos){
     placeCloneTiles(rackId, pos);
-    // console.log(`from: ${rackId}`)
-    // console.log(`to: ${pos}`)
-    // console.log(`pid: ${played_ids}`)
     allTiles = (rackId.length===7? true : false);
 
 
@@ -942,7 +939,7 @@ function tryNletters(n, maxTries){
     let rackPerms = getAllRackPermutations(n);
     let legalSlots =  getAllSlotsSortedByLen()[n]
     // console.log(`rackperms: ${rackPerms.length}, legalSlots = ${legalSlots.length}, to try: ${rackPerms.length*legalSlots.length}`)
-    console.log(`Starting ${n}-letter words`)
+    // console.log(`Starting ${n}-letter words`)
     let blankspots=[];
     let stop = false;
     for (rackId of rackIds){
@@ -985,7 +982,7 @@ function tryNletters(n, maxTries){
                     stop = true;
                     }
                     changeLetter(blank1,"_");
-                    console.log(`Choosing ${alphabet[i]} for blank tile`);	
+                    // console.log(`Choosing ${alphabet[i]} for blank tile`);	
                     if(stop) {break;}
                     
                 }
@@ -1000,7 +997,7 @@ function tryNletters(n, maxTries){
                         stop = true;
                         }
                         changeLetter(blank2,"_");	
-                        console.log(`Choosing ${alphabet[i]} for blank tile`);
+                        // console.log(`Choosing ${alphabet[i]} for blank tile`);
                         if(stop) {break;}
                     }
         
@@ -1015,7 +1012,7 @@ function tryNletters(n, maxTries){
             }
             
             if (moves>maxTries || rupa.haveIwon){
-                console.log(`${moves} max reached for ${n}-letter words`);
+                // console.log(`${moves} max reached for ${n}-letter words`);
                 break loop1;
             }
         }

@@ -963,7 +963,7 @@ function AI_play(){
     players[who].makeMove();
     let tiles = getTilesPlayedNotSubmitted();
     if (tiles.length === 0) {
-        console.log(`${players[who]}$ AI is thinking...`)
+        // console.log(`${players[who]}$ AI is thinking...`)
         return;
     } else {
         AI_playGotMove();
@@ -1741,7 +1741,10 @@ function createPlayers(){
             // } 
             myWorker.onmessage = function(event) {
                 if (typeof(event.data)==="string"){
-                    console.log("Message from worker:", event.data); // ["foo", "bar", "baz"]
+                    // console.log("Message from worker:", event.data); 
+                    let aibox=document.getElementById("AIbox");
+                    aibox.classList.remove("not-there");
+                    aibox.innerHTML = event.data;
                 }
             }
 
@@ -1749,6 +1752,8 @@ function createPlayers(){
             myWorker.addEventListener('message', event => {
                 let result = event.data;
                 if (typeof(event.data)==="object"){
+                    let aibox=document.getElementById("AIbox");
+                    aibox.classList.add("not-there");
                     resolve(result); 
                 }
               }, false)

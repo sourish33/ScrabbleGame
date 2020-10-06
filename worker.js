@@ -23,16 +23,20 @@ onmessage = function(e) {
 
     t0=performance.now()
     tryNletters(2, maxTries)
+    postMessage("2 letter words complete")
     tryNletters(3, maxTries)
+    postMessage("3 letter words complete")
     tryNletters(4, maxTries)
-    postMessage("2,3, and 4 letter words considered")
+    postMessage("4 letter words complete")
     tryNletters(5, maxTries)
+    postMessage("5 letter words complete")
     tryNletters(6, maxTries)
+    postMessage("6 letter words complete")
     tryNletters(7, maxTries)
-
+    postMessage("7 letter words complete")
 
     t1=performance.now()
-    console.log(`Best Move Found: ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
+    postMessage(`Best Move Found: ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
 
     postMessage(rupa);
   }
