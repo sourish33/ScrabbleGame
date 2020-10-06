@@ -4,7 +4,6 @@ let boosters = fillBoosters();
 let legalPositions = getlegalPositions();
 let moveNumber =1;
 let settings = getSettings();
-let MaxWords = [10000,10000,10000,10000,10000,10000,10000];
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
@@ -14,9 +13,10 @@ let numPlayers  = playerNames.length;
 if (randomize) {playerNames= shuffle(playerNames);}
 let players = {};
 let maxPoints =50000000;
+let maxWords = 50000;
 if (endgame=="75pt") {maxPoints =75;}
 if (endgame=="150pt") {maxPoints =150;}
-let workers=[];
+
 
 
 
@@ -1428,7 +1428,7 @@ let player = {
         this.numMoves=0;
     }
 
-    AI_player.trySingles = function(maxTries=MaxWords){
+    AI_player.trySingles = function(maxTries=maxWords){
         let rackIds = getRackIds("rack");
         let moves =0;
         for (let pos of legalPositions) {
@@ -1620,19 +1620,19 @@ let player = {
             changeLetter(this.bestMove["blank2"][0], this.bestMove["blank2"][1] );
         }
         this.ai_move(from, to);
-        console.log(`found: ${readWord(this.bestMove["to"].flat())} for ${this.bestMove["points"]}`)
+        // console.log(`found: ${readWord(this.bestMove["to"].flat())} for ${this.bestMove["points"]}`)
         this.resetBestMove();
     }
 
 
-    AI_player.makeMove = async function(){////WORKING ON THIS
+    AI_player.makeMove = async function(){
 
             
 
 
         if (moveNumber!==1) {
         
-                this.trySingles(MaxWords[0]);
+                this.trySingles(maxWords);
                 if (this.haveIwon){
                     this.playBestMove();
                     AI_playGotMove();
@@ -1641,7 +1641,7 @@ let player = {
         }
 
        
-        let workerResult = await try_n_tiles(50000, this.score);
+        let workerResult = await try_n_tiles(maxWords, this.score);
         
         if (workerResult.bestMove["points"]> this.bestMove["points"]){
             this.bestMove["to"]=workerResult.bestMove["to"];
@@ -1956,7 +1956,7 @@ startGame();
 
 //TODO
 /*  
-- Animation while program is thinking
+- difficulty level for AI
 - Multiple workers
 - 
 - 
