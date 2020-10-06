@@ -1739,12 +1739,23 @@ function createPlayers(){
             //     workers.push(result);
             //     resolve(result);     
             // } 
+            myWorker.onmessage = function(event) {
+                if (typeof(event.data)==="string"){
+                    console.log("Message from worker:", event.data); // ["foo", "bar", "baz"]
+                }
+            }
+
+
             myWorker.addEventListener('message', event => {
                 let result = event.data;
-                resolve(result); 
+                if (typeof(event.data)==="object"){
+                    resolve(result); 
+                }
               }, false)
 
         })
+
+        
 
     }
 

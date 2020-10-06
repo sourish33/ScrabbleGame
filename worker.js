@@ -25,6 +25,7 @@ onmessage = function(e) {
     tryNletters(2, maxTries)
     tryNletters(3, maxTries)
     tryNletters(4, maxTries)
+    postMessage("2,3, and 4 letter words considered")
     tryNletters(5, maxTries)
     tryNletters(6, maxTries)
     tryNletters(7, maxTries)
