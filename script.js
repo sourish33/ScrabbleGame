@@ -1554,14 +1554,14 @@ let player = {
         }
 
        
-        let workerResult = await try_n_tiles(350000, this.score);
+        let workerResult = await try_n_tiles(10000, this.score);
         
         if (workerResult.bestMove["points"]> this.bestMove["points"]){
-            this.bestMove["to"]=workers[0].bestMove["to"];
-            this.bestMove["from"]=workers[0].bestMove["from"];
-            this.bestMove["points"]=workers[0].bestMove["points"];
-            this.bestMove["blank1"]=workers[0].bestMove["blank1"];
-            this.bestMove["blank2"]=workers[0].bestMove["blank2"];
+            this.bestMove["to"]=workerResult.bestMove["to"];
+            this.bestMove["from"]=workerResult.bestMove["from"];
+            this.bestMove["points"]=workerResult.bestMove["points"];
+            this.bestMove["blank1"]=workerResult.bestMove["blank1"];
+            this.bestMove["blank2"]=workerResult.bestMove["blank2"];
             this.playBestMove();
             AI_playGotMove();
             return;     
@@ -1723,7 +1723,6 @@ function createPlayers(){
 
         return new Promise((resolve,reject)=>{
 
-            workers=[];
             let myWorker = new Worker('worker.js');
             let board = whatsOnTheBoard();
             let legalPositions=getlegalPositions();
@@ -1734,12 +1733,16 @@ function createPlayers(){
 
             myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
 
-            myWorker.onmessage = function(e) {
-                result = e.data;
-                // console.log(`Incoming: ${result.bestMove["from"]}`);
-                workers.push(result);
-                resolve(result);     
-            } 
+            // myWorker.onmessage = function(e) {
+            //     result = e.data;
+            //     // console.log(`Incoming: ${result.bestMove["from"]}`);
+            //     workers.push(result);
+            //     resolve(result);     
+            // } 
+            myWorker.addEventListener('message', event => {
+                let result = event.data;
+                resolve(result); 
+              }, false)
 
         })
 
