@@ -972,7 +972,6 @@ function AI_play(){
 }
 
 
-
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
     let tiles = getTilesPlayedNotSubmitted();
@@ -1016,11 +1015,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         //advance the movenumber
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
-        if (!includes("AI_", players[who].name)) {
-            alert(`Please pass to ${players[who].name}`);
-        }
-        
-
+        alert(`Please pass to ${players[who].name}`);
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
         replenishRack();
@@ -1039,6 +1034,90 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     }
 
 }
+
+
+// function play(){//makes tiles stuck and animates new tiles when play button is pressed
+
+//     let tiles = getTilesPlayedNotSubmitted();
+//     if (tiles.length === 0) {return;} //nothing submitted yet
+
+//     if (!checkLegalPlacement(tiles)) {
+//         alert("Tile placement illegal");
+//         return;
+//     }
+
+//     if (dictionaryChecking) {
+//         let wordarray = readAllWords(getAllNewWords());
+//         let notAWords = checkIfLegal(wordarray);
+//         if (notAWords.length!==0){
+//             let msg =`${notAWords.join(", ")} not valid` ;
+//             alert(msg);
+//             return;
+//         }
+//     }
+
+//     let who= whoseMove(moveNumber,numPlayers);
+//     players[who].addPoints(score());
+//     players[who].removePieces();
+//     updateScoreBoard();
+
+//     for (tile of tiles) {
+//         tile.classList.remove("played-not-submitted");
+//         tile.classList.add("submitted");
+//         tile.setAttribute("ondragstart","return false");
+//         tile.classList.add("unselectable");
+//     }
+
+//     //is the game over?
+//     let gameCheck = endCheck();
+
+//     if (gameCheck===0)
+//     {
+//         //clear the search results
+//         let searchresult = document.getElementsByClassName("searchresult")[0];
+//         searchresult.innerHTML ="";
+//         //advance the movenumber
+//         // moveNumber++;
+
+//         moveNumber++;
+//         who= whoseMove(moveNumber,numPlayers);
+
+//         document.getElementById("who-is-playing").innerHTML=players[who].name;
+//         players[who].returnPieces();
+//         replenishRack();
+//         if (!includes("AI_", players[who].name)){
+//             alert(`Please pass device to ${players[who].name}`);
+//         }
+
+
+
+
+
+
+//         // who= whoseMove(moveNumber,numPlayers);
+//         // document.getElementById("who-is-playing").innerHTML=players[who].name;
+ 
+//         // if (!includes("AI_", players[who].name)) {
+//         //     alert(`Please pass to ${players[who].name}`);
+//         // }
+//         // players[who].returnPieces();
+//         // replenishRack();
+        
+//         //reset the possible points 
+//         document.getElementById("points").innerHTML = 0;
+//         //update the list of legal positions
+//         legalPositions = getlegalPositions();
+//         if (includes("AI_", players[who].name)) {
+//             AI_play();
+//         } else{
+//             play();
+//         }
+//     }
+//     else {
+//         endGameSequence(gameCheck);
+//     }
+
+// }
 
 function endGameSequence(n) {
     if (n===1 || n===2){
@@ -1554,7 +1633,7 @@ let player = {
         }
 
        
-        let workerResult = await try_n_tiles(10000, this.score);
+        let workerResult = await try_n_tiles(50000, this.score);
         
         if (workerResult.bestMove["points"]> this.bestMove["points"]){
             this.bestMove["to"]=workerResult.bestMove["to"];
