@@ -1641,7 +1641,9 @@ let player = {
         }
 
        
-        let workerResult = await try_n_tiles(maxWords, this.score);
+        let workerResult = await try_n_tiles(maxWords, this.score, "worker.js");
+        // const [res1, res2] = await Promise.all([try_n_tiles(maxWords, this.score, "worker1.js"), try_n_tiles(maxWords, this.score, "worker.js")]);
+        // workerResult = (res1.bestMove["points"]> res2.bestMove["points"] ? res1 : res2);
         
         if (workerResult.bestMove["points"]> this.bestMove["points"]){
             this.bestMove["to"]=workerResult.bestMove["to"];
@@ -1806,11 +1808,11 @@ function createPlayers(){
           }
     }
 
-    function try_n_tiles(maxTries, cur_points=0){
+    function try_n_tiles(maxTries, cur_points=0, workerfile="worker.js"){
 
         return new Promise((resolve,reject)=>{
 
-            let myWorker = new Worker('worker.js');
+            let myWorker = new Worker(workerfile);
             let board = whatsOnTheBoard();
             let legalPositions=getlegalPositions();
             let tiles = getTilesPlayedNotSubmitted();
@@ -1820,13 +1822,7 @@ function createPlayers(){
 
             myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
 
-            // myWorker.onmessage = function(e) {
-            //     result = e.data;
-            //     // console.log(`Incoming: ${result.bestMove["from"]}`);
-            //     workers.push(result);
-            //     resolve(result);     
-            // } 
-            myWorker.onmessage = function(event) {
+              myWorker.onmessage = function(event) {
                 if (typeof(event.data)==="string"){
                     // console.log("Message from worker:", event.data); 
                     let aibox=document.getElementById("AIbox");

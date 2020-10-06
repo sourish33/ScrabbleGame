@@ -22,15 +22,14 @@ onmessage = function(e) {
 
 
     // t0=performance.now()
-    if (!rupa.haveIwon){
-    for (let i=2;i<8;i++){
+
+    for (let i=7;i<8;i++){
         tryNletters(i, maxTries)
         postMessage(`${i}-letter words complete`)
         if (rupa.haveIwon){
             break;
-            }
-
         }
+
     }
 
 
