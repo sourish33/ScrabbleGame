@@ -1038,90 +1038,6 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
 
 }
 
-
-// function play(){//makes tiles stuck and animates new tiles when play button is pressed
-
-//     let tiles = getTilesPlayedNotSubmitted();
-//     if (tiles.length === 0) {return;} //nothing submitted yet
-
-//     if (!checkLegalPlacement(tiles)) {
-//         alert("Tile placement illegal");
-//         return;
-//     }
-
-//     if (dictionaryChecking) {
-//         let wordarray = readAllWords(getAllNewWords());
-//         let notAWords = checkIfLegal(wordarray);
-//         if (notAWords.length!==0){
-//             let msg =`${notAWords.join(", ")} not valid` ;
-//             alert(msg);
-//             return;
-//         }
-//     }
-
-//     let who= whoseMove(moveNumber,numPlayers);
-//     players[who].addPoints(score());
-//     players[who].removePieces();
-//     updateScoreBoard();
-
-//     for (tile of tiles) {
-//         tile.classList.remove("played-not-submitted");
-//         tile.classList.add("submitted");
-//         tile.setAttribute("ondragstart","return false");
-//         tile.classList.add("unselectable");
-//     }
-
-//     //is the game over?
-//     let gameCheck = endCheck();
-
-//     if (gameCheck===0)
-//     {
-//         //clear the search results
-//         let searchresult = document.getElementsByClassName("searchresult")[0];
-//         searchresult.innerHTML ="";
-//         //advance the movenumber
-//         // moveNumber++;
-
-//         moveNumber++;
-//         who= whoseMove(moveNumber,numPlayers);
-
-//         document.getElementById("who-is-playing").innerHTML=players[who].name;
-//         players[who].returnPieces();
-//         replenishRack();
-//         if (!includes("AI_", players[who].name)){
-//             alert(`Please pass device to ${players[who].name}`);
-//         }
-
-
-
-
-
-
-//         // who= whoseMove(moveNumber,numPlayers);
-//         // document.getElementById("who-is-playing").innerHTML=players[who].name;
- 
-//         // if (!includes("AI_", players[who].name)) {
-//         //     alert(`Please pass to ${players[who].name}`);
-//         // }
-//         // players[who].returnPieces();
-//         // replenishRack();
-        
-//         //reset the possible points 
-//         document.getElementById("points").innerHTML = 0;
-//         //update the list of legal positions
-//         legalPositions = getlegalPositions();
-//         if (includes("AI_", players[who].name)) {
-//             AI_play();
-//         } else{
-//             play();
-//         }
-//     }
-//     else {
-//         endGameSequence(gameCheck);
-//     }
-
-// }
-
 function endGameSequence(n) {
     if (n===1 || n===2){
         winner =getTopper()[0];
@@ -1227,13 +1143,6 @@ function displayScore() {
     document.getElementById("points").innerHTML = u;
 }
 
-// function highLightPlayer(){
-//     let who= whoseMove(moveNumber,numPlayers);
-//     let namid = "pl"+who;
-//     // let scorid = "pl"+who;
-//     let namcell = document.getElementById(namid).parentElement;
-//     namcell.classList.add("highlight");
-// }
 
 function updateScoreBoard(){
     document.getElementById("pl1").innerHTML = players[1].name;
@@ -1466,58 +1375,6 @@ let player = {
     }
 
 
-    AI_player.tryNLetterWords = function(n, maxTries){
-        let alphabet = "AEOS";
-        let rackIds = getRackIds();
-        let rackPerms = getAllRackPermutations(n);
-        let legalSlots = getAllSlotsSortedByLen()[n];
-        let blankspot;
-        for (rackId of rackIds){
-            if (readLetter(rackId)=="_"){
-                blankspot = rackId;
-            }
-        }
-        let moves =0;
-        for (let pos of legalSlots) {
-
-            for (let rackPerm of rackPerms){
-                this.numMoves++;
-                if (includes("_", readWord(rackPerm))) {
-                    // console.log("Blank tile!")
-                    for (let i=0;i<alphabet.length;i++){
-                        changeLetter(blankspot,alphabet[i]);
-                        let curPoints = this.bestMove["points"];
-                        this.try_move_no_blanks(rackPerm, pos);
-                        moves++;
-                        if (this.bestMove["points"] > curPoints){
-                            if (this.bestMove["blank1"].length!==0)
-                            {this.bestMove["blank1"] = [blankspot, alphabet[i]];}
-                            else {this.bestMove["blank2"] = [blankspot, alphabet[i]];}
-                            stop = true;
-                            console.log(`Choosing ${alphabet[i]} for the blank tile`)
-                        }
-                        changeLetter(blankspot,"_");	
-                        if(stop) {break;}
-                    }
-            
-                
-
-                } else{
-                    // if (checkLegalitySingleSlot(pos)){
-                        this.try_move_no_blanks(rackPerm, pos);
-                        moves++;
-                        this.removeCloneTiles();
-                    // }
-                }
-                
-                if (moves>maxTries || this.haveIwon){
-                    console.log(`${moves} max reached for ${n}-letter words`)
-                    return;
-                }
-            }
-
-        }
-    }
 
     
     AI_player.try_move_no_blanks = function(rackId, pos){
@@ -1792,21 +1649,6 @@ function createPlayers(){
         return boardnrack;
     }
 
-    function callWorker(){
-        let myWorker = new Worker('worker.js');
-        let board = whatsOnTheBoard();
-        let tiles = getTilesPlayedNotSubmitted();
-        let played_ids= getPlayedIds(tiles);
-        tiles = getTilesSubmitted();
-        let submitted_ids= getPlayedIds(tiles);
-
-        myWorker.postMessage([board, getlegalPositions(),played_ids,submitted_ids,boosters]);
-
-        myWorker.onmessage = function(e) {
-            result = e.data;
-            console.log(result);
-          }
-    }
 
     function try_n_tiles(maxTries, cur_points=0, workerfile="worker.js"){
 
@@ -1875,6 +1717,8 @@ function createPlayers(){
         u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
         console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
     }
+
+    
 
     function showModal (){
         let modal = document.getElementById("myModal");
@@ -1952,8 +1796,8 @@ startGame();
 
 //TODO
 /*  
-- difficulty level for AI
-- Multiple workers
+- difficulty level for AI in the interface
+- Animation for moving pieces by the AI
 - 
 - 
 - 

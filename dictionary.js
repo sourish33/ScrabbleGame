@@ -10,6 +10,14 @@ function checkDict(txt) {
   return scrabbledict.has(txt.toUpperCase());
 }
 
+function allValidWords(){
+	let words = readAllWords(getAllNewWords());
+	for (let word of words){
+		if (!checkDict(word)) {return false}
+	}
+	return true;
+}
+
 function getWordToCheck() {
     let myform = document.getElementById("submittedWord");
     let inputword = myform[0].value.toUpperCase();
