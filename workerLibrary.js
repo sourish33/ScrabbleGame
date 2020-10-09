@@ -935,7 +935,7 @@ function try_move_no_blanks(rackId, pos){
 }
 
 function tryNletters(n, maxTries){
-    let alphabet = "AEOS";
+    let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let rackPerms = getAllRackPermutations(n);
     let legalSlots =  getAllSlotsSortedByLen()[n]
     // console.log(`rackperms: ${rackPerms.length}, legalSlots = ${legalSlots.length}, to try: ${rackPerms.length*legalSlots.length}`)
