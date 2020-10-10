@@ -978,8 +978,10 @@ function tryNletters(n, maxTries){
                     let curPoints = rupa.bestMove["points"];
                     try_move_no_blanks(rackPerm, pos);
                     moves++;
-                    rupa.bestMove["blank1"] = [blank1, alphabet[i]]; 
-                    stop = true;
+                    if (rupa.bestMove["points"] > curPoints){
+                        rupa.bestMove["blank1"] = [blank1, alphabet[i]]; 
+                        stop = true;
+                        }
                     }
                     changeLetter(blank1,"_");
                     // console.log(`Choosing ${alphabet[i]} for blank tile`);	
@@ -993,8 +995,10 @@ function tryNletters(n, maxTries){
                         let curPoints = rupa.bestMove["points"];
                         try_move_no_blanks(rackPerm, pos);
                         moves++;
-                        rupa.bestMove["blank2"] = [blank2, alphabet[i]]; 
-                        stop = true;
+                        if (rupa.bestMove["points"] > curPoints){
+                            rupa.bestMove["blank2"] = [blank2, alphabet[i]]; 
+                            stop = true;
+                            }
                         }
                         changeLetter(blank2,"_");	
                         // console.log(`Choosing ${alphabet[i]} for blank tile`);
