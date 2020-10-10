@@ -179,6 +179,10 @@ function subtractArrays(arr1,arr2){
     return sarr;
 }
 
+function findCommonElements(arr1, arr2) { //same as findCommonElements
+    return arr1.filter(item => arr2.includes(item)) 
+} 
+
 function multiplyArrays(arr1, arr2){//dot product
     if (arr1.length !== arr2.length){
         console.log("cant multiply arrays of different sizes");
@@ -918,11 +922,24 @@ function endCheck(){
 }
 
 function displayMove(){
-    let wordsPlayed = readAllWords(getAllNewWords());
+    let newWords = getAllNewWords();
+    tiles = getPlayedIds(getTilesPlayedNotSubmitted());
+    let playedWord = []
+    if (newWords.length ==0){return;}
+    if (newWords.length ==1) {
+        playedWord=newWords[0];
+    }else {
+        playedWord= newWords.sort((x,y)=>{
+        let u = findCommonElements(x,tiles);
+        let v= findCommonElements(y,tiles);
+        return v.length-u.length;
+    })[0]
+    }
+    // let wordsPlayed = readAllWords(getAllNewWords());
     let lw = document.getElementById("lastPlayed");
-    lw.innerHTML = `Played: ${wordsPlayed.join()} for ${score()}`;
+    lw.innerHTML = `Played: ${readWord(playedWord)} for ${score()}`;
     lw.classList.remove("not-there");
-    console.log(`Played: ${wordsPlayed.join(', ')}`);
+    // console.log(`Played: ${wordsPlayed.join(', ')}`);
 }
 
 function AI_playGotMove(){

@@ -77,7 +77,7 @@ function permute(permutation) {
       return combs;
   }
   
-  function findCommonElements(arr1, arr2) { //same as findCommonElements
+  function anyCommonElements(arr1, arr2) { //same as anyCommonElements
     return arr1.some(item => arr2.includes(item)) 
 } 
 
@@ -263,8 +263,8 @@ function findHorSlots(row, n){/////////////////WORKING ON rupa//////////////////
 
 			slot.push(space_id);
 		}
-		let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
-		let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+		let containsAtLeastOneLegalSlot = anyCommonElements(slot,legalPositions);
+		let overlapsSubmitted =  anyCommonElements(slot,submitted_ids);
 		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 			slotList.push(slot);
 		}
@@ -293,8 +293,8 @@ function findHorGapSlots(row, n){
 
 		if (containsSubmitted){
 			slot = subtractArrays(slot, toJumpOver);
-			let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
-			let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+			let containsAtLeastOneLegalSlot = anyCommonElements(slot,legalPositions);
+			let overlapsSubmitted =  anyCommonElements(slot,submitted_ids);
 			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 				slotList.push(slot);
 			}
@@ -317,8 +317,8 @@ function findVerSlots(col, n){
 			let space_id = rows[i+j]+col.toString();
 			slot.push(space_id);
 		}
-		let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
-		let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+		let containsAtLeastOneLegalSlot = anyCommonElements(slot,legalPositions);
+		let overlapsSubmitted =  anyCommonElements(slot,submitted_ids);
 		if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 			slotList.push(slot);
 		}
@@ -350,8 +350,8 @@ function findVerGapSlots(col, n){
 		// }
 		if (containsSubmitted){
 			slot = subtractArrays(slot, toJumpOver);
-			let containsAtLeastOneLegalSlot = findCommonElements(slot,legalPositions);
-			let overlapsSubmitted =  findCommonElements(slot,submitted_ids);
+			let containsAtLeastOneLegalSlot = anyCommonElements(slot,legalPositions);
+			let overlapsSubmitted =  anyCommonElements(slot,submitted_ids);
 			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
 				slotList.push(slot);
 			}
@@ -374,7 +374,7 @@ function findAllHorSlotsOfLength(n) {
 	for (row of rows){
 		let horSlots = findHorSlots(row, n);
 		for (horSlot of horSlots){
-			if (findCommonElements(legalPositions, horSlot)) { allSlots.push(horSlot);}
+			if (anyCommonElements(legalPositions, horSlot)) { allSlots.push(horSlot);}
 		}
 	}
 
@@ -393,7 +393,7 @@ function findAllVerSlotsOfLength(n) {
 	for (col of cols){
 		let vslots = findVerSlots(col, n);
 		for (vslot of vslots){
-			if (findCommonElements(legalPositions, vslot)) { allSlots.push(vslot);}
+			if (anyCommonElements(legalPositions, vslot)) { allSlots.push(vslot);}
 		}
 	}
 
@@ -535,7 +535,7 @@ function allValidWords(){
 function hasLetters(slot,which="all"){
 	let letterList = getLettersOnSquare(slot);
 	if (which==="all"){
-		if(findCommonElements(letterList,["TL","DL","TW","DW"])){
+		if(anyCommonElements(letterList,["TL","DL","TW","DW"])){
 			return true;
 		}
 			return false;
