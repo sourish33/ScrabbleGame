@@ -917,10 +917,19 @@ function endCheck(){
     return 0;
 }
 
+function displayMove(){
+    let wordsPlayed = readAllWords(getAllNewWords());
+    let lw = document.getElementById("lastPlayed");
+    lw.innerHTML = `Played: ${wordsPlayed.join()} for ${score()}`;
+    lw.classList.remove("not-there");
+    console.log(`Played: ${wordsPlayed.join(', ')}`);
+}
+
 function AI_playGotMove(){
     legalPositions = getlegalPositions();
     let who= whoseMove(moveNumber,numPlayers);
     let tiles = getTilesPlayedNotSubmitted();
+    displayMove()
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
@@ -993,6 +1002,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     }
 
     let who= whoseMove(moveNumber,numPlayers);
+    displayMove();
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
