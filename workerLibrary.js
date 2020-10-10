@@ -916,6 +916,8 @@ function createAIPlayer(){
 }
 
 function try_move_no_blanks(rackId, pos){
+    // if (!isArray(rackId)) { rackId=[rackId]}
+    // if (!isArray(pos)) { pos=[pos]}
     placeCloneTiles(rackId, pos);
     allTiles = (rackId.length===7? true : false);
 
@@ -923,6 +925,8 @@ function try_move_no_blanks(rackId, pos){
     if (allValidWords()){
             let points = score(allTiles);
             if (points>rupa.bestMove["points"]){
+                if (typeof(rackId)==="string"){rackId=[rackId]};
+                if (typeof(pos)==="string"){pos=[pos]};
                 rupa.bestMove["from"]=rackId;
                 rupa.bestMove["to"] = pos;
                 rupa.bestMove["points"] = points;
