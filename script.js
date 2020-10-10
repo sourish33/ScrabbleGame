@@ -1325,7 +1325,6 @@ let player = {
     AI_player.bestMove ={};
     AI_player.blank1 =[];
     AI_player.blank2 =[];
-    AI_player.numMoves =0;
     AI_player.haveIwon=false;
 
     AI_player.resetBestMove = function(){
@@ -1334,7 +1333,6 @@ let player = {
         this.bestMove["to"]=[];
         this.bestMove["blank1"]=[];
         this.bestMove["blank2"]=[];
-        this.numMoves=0;
     }
 
     AI_player.trySingles = function(maxTries=maxWords){
@@ -1345,7 +1343,6 @@ let player = {
 
                 let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 let stop =  false;
-                this.numMoves++;
                 if (readLetter(rackId)==="_"){
                     console.log("Blank tile!")
                     for (let i=0;i<26;i++){
@@ -1487,15 +1484,15 @@ let player = {
             
 
 
-        if (moveNumber!==1) {
+        // if (moveNumber!==1) {
         
-                this.trySingles(maxWords);
-                if (this.haveIwon){
-                    this.playBestMove();
-                    AI_playGotMove();
-                    return;
-                }
-        }
+        //         this.trySingles(maxWords);
+        //         if (this.haveIwon){
+        //             this.playBestMove();
+        //             AI_playGotMove();
+        //             return;
+        //         }
+        // }
 
        
         let workerResult = await try_n_tiles(maxWords, this.score, "worker.js");

@@ -1026,4 +1026,40 @@ function tryNletters(n, maxTries){
 }
 
 
+function trySingles(maxTries=maxWords){
+
+    let moves =0;
+    for (let pos of legalPositions) {
+        for (let rackId of rackIds){
+
+            let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let stop =  false;
+        
+            if (readLetter(rackId)==="_"){
+                console.log("Blank tile!")
+                for (let i=0;i<26;i++){
+                    changeLetter(rackId,alphabet[i]);
+                    let curPoints = rupa.bestMove["points"];
+                    try_move_no_blanks(rackId, pos);
+                    if (rupa.bestMove["points"] > curPoints){
+                        rupa.bestMove["blank1"] = [rackId, alphabet[i]];
+                        stop = true;
+                        // console.log(`Choosing ${alphabet[i]} for the blank tile`)
+                    }
+                    changeLetter(rackId,"_");	
+                    if(stop) {break;}
+                }
+            } else{
+                try_move_no_blanks(rackId, pos);
+            }
+            moves++;
+            if (moves>maxTries || rupa.haveIwon){
+                // console.log(`${moves} max reached`)
+                return;
+            }
+        }
+    }
+}
+
+
 

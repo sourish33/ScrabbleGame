@@ -20,12 +20,15 @@ onmessage = function(e) {
 
     rupa.score=cur_points;
 
-
+    if (legalPositions.length!==1){
+        postMessage(`Trying single tiles`)
+        trySingles(maxTries);
+    }
     // t0=performance.now()
     if (!rupa.haveIwon){
     for (let i=2;i<8;i++){
+        postMessage(`Trying ${i}-letter combinations`)
         tryNletters(i, maxTries)
-        postMessage(`${i}-letter words complete`)
         if (rupa.haveIwon){
             break;
             }
