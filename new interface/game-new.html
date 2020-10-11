@@ -9,7 +9,7 @@
 		<title>Scrabble</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<!-- <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'> -->
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="style-new.css">
 
 	</head>
 	<body>
@@ -21,7 +21,7 @@
 
 		  
 		  <div class="row" >
-			<div class="col-lg-8 col-md-8 col-sm-10 " style="position: relative;">
+			<div class="col-lg-8 col-md-8 col-sm-12 " style="position: relative;">
 					<div class="grid-container ">
 					<!-- row a -->
 
@@ -307,14 +307,14 @@
 		    
 
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-2 d-flex flex-column justify-content-left control-btns" >
+			<div class="col-lg-4 col-md-4 col-sm-12 d-flex flex-column justify-content-left control-btns" >
 
 				<div class="row ">
 					<div class="col d-flex flex-column">
-							<div class="p-2 mt-0">
+							<div class="p-2">
 								<button type="button" class="btn btn-primary" id="shuffle">Shuffle</button>
 							</div>
-							<div class="p-2 mt-0">
+							<div class="p-2">
 								<button type="button" class="btn btn-primary" id="recall">Recall</button>
 							</div>
 
@@ -363,10 +363,7 @@
 								<p>Tiles remaining:  <span id="tile-counter">0</span><br>Points possible this turn: <span id="points">0</span></p>
 							</div>
 						</div>
-						<div>
-							<p class="not-there" id="lastPlayed"></p>
-						</div>
-						<div>
+						<div class="p-2">
 							<p class="not-there" id="AIbox">AI: Considering 7-letter words</p>
 						</div>
 
@@ -380,8 +377,18 @@
 				</div> -->
 
 
-				<div class="p-2 mt-0">
-					<button type="button" class="btn btn-primary" id="2lw-list">Show 2-letter words</button>
+				<div class="p-2" id="twolw-list" >
+				<p>
+					AA, AB, AD, AE, AG, AH, AI, AL, AM, AN, AR, AS, AT, AW, AX, AY, BA, BE, BI, BO, BY, CH, DA, DE, DI, DO, EA, EE, ED, EF, EH, EL, EM, EN, ER, ES, ET, EW, EX, 
+					FA, FE, FY, GI, GO, GU, HA, HE, HI, HM, HO, ID, IF, IN, IO, IS, IT, JA, JO, KA, KO, KI, KY, LA, LI, LO, MA, ME, MI, MM, MO, MU, MY, NA, NE, NO, NU, NY, OB, OD, OE, OF, OH, OI, OK, 
+					OM, ON, OO, OP, OR, OS, OU, OW, OX, OY, PA, PE, PI, PO, QI, RE, SH, SI, SO, ST, TA, TE, TI, TO, UG, UH, UM, UN, UP, UR, US, UT, WE, WO, XI, XU, YA, YE, YO, YU, ZA, ZE, ZO
+				</p>
+				<!-- <form>
+					<div class="form-group">
+					  <label for="dictionary">Check Dictionary</label>
+					  <input type="text" class="form-control" id="checkdic" placeholder="not a word">
+					</div>
+				</form> -->
 				</div>
 				<div class="mt-0">
 					<form id="submittedWord">
@@ -426,7 +433,7 @@
 							ondrop="onDrop(event);"
 							ondragover="onDragOver(event);"
 							ondragstart="onDragStart(event);">
-								<div class="tile-container ghost" 
+								<div class="tile-container" 
 								draggable="true">
 									<img  src="img/tile.png" class="tile-on-board">
 									<div class="centered">Q</div>
@@ -439,7 +446,7 @@
 							ondrop="onDrop(event);"	
 							ondragstart="onDragStart(event);"
 							>
-								<div class="tile-container ghost" 
+								<div class="tile-container" 
 								draggable="true" >					
 									<img src="img/tile.png" class="tile-on-board" draggable="false">
 									<div class="centered">B</div>
@@ -452,7 +459,7 @@
 							ondrop="onDrop(event);"	
 							ondragstart="onDragStart(event);"
 							>
-								<div class="tile-container ghost"
+								<div class="tile-container"
 								draggable="true" >
 									<img src="img/tile.png" class="tile-on-board" draggable="false">
 									<div class="centered">J</div>
@@ -466,7 +473,7 @@
 							ondrop="onDrop(event);"	
 							ondragstart="onDragStart(event);"
 							>
-								<div class="tile-container ghost" 
+								<div class="tile-container" 
 								draggable="true">
 									<img src="img/tile.png" class="tile-on-board" draggable="false">
 									<div class="centered">S</div>
@@ -479,7 +486,7 @@
 							ondrop="onDrop(event);"	
 							ondragstart="onDragStart(event);"
 							>
-								<div class="tile-container ghost" 
+								<div class="tile-container" 
 								draggable="true" >
 									<img src="img/tile.png" class="tile-on-board" draggable="false">
 									<div class="centered">D</div>
@@ -493,7 +500,7 @@
 							ondrop="onDrop(event);"	
 							ondragstart="onDragStart(event);"
 							>
-								<div class="tile-container ghost" 
+								<div class="tile-container" 
 								draggable="true">
 									<img src="img/tile.png" class="tile-on-board" draggable="false">
 									<div class="centered">V</div>
@@ -506,7 +513,7 @@
 							ondrop="onDrop(event);"	
 							ondragstart="onDragStart(event);"
 							>
-								<div class="tile-container ghost" 
+								<div class="tile-container" 
 								draggable="true">
 									<img src="img/tile.png" class="tile-on-board" draggable="false">
 									<div class="centered">P</div>
@@ -551,29 +558,22 @@
 		  
 		  </div>
 
-		  <div id="two-letter-modal" class="modal">
-
-			<!-- Modal content -->
-			<div class="modal-content">
-			  <span class="close" id="close2lw-list">&times;</span>
-			  <h3>Two-letter Words</h3>
-			  <p>
-				AA, AB, AD, AE, AG, AH, AI, AL, AM, AN, AR, AS, AT, AW, AX, AY, BA, BE, BI, BO, BY, CH, DA, DE, DI, DO, EA, EE, ED, EF, EH, EL, EM, EN, ER, ES, ET, EW, EX, 
-				FA, FE, FY, GI, GO, GU, HA, HE, HI, HM, HO, ID, IF, IN, IO, IS, IT, JA, JO, KA, KO, KI, KY, LA, LI, LO, MA, ME, MI, MM, MO, MU, MY, NA, NE, NO, NU, NY, OB, OD, OE, OF, OH, OI, OK, 
-				OM, ON, OO, OP, OR, OS, OU, OW, OX, OY, PA, PE, PI, PO, QI, RE, SH, SI, SO, ST, TA, TE, TI, TO, UG, UH, UM, UN, UP, UR, US, UT, WE, WO, XI, XU, YA, YE, YO, YU, ZA, ZE, ZO
-			</p>
-			</div>
-		  
-		  </div>
 
 
 
 
 
-		<script src="dictformatted.js"></script>
-		<script src="dictionary.js"></script>
-		<!-- <script src="AI.js"></script> -->
-		<script src="script.js"></script>
+		<script>
+		function  setBoardSize() {
+			let n=75;
+			let intViewportHeight = window.innerHeight;
+			let u=document.getElementsByClassName("grid-container")[0];
+			u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
+			u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
+			console.log("setBoardSize working")
+    }
+	window.addEventListener("resize", setBoardSize);
+		</script>
 		
 
 </body>

@@ -1725,21 +1725,31 @@ function createPlayers(){
     function  setBoardSize() {
         let n=85;
         let intViewportHeight = window.innerHeight;
-        u=document.getElementsByClassName("grid-container")[0];
+        let u=document.getElementsByClassName("grid-container")[0];
         u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
         u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
-        console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+        // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
     }
 
     
 
-    function showModal (){
+    function showModalInfo(){
         let modal = document.getElementById("myModal");
         modal.style.display="block"
     }
 
-    function closeMondal (){
+    function closeMondalInfo(){
         let modal = document.getElementById("myModal");
+        modal.style.display="none"
+    }
+
+    function showModal2lw(){
+        let modal = document.getElementById("two-letter-modal");
+        modal.style.display="block"
+    }
+
+    function closeMondal2lw(){
+        let modal = document.getElementById("two-letter-modal");
         modal.style.display="none"
     }
 
@@ -1769,13 +1779,20 @@ document.getElementById("play").addEventListener("click", play);
 document.getElementById("checkdic").addEventListener("click", getWordToCheck);
 document.getElementById("exchange").addEventListener("click", exchangeLetters);
 document.getElementById("pass").addEventListener("click", pass);
-document.getElementById("info").addEventListener("click", showModal);
-document.getElementById("closemodal").addEventListener("click", closeMondal);
+document.getElementById("info").addEventListener("click", showModalInfo);
+document.getElementById("closemodal").addEventListener("click", closeMondalInfo);
+document.getElementById("2lw-list").addEventListener("click", showModal2lw);
+document.getElementById("close2lw-list").addEventListener("click", closeMondal2lw);
+
 window.addEventListener("resize", setBoardSize);
 window.addEventListener("click", function (event){
     let modal = document.getElementById("myModal");
+    let modal1 = document.getElementById("two-letter-modal");
     if (event.target == modal) {
-        closeMondal();
+        closeMondalInfo();
+    }
+    if (event.target == modal1) {
+        closeMondal2lw();
     }
 });
 
