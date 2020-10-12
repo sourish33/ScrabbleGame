@@ -1081,6 +1081,8 @@ function endGameSequence(n) {
 
 function pass()
 {
+    let confirmPass = confirm("Are you sure you want to pass your turn?")
+    if (!confirmPass){return}
     let onboard = getTilesPlayedNotSubmitted();
     if (onboard.length!==0) {returnToRack();}
 
