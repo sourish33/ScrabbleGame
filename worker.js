@@ -28,6 +28,11 @@ onmessage = function(e) {
     if (!rupa.haveIwon){
     for (let i=2;i<8;i++){
         postMessage(`Trying ${i}-letter combinations`)
+        // if (i<6) {
+        //     tryNletters(i, maxTries)
+        // } else {
+        //     tryNletters(i, 1000)
+        // }
         tryNletters(i, maxTries)
         if (rupa.haveIwon){
             break;
