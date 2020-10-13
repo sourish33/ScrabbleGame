@@ -944,7 +944,7 @@ function tryNletters(n, maxTries){
     let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let rackPerms = getAllRackPermutations(n);
     let legalSlots =  getAllSlotsSortedByLen()[n]
-    console.log(`rackperms: ${rackPerms.length}, legalSlots = ${legalSlots.length}, to try: ${rackPerms.length*legalSlots.length}`)
+    // console.log(`rackperms: ${rackPerms.length}, legalSlots = ${legalSlots.length}, to try: ${rackPerms.length*legalSlots.length}`)
     // console.log(`Starting ${n}-letter words`)
     let blankspots=[];
     let stop = false;
@@ -967,7 +967,7 @@ function tryNletters(n, maxTries){
         default:
             break;
     }
-    if (blankspots.length>0) {console.log(`Found blanks at ${blankspots}`)}
+    // if (blankspots.length>0) {console.log(`Found blanks at ${blankspots}`)}
     let moves =0;
     loop1:
     for (let pos of legalSlots) {
@@ -1043,7 +1043,7 @@ function trySingles(maxTries=maxWords){
             let stop =  false;
         
             if (readLetter(rackId)==="_"){
-                console.log("Blank tile!")
+                // console.log("Blank tile!")
                 for (let i=0;i<26;i++){
                     changeLetter(rackId,alphabet[i]);
                     let curPoints = rupa.bestMove["points"];
