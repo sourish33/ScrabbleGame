@@ -295,7 +295,8 @@ function findHorGapSlots(row, n){
 			slot = subtractArrays(slot, toJumpOver);
 			let containsAtLeastOneLegalSlot = anyCommonElements(slot,legalPositions);
 			let overlapsSubmitted =  anyCommonElements(slot,submitted_ids);
-			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+            let tooManyLetters = (slot.length > 7 ? true : false);
+			if (containsAtLeastOneLegalSlot && !overlapsSubmitted && !tooManyLetters){
 				slotList.push(slot);
 			}
 		}
@@ -341,7 +342,7 @@ function findVerGapSlots(col, n){
 			if (submitted_ids.includes(space_id)) {
 				containsSubmitted = true;
 				toJumpOver.push(space_id);
-			}
+            }
 			slot.push(space_id);
 		}
 		// if (containsSubmitted){
@@ -351,8 +352,9 @@ function findVerGapSlots(col, n){
 		if (containsSubmitted){
 			slot = subtractArrays(slot, toJumpOver);
 			let containsAtLeastOneLegalSlot = anyCommonElements(slot,legalPositions);
-			let overlapsSubmitted =  anyCommonElements(slot,submitted_ids);
-			if (containsAtLeastOneLegalSlot && !overlapsSubmitted){
+            let overlapsSubmitted =  anyCommonElements(slot,submitted_ids);
+            let tooManyLetters = (slot.length > 7 ? true : false);
+			if (containsAtLeastOneLegalSlot && !overlapsSubmitted && !tooManyLetters){
 				slotList.push(slot);
 			}
 		}
@@ -409,7 +411,7 @@ function getAllHorGapSlots(){
 		rows = getUniques(rows);
 	}
 	for (let row of rows){
-		for (let i=3;i<8;i++) {
+		for (let i=3;i<14;i++) {
 			gapslot = findHorGapSlots(row, i);
 			let len = gapslot.length;
 			if (len>1){
@@ -431,7 +433,7 @@ function getAllVerGapSlots(){
 	}
 
 	for (let col of cols){
-		for (let i=3;i<8;i++) {
+		for (let i=3;i<14;i++) {
 			gapslot = findVerGapSlots(col, i);
 			let len = gapslot.length;
 			if (len>1){

@@ -13,7 +13,7 @@ let numPlayers  = playerNames.length;
 if (randomize) {playerNames= shuffle(playerNames);}
 let players = {};
 let maxPoints =50000000;
-let maxWords = 50000;
+let maxWords = 500000;
 if (endgame=="75pt") {maxPoints =75;}
 if (endgame=="150pt") {maxPoints =150;}
 
