@@ -19,7 +19,7 @@ onmessage = function(e) {
     maxPoints= e.data[7];
 
     rupa.score=cur_points;
-    console.log("This is worker all-purpose")
+    console.log("This is the worker all-purpose")
     if (legalPositions.length!==1){
         postMessage(`Trying single tiles`)
         trySingles(maxTries);

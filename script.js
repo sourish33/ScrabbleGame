@@ -1686,6 +1686,7 @@ function createPlayers(){
             let submitted_ids= getPlayedIds(tiles);
             let aibox=document.getElementById("AIbox");
             aibox.classList.remove("not-there");
+            let previousText = ""
 
             myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
 
@@ -1698,8 +1699,7 @@ function createPlayers(){
             myWorker.addEventListener('message', event => {
                 let result = event.data;
                 if (typeof(event.data)==="string"){
-                    let aibox=document.getElementById("AIbox");
-                    aibox.classList.remove("not-there");
+                    previousText=aibox.innerHTML;
                     aibox.innerHTML = event.data;
                 }
               }, false)
@@ -1710,7 +1710,7 @@ function createPlayers(){
                 let result = event.data;
                 if (typeof(event.data)==="object"){
                     let aibox=document.getElementById("AIbox");
-                    
+                    aibox.innerHTML=previousText;
                     resolve(result); 
                 }
               }, false)
