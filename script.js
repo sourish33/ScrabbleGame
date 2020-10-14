@@ -1505,6 +1505,8 @@ let player = {
         this.ai_move(from, to);
         // console.log(`found: ${readWord(this.bestMove["to"].flat())} for ${this.bestMove["points"]}`)
         this.resetBestMove();
+        let aibox=document.getElementById("AIbox");
+        aibox.classList.add("not-there");
     }
 
 
@@ -1678,31 +1680,39 @@ function createPlayers(){
             let played_ids= getPlayedIds(tiles);
             tiles = getTilesSubmitted();
             let submitted_ids= getPlayedIds(tiles);
+            let aibox=document.getElementById("AIbox");
+            aibox.classList.remove("not-there");
 
             myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
 
-              myWorker.onmessage = function(event) {
+            //   myWorker.onmessage = function(event) {
+            //     if (typeof(event.data)==="string"){
+            //         // console.log("Message from worker:", event.data); 
+            //         aibox.innerHTML = event.data;
+            //     }
+            // }
+            myWorker.addEventListener('message', event => {
+                let result = event.data;
                 if (typeof(event.data)==="string"){
-                    // console.log("Message from worker:", event.data); 
                     let aibox=document.getElementById("AIbox");
                     aibox.classList.remove("not-there");
                     aibox.innerHTML = event.data;
                 }
-            }
+              }, false)
+            
 
 
             myWorker.addEventListener('message', event => {
                 let result = event.data;
                 if (typeof(event.data)==="object"){
                     let aibox=document.getElementById("AIbox");
-                    aibox.classList.add("not-there");
+                    
                     resolve(result); 
                 }
               }, false)
 
         })
 
-        
 
     }
 

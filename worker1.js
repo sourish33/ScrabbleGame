@@ -36,9 +36,10 @@ onmessage = function(e) {
     //     }
     if (!rupa.haveIwon){
         console.log("Worker1 here!")
-        postMessage(`Thinking`)
+        postMessage(`Trying ${7}-letter combinations`)
         tryNletters(7, maxTries)
         console.log("Worker1 done")
+        postMessage(`${7}-letter combinations DONE`)
         }
 
 
