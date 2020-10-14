@@ -1513,13 +1513,17 @@ let player = {
     AI_player.makeMove = async function(){
 
             
-
+        let workerResult;
         // let workerResult = await try_n_tiles(maxWords, this.score, "worker.js");
+        if (maxPoints-this.score<25) {
+            workerResult = await try_n_tiles(maxWords, this.score, "worker.js");
+        }
 
-
-        const [res1, res2, res3] = await Promise.all([try_n_tiles(maxWords, this.score, "worker1.js"), try_n_tiles(maxWords, this.score, "worker2.js"),try_n_tiles(maxWords, this.score, "worker.js")]);
-        sortedres = [res1,res2,res3].sort((a,b)=>{return b.bestMove["points"]-a.bestMove["points"]});
-        workerResult = sortedres[0];
+        else {
+            const [res1, res2, res3] = await Promise.all([try_n_tiles(maxWords, this.score, "worker1.js"), try_n_tiles(maxWords, this.score, "worker2.js"),try_n_tiles(maxWords, this.score, "worker0.js")]);
+            sortedres = [res1,res2,res3].sort((a,b)=>{return b.bestMove["points"]-a.bestMove["points"]});
+            workerResult = sortedres[0];
+        }
         
         if (workerResult.bestMove["points"]> this.bestMove["points"]){
             this.bestMove["to"]=workerResult.bestMove["to"];
