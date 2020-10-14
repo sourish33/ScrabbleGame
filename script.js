@@ -1512,10 +1512,12 @@ let player = {
 
             
 
-       
-        let workerResult = await try_n_tiles(maxWords, this.score, "worker.js");
-        // const [res1, res2] = await Promise.all([try_n_tiles(maxWords, this.score, "worker1.js"), try_n_tiles(maxWords, this.score, "worker.js")]);
-        // workerResult = (res1.bestMove["points"]> res2.bestMove["points"] ? res1 : res2);
+        // let workerResult = await try_n_tiles(maxWords, this.score, "worker.js");
+
+
+        const [res1, res2, res3] = await Promise.all([try_n_tiles(maxWords, this.score, "worker1.js"), try_n_tiles(maxWords, this.score, "worker2.js"),try_n_tiles(maxWords, this.score, "worker.js")]);
+        sortedres = [res1,res2,res3].sort((a,b)=>{return b.bestMove["points"]-a.bestMove["points"]});
+        workerResult = sortedres[0];
         
         if (workerResult.bestMove["points"]> this.bestMove["points"]){
             this.bestMove["to"]=workerResult.bestMove["to"];
@@ -1665,7 +1667,7 @@ function createPlayers(){
     }
 
 
-    function try_n_tiles(maxTries, cur_points=0, workerfile="worker.js"){
+    function try_n_tiles(maxTries, cur_points=0, workerfile){
 
         return new Promise((resolve,reject)=>{
 

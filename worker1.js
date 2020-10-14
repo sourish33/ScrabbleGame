@@ -23,14 +23,23 @@ onmessage = function(e) {
 
     // t0=performance.now()
 
-    for (let i=7;i<8;i++){
-        tryNletters(i, maxTries)
-        postMessage(`${i}-letter words complete`)
-        if (rupa.haveIwon){
-            break;
+    // if (!rupa.haveIwon){
+    //     console.log("Worker1 here!")
+    //     for (let i=7;i<8;i++){
+    //         postMessage(`W1:Trying ${i}-letter combinations`)
+    //         tryNletters(i, maxTries)
+    //         if (rupa.haveIwon){
+    //             break;
+    //             }
+    
+    //         }
+    //     }
+    if (!rupa.haveIwon){
+        console.log("Worker1 here!")
+        postMessage(`Thinking`)
+        tryNletters(7, maxTries)
+        console.log("Worker1 done")
         }
-
-    }
 
 
 
