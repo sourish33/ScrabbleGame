@@ -590,7 +590,8 @@ function getAllRackPermutations(n){//permutes the tiles without duplication, i.e
 	let letters =[];
 	rackIds.forEach(el=>{ letters.push(readLetter(el)); });
 	let perms = unique_k_perms(letters,n);
-	let rackperms =[]
+    let rackperms =[]//words in dictionary go here
+    let rackperms1 = []//words not in dictionary will go here
 	for (let perm of perms){
 		let rperm = [];
 		for (let el of perm){
@@ -607,10 +608,14 @@ function getAllRackPermutations(n){//permutes the tiles without duplication, i.e
          		}
 				  
 			}
-		}
-		rackperms.push(rperm);
+        }
+        if (checkDict(perm.join(""))){
+            rackperms.push(rperm);
+        } else {
+            rackperms1.push(rperm);
+        }
 	}
-	return rackperms;
+	return rackperms.concat(rackperms1);
 
 }
 
@@ -984,7 +989,7 @@ function tryNletters(n, maxTries){
                     changeLetter(blank1,alphabet[i]);
                     let curPoints = rupa.bestMove["points"];
                     try_move_no_blanks(rackPerm, pos);
-                    // moves++;
+                    moves++;
                     if (rupa.bestMove["points"] > curPoints){
                         rupa.bestMove["blank1"] = [blank1, alphabet[i]]; 
                         stop = true;
@@ -1001,7 +1006,7 @@ function tryNletters(n, maxTries){
                         changeLetter(blank2,alphabet[i]);
                         let curPoints = rupa.bestMove["points"];
                         try_move_no_blanks(rackPerm, pos);
-                        // moves++;
+                        moves++;
                         if (rupa.bestMove["points"] > curPoints){
                             rupa.bestMove["blank2"] = [blank2, alphabet[i]]; 
                             stop = true;
