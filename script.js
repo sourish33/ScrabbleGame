@@ -13,14 +13,15 @@ let numPlayers  = playerNames.length;
 if (randomize) {playerNames= shuffle(playerNames);}
 let players = {};
 let maxPoints =50000000;
-let maxWords = 700000;
+let level = 2; //1:easy, 2:medium, 3:hard
 if (endgame=="75pt") {maxPoints =75;}
 if (endgame=="150pt") {maxPoints =150;}
 
 
 
 
-
+let levels = [1000,50000,600000]
+maxWords=levels[level-1]
 let tilesArray;
 (tilesArray = function makeTileList(){
 
@@ -1853,7 +1854,7 @@ startGame();
 /*  
 - difficulty level for AI in the interface
 - checkbox for AI
-- 
+- make textbox in dictionary autofocus
 - 
 - 
 - 
