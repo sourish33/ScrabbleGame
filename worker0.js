@@ -32,7 +32,7 @@ onmessage = function(e) {
         if (rupa.haveIwon){
             break;
             }
-        postMessage(`${i}-letter combinations DONE`)
+        postMessage(`${i}-letter combinations done`)
         }
         
     }

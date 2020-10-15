@@ -1079,10 +1079,13 @@ function endGameSequence(n) {
 }
 
 
-function pass()
+function pass(confirm=true)
 {
-    let confirmPass = confirm("Are you sure you want to pass your turn?")
-    if (!confirmPass){return}
+    if (confirm) {
+        let confirmPass = confirm("Are you sure you want to pass your turn?")
+        if (!confirmPass){return}
+    }
+    
     let onboard = getTilesPlayedNotSubmitted();
     if (onboard.length!==0) {returnToRack();}
 
@@ -1536,10 +1539,17 @@ let player = {
             return;     
         } else {
             console.log("got nothing from worker")
+            }
+        if (this.points === 0){
+                console.log("Unable to find a move")
+                let aibox=document.getElementById("AIbox");
+                aibox.classList.remove("not-there");
+                aibox.innerHTML = "AI failed to find a move - passing";
+                pass(false);
+                return;
+            }
             this.playBestMove();
             AI_playGotMove();
-
-        }
 
     }
 
@@ -1842,7 +1852,7 @@ startGame();
 //TODO
 /*  
 - difficulty level for AI in the interface
-- Animation for moving pieces by the AI
+- checkbox for AI
 - 
 - 
 - 
