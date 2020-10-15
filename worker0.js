@@ -19,15 +19,14 @@ onmessage = function(e) {
     maxPoints= e.data[7];
 
     rupa.score=cur_points;
-    console.log("This is the worker all-purpose")
+    console.log("This is worker 0")
     if (legalPositions.length!==1){
-        // postMessage(`Trying single tiles`)
+        postMessage(`Trying single tiles`)
         trySingles(maxTries);
-        postMessage(`Single letters done`)
     }
     // t0=performance.now()
     if (!rupa.haveIwon){
-    for (let i=2;i<8;i++){
+    for (let i=2;i<6;i++){
         // postMessage(`Trying ${i}-letter combinations`)
         tryNletters(i, maxTries)
         if (rupa.haveIwon){

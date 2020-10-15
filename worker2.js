@@ -19,27 +19,38 @@ onmessage = function(e) {
     maxPoints= e.data[7];
 
     rupa.score=cur_points;
-    console.log("This is the worker all-purpose")
-    if (legalPositions.length!==1){
-        // postMessage(`Trying single tiles`)
-        trySingles(maxTries);
-        postMessage(`Single letters done`)
-    }
-    // t0=performance.now()
-    if (!rupa.haveIwon){
-    for (let i=2;i<8;i++){
-        // postMessage(`Trying ${i}-letter combinations`)
-        tryNletters(i, maxTries)
-        if (rupa.haveIwon){
-            break;
-            }
-        postMessage(`${i}-letter combinations DONE`)
-        }
-        
-    }
 
-    console.log("Worker0 done")
-   postMessage(rupa);
+
+    // t0=performance.now()
+
+    if (!rupa.haveIwon){
+        console.log("Worker2 here!")
+
+        // postMessage(`Trying ${6}-letter combinations`)
+        tryNletters(6, maxTries)
+        console.log("Worker2 done")
+        postMessage(`${6}-letter combinations DONE`)
+        }
+
+
+
+    // tryNletters(2, maxTries)
+    // postMessage("2 letter words complete")
+    // tryNletters(3, maxTries)
+    // postMessage("3 letter words complete")
+    // tryNletters(4, maxTries)
+    // postMessage("4 letter words complete")
+    // tryNletters(5, maxTries)
+    // postMessage("5 letter words complete")
+    // tryNletters(6, maxTries)
+    // postMessage("6 letter words complete")
+    // tryNletters(7, maxTries)
+    // postMessage("7 letter words complete")
+
+    // t1=performance.now()
+    // postMessage(`Best Move Found: ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
+
+    postMessage(rupa);
   }
 
 
