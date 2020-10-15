@@ -21,7 +21,7 @@ if (endgame=="150pt") {maxPoints =150;}
 
 
 let levels = [1000,50000,600000]
-maxWords=levels[level-1]
+// maxWords=levels[level-1]
 let tilesArray;
 (tilesArray = function makeTileList(){
 
@@ -1349,10 +1349,12 @@ let player = {
   };
 
 
-  function createAIPlayer(NAME, NUMBER){
+  function createAIPlayer(NAME, NUMBER, LEVEL=2){
     let AI_player = Object.create(player);
     AI_player.name = NAME;
     AI_player.number =NUMBER;
+    AI_player.max_words = levels[LEVEL-1];
+    AI_player.ai=true;
     AI_player.score =0;
 
     AI_player.bestMove ={};
@@ -1368,119 +1370,8 @@ let player = {
         this.bestMove["blank2"]=[];
     }
 
-    // AI_player.trySingles = function(maxTries=maxWords){
-    //     let rackIds = getRackIds("rack");
-    //     let moves =0;
-    //     for (let pos of legalPositions) {
-    //         for (let rackId of rackIds){
 
-    //             let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    //             let stop =  false;
-    //             if (readLetter(rackId)==="_"){
-    //                 console.log("Blank tile!")
-    //                 for (let i=0;i<26;i++){
-    //                     changeLetter(rackId,alphabet[i]);
-    //                     let curPoints = this.bestMove["points"];
-    //                     this.try_move_no_blanks(rackId, pos);
-    //                     if (this.bestMove["points"] > curPoints){
-    //                         if (this.bestMove["blank1"].length===0)
-    //                         {this.bestMove["blank1"] = [rackId, alphabet[i]];}
-    //                         else {this.bestMove["blank2"] = [rackId, alphabet[i]];}
-    //                         stop = true;
-    //                         console.log(`Choosing ${alphabet[i]} for the blank tile`)
-    //                     }
-    //                     changeLetter(rackId,"_");	
-    //                     if(stop) {break;}
-    //                 }
-    //             } else{
-    //                 this.try_move_no_blanks(rackId, pos);
-    //             }
-    //             moves++;
-    //             if (moves>maxTries || this.haveIwon){
-    //                 // console.log(`${moves} max reached`)
-    //                 return;
-    //             }
-    //         }
-    //     }
-    // }
-
-
-
-    
-    // // AI_player.try_move_no_blanks = function(rackId, pos){
-    // //     this.placeCloneTiles(rackId, pos);
-    // //     let tiles = getTilesPlayedNotSubmitted();
-    // //     // if (checkLegalPlacement(tiles)){
-    // //     if (allValidWords()){
-    // //             let points = score();
-    // //             if (points>this.bestMove["points"]){
-    // //                 this.bestMove["from"]=[rackId];
-    // //                 this.bestMove["to"] = [pos];
-    // //                 this.bestMove["points"] = points;
-    // //                 if (this.score+points>maxPoints){
-    // //                     this.haveIwon=true;
-    // //                 }
-    // //             }
-    // //         }
-    // //     // }
-    // //     // else{
-    // //     //     //console.log(pos)
-    // //     // }
-        
-    // //     this.removeCloneTiles();
-    // // }
-
-
-
-
-
-    // AI_player.placeCloneTiles = function(orig_id, dest_id){
-    //     if (typeof(orig_id)!==typeof(dest_id)){return;}
-        
-    //     if ( !(typeof(orig_id)==="string" || Array.isArray(orig_id)))   {return;}
-    //     if (typeof(orig_id) === "string"){
-    //         if ( !isEmptyOnBoard(dest_id) ){return;}
-    //         let origin = document.getElementById(orig_id);
-    //         let tile = getTheTile(origin);
-    //         let cloneTile = tile.cloneNode(true);
-    //         cloneTile.removeAttribute("id");
-    //         let dest = document.getElementById(dest_id);
-    //         dest.appendChild(cloneTile);
-    //         dest.classList.add('played-not-submitted');
-    //         dest.classList.add('clone');
-    //         return;
-    //     }
-    //     if (orig_id.length!== dest_id.length) {return;}
-
-    //     for (let i=0;i<orig_id.length;i++) {
-    //         this.placeCloneTiles(orig_id[i],dest_id[i]);
-    //     }
-        
-        
-    // }
-
-    // AI_player.removeCloneTiles = function(){
-    //     let cloneSpots=document.getElementsByClassName("clone");
-    //     let pns=document.getElementsByClassName("played-not-submitted");
-    //     if (cloneSpots.length===0 && pns.length===0) {return;}
-         
-    //     while (cloneSpots.length>0) {
-    //             cloneTile = cloneSpots[0].children[0];
-    //             cloneSpots[0].removeChild(cloneTile);
-    //             cloneSpots[0].classList.remove("played-not-submitted");
-    //             cloneSpots[0].classList.remove("clone");
-    //         }
-        
-    //     let remcloneSpots=document.getElementsByClassName("clone");
-    //     if (remcloneSpots.length !==0){console.log(`${remcloneSpots.length} clone spots not cleared`);}
-
-    // }
-        
-
-    
-
-
-    AI_player.ai_move = function(from_locs,to_locs,blank1=[],blank2=[]){
+    AI_player.ai_move = function(from_locs,to_locs){
         if (typeof(from_locs)!==typeof(to_locs)){return;}
         if (typeof(from_locs) === "string"){
             move(from_locs,to_locs);
@@ -1518,13 +1409,12 @@ let player = {
 
             
         let workerResult;
-        // let workerResult = await try_n_tiles(maxWords, this.score, "worker.js");
         if (maxPoints-this.score<25) {
-            workerResult = await try_n_tiles(maxWords, this.score, "worker.js");
+            workerResult = await try_n_tiles(this.max_words, this.score, "worker.js");
         }
 
         else {
-            const [res1, res2, res3] = await Promise.all([try_n_tiles(maxWords, this.score, "worker1.js"), try_n_tiles(maxWords, this.score, "worker2.js"),try_n_tiles(maxWords, this.score, "worker0.js")]);
+            const [res1, res2, res3] = await Promise.all([try_n_tiles(this.max_words, this.score, "worker1.js"), try_n_tiles(this.max_words, this.score, "worker2.js"),try_n_tiles(this.max_words, this.score, "worker0.js")]);
             sortedres = [res1,res2,res3].sort((a,b)=>{return b.bestMove["points"]-a.bestMove["points"]});
             workerResult = sortedres[0];
         }
@@ -1568,6 +1458,7 @@ function createHumanPlayer(NAME, NUMBER){
     let playerH = Object.create(player);
     playerH.name = NAME;
     playerH.number =NUMBER;
+    playerH.ai=false;
     playerH.makeRack();
     return playerH;
 }
