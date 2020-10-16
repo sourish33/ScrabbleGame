@@ -33,6 +33,15 @@ function getRadioValue(name){
         return selected;
 }
 
+function showAILevel(){
+    level = document.getElementById("AIlevel1")
+    if (this.checked){
+        level.classList.remove("ghost")
+    } else {
+        level.classList.add("ghost")
+    }
+}
+
 
 
 function getInitialData() {
@@ -92,4 +101,5 @@ function getInitialData() {
 
 document.getElementById("playbutton").addEventListener("click", getInitialData);
 document.getElementById("addplayerbutton").addEventListener("click", addPlayer);
+document.querySelector("input[name=ck1]").addEventListener("change", showAILevel);
 
