@@ -4,20 +4,45 @@
 // let numPlayers = 2;
 // let dictionaryChecking = true;
 
+function show(x){
+    x.classList.remove("not-there")
+}
+
+function hide(x){
+    x.classList.add("not-there")
+}
+
 
 function addPlayer(){
     f3 = document.getElementById("3rdplayer");
     f4 = document.getElementById("4thplayer");
-    butt = document.getElementById("addplayerbutton");
+    button1 = document.getElementById("addplayerbutton");
+    button2 = document.getElementById("removeplayerbutton");
     f3invisible=f3.classList.contains("not-there");
     f4invisible = f4.classList.contains("not-there");
+    f3visible = !f3invisible;
+    f4vivible = !f4invisible;
+
     if (f3invisible && f4invisible){
-        f3.classList.remove("not-there");
+        show(f3)
+        show(button2)
     }
-    if (!f3invisible && f4invisible){
-        f4.classList.remove("not-there");
-        butt.classList.add("not-there");
+
+    if (f3visible && f4invisible){
+        show(f4)
+        hide(button1)
     }
+
+
+}
+
+function removePlayer(){////WORKING ON THIS!!!
+    /////TODO: Reset a player when removing them
+    f3 = document.getElementById("3rdplayer");
+    f4 = document.getElementById("4thplayer");
+    button1 = document.getElementById("addplayerbutton");
+    button2 = document.getElementById("removeplayerbutton");
+
 }
 
 function getRadioValue(name){
@@ -48,6 +73,7 @@ function resetPage(){
    
     for (let i=1;i<5;i++){
         document.getElementById(`player${i}`).value ="";
+        u = document.getElementById('p${i}')
         document.querySelector(`input[name=ck${i}]`).checked=false;
     }
 }
