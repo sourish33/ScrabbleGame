@@ -33,12 +33,22 @@ function getRadioValue(name){
         return selected;
 }
 
-function showAILevel(){
-    level = document.getElementById("AIlevel1")
-    if (this.checked){
+function showAILevel(n){
+
+    let check=document.querySelector(`input[name=ck${n}]`)
+    let level = document.getElementById(`AIlevel${n}`)
+    if (check.checked){
         level.classList.remove("ghost")
     } else {
         level.classList.add("ghost")
+    }
+}
+
+function resetPage(){
+   
+    for (let i=1;i<5;i++){
+        document.getElementById(`player${i}`).value ="";
+        document.querySelector(`input[name=ck${i}]`).checked=false;
     }
 }
 
@@ -82,13 +92,7 @@ function getInitialData() {
     sessionStorage.setItem("dictionary", getRadioValue("dictCheck"));
     sessionStorage.setItem("gameend", getRadioValue("gameType"));
 
-
-
-    document.getElementById("player1").value ="";
-    document.getElementById("player2").value ="";
-    document.getElementById("player3").value ="";
-    document.getElementById("player4").value ="";
-
+    resetPage();
 
     window.open('game.html', '_self')
     // window.open('game.html')
@@ -101,5 +105,10 @@ function getInitialData() {
 
 document.getElementById("playbutton").addEventListener("click", getInitialData);
 document.getElementById("addplayerbutton").addEventListener("click", addPlayer);
-document.querySelector("input[name=ck1]").addEventListener("change", showAILevel);
+for (let i=1;i<5;i++){
+    document.querySelector(`input[name=ck${i}]`).addEventListener("change", ()=>{
+        showAILevel(i);
+    });
+}
+resetPage()
 
