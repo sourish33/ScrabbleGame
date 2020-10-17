@@ -269,13 +269,7 @@ align-items: center;
     color: blue;
   }
 
-  .AIPlayer {
-  /* font-family: 'Press Start 2P', cursive;
-  font-size: 0.8em; */
-  }
-  .AIbgd{
-    background-color: coral;
-  }
+
 
   #AIbox{
     border: 2px solid #888;

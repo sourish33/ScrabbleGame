@@ -1179,36 +1179,36 @@ function displayScore() {
     document.getElementById("points").innerHTML = u;
 }
 
-function decorateAI(n){
-    if (players[n].isAI){
-        document.getElementById(`pl${n}`).classList.add("AIPlayer")
-        document.getElementById(`pl${n}-points`).classList.add("AIPlayer")
-    }
-}
+// function decorateAI(n){
+//     if (players[n].isAI){
+//         document.getElementById(`pl${n}`).classList.add("AIPlayer")
+//         document.getElementById(`pl${n}-points`).classList.add("AIPlayer")
+//     }
+// }
 
 
 function updateScoreBoard(){
     document.getElementById("pl1").innerHTML = players[1].name;
     document.getElementById("pl1-points").innerHTML = players[1].score;
-    decorateAI(1);
+    // decorateAI(1);
     
     document.getElementById("pl2-points").innerHTML = players[2].score;
     document.getElementById("pl2").innerHTML = players[2].name;
-    decorateAI(2);
+    // decorateAI(2);
 
     if (numPlayers===3){
         document.getElementById("pl3-points").innerHTML = players[3].score;
         document.getElementById("pl3").innerHTML = players[3].name;
-        decorateAI(3);
+        // decorateAI(3);
     }
     if (numPlayers===4){
         document.getElementById("pl3-points").innerHTML = players[3].score;
         document.getElementById("pl3").innerHTML = players[3].name;
-        decorateAI(3);
+        // decorateAI(3);
 
         document.getElementById("pl4-points").innerHTML = players[4].score;
         document.getElementById("pl4").innerHTML = players[4].name;
-        decorateAI(4);
+        // decorateAI(4);
     }
 }
 
@@ -1311,7 +1311,20 @@ function moveRackToRack(rack1, rack2){
         }
 }
 
-function makeRackUntouchable()
+function makeRackUntouchable(n){
+    let rackIds = getRackIds()
+    if (!players[n].isAI){
+        for (rackId of rackIds){
+            rackId.setAttribute("ondragstart","onDragStart(event);");
+        }
+
+    }else{
+    
+        for (rackId of rackIds){
+            rackId.setAttribute("ondragstart","return false");
+        }
+    }
+}
 
 let player = {
     name: '__', 
@@ -1493,16 +1506,14 @@ function createPlayers(){
     let row;
 
     createPlayer(1);
-    if (players[1].isAI){document.getElementById("1strow").classList.add("AIbgd")}
     createPlayer(2);
-    if (players[2].isAI){document.getElementById("2ndrow").classList.add("AIbgd")}
 
     
     if (numPlayers ===3){
         createPlayer(3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
-        if (players[3].isAI){row.classList.add("AIbgd")}
+
 
     }
 
@@ -1511,12 +1522,10 @@ function createPlayers(){
         createPlayer(3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
-        if (players[3].isAI){row.classList.add("AIbgd")}
 
         createPlayer(4);
         row=document.getElementById("4throw");
         row.classList.remove("not-there");
-        if (players[4].isAI){row.classList.add("AIbgd")}
     }
 }
 
