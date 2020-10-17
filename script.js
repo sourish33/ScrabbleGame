@@ -1311,6 +1311,8 @@ function moveRackToRack(rack1, rack2){
         }
 }
 
+function makeRackUntouchable()
+
 let player = {
     name: '__', 
     number: 0,
@@ -1745,9 +1747,9 @@ for (sqr of sqrs){
     });
 }
 
-document.getElementById("s1").addEventListener("mousedown",()=>{
-    this.children[0].classList.add("zoom")
-})
+// document.getElementById("s1").addEventListener("mousedown",()=>{
+//     this.children[0].classList.add("zoom")
+// })
 
 
 
