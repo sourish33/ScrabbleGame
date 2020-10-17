@@ -7,7 +7,10 @@ let settings = getSettings();
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
-let AIlist = settings[3];
+let AIlist={}
+for (let n=1;n<5;n++){
+    AIlist[n]=settings[3][n-1]
+}
 
 let playerNames = getPlayerNames();
 let numPlayers  = playerNames.length;
@@ -965,9 +968,7 @@ function AI_playGotMove(){
         //advance the movenumber
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
-        // if (!includes("AI_", players[who].name)) {
-        //     alert(`Please pass to ${players[who].name}`);
-        // }
+  
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
         replenishRack();
@@ -975,7 +976,7 @@ function AI_playGotMove(){
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
         legalPositions = getlegalPositions();
-        if (includes("AI_", players[who].name)) {
+        if (players[who].isAI) {
             AI_play();
         } else{
             play();
@@ -1046,7 +1047,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
         // alert(`Please pass to ${players[who].name}`);
-        if (!includes("AI_", players[who].name)){
+        if (!players[who].isAI) {
             alert(`Please pass device to ${players[who].name}`);
         }
         document.getElementById("who-is-playing").innerHTML=players[who].name;
@@ -1056,7 +1057,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
         legalPositions = getlegalPositions();
-        if (includes("AI_", players[who].name)) {
+        if (players[who].isAI) {
             AI_play();
         } else{
             play();
@@ -1082,11 +1083,11 @@ function endGameSequence(n) {
 }
 
 
-function pass(confirm=true)
+function pass(confirmPass=true)
 {
-    if (confirm) {
-        let confirmPass = confirm("Are you sure you want to pass your turn?")
-        if (!confirmPass){return}
+    if (confirmPass) {
+        let confirmed = confirm("Are you sure you want to pass your turn?")
+        if (!confirmed){return}
     }
     
     let onboard = getTilesPlayedNotSubmitted();
@@ -1103,7 +1104,7 @@ function pass(confirm=true)
     //advance the movenumber
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
-    if (!includes("AI_", players[who].name)){
+    if (!players[who].isAI) {
         alert(`Please pass device to ${players[who].name}`);
     }
     document.getElementById("who-is-playing").innerHTML=players[who].name;
@@ -1113,7 +1114,7 @@ function pass(confirm=true)
     document.getElementById("points").innerHTML = 0;
     //update the list of legal positions
     legalPositions = getlegalPositions();
-    if (includes("AI_", players[who].name)) {
+    if (players[who].isAI) {
         AI_play();
     } else{
         play();
@@ -1178,24 +1179,36 @@ function displayScore() {
     document.getElementById("points").innerHTML = u;
 }
 
+function decorateAI(n){
+    if (players[n].isAI){
+        document.getElementById(`pl${n}`).classList.add("AIPlayer")
+        document.getElementById(`pl${n}-points`).classList.add("AIPlayer")
+    }
+}
+
 
 function updateScoreBoard(){
     document.getElementById("pl1").innerHTML = players[1].name;
     document.getElementById("pl1-points").innerHTML = players[1].score;
+    decorateAI(1);
     
     document.getElementById("pl2-points").innerHTML = players[2].score;
     document.getElementById("pl2").innerHTML = players[2].name;
+    decorateAI(2);
 
     if (numPlayers===3){
         document.getElementById("pl3-points").innerHTML = players[3].score;
         document.getElementById("pl3").innerHTML = players[3].name;
+        decorateAI(3);
     }
     if (numPlayers===4){
         document.getElementById("pl3-points").innerHTML = players[3].score;
         document.getElementById("pl3").innerHTML = players[3].name;
+        decorateAI(3);
 
         document.getElementById("pl4-points").innerHTML = players[4].score;
         document.getElementById("pl4").innerHTML = players[4].name;
+        decorateAI(4);
     }
 }
 
@@ -1356,7 +1369,7 @@ let player = {
     AI_player.name = NAME;
     AI_player.number =NUMBER;
     AI_player.max_words = levels[LEVEL-1];
-    AI_player.ai=true;
+    AI_player.isAI=true;
     AI_player.score =0;
 
     AI_player.bestMove ={};
@@ -1460,14 +1473,15 @@ function createHumanPlayer(NAME, NUMBER){
     let playerH = Object.create(player);
     playerH.name = NAME;
     playerH.number =NUMBER;
-    playerH.ai=false;
+    playerH.isAI=false;
     playerH.makeRack();
     return playerH;
 }
 
 function createPlayer(n){
-    if (includes("AI_", playerNames[n-1])){
-        players[n] = createAIPlayer(playerNames[n-1], n);
+   
+    if (AIlist[n]!=="0"){
+        players[n] = createAIPlayer(`${playerNames[n-1]}`, n, parseInt(AIlist[n]));
     } else {
         players[n] = createHumanPlayer(playerNames[n-1], n);
     }
@@ -1475,14 +1489,18 @@ function createPlayer(n){
 
 function createPlayers(){
     let row;
+
     createPlayer(1);
+    if (players[1].isAI){document.getElementById("1strow").classList.add("AIbgd")}
     createPlayer(2);
+    if (players[2].isAI){document.getElementById("2ndrow").classList.add("AIbgd")}
 
     
     if (numPlayers ===3){
         createPlayer(3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
+        if (players[3].isAI){row.classList.add("AIbgd")}
 
     }
 
@@ -1491,10 +1509,12 @@ function createPlayers(){
         createPlayer(3);
         row=document.getElementById("3rdrow");
         row.classList.remove("not-there");
+        if (players[3].isAI){row.classList.add("AIbgd")}
 
         createPlayer(4);
         row=document.getElementById("4throw");
         row.classList.remove("not-there");
+        if (players[4].isAI){row.classList.add("AIbgd")}
     }
 }
 
@@ -1679,7 +1699,7 @@ function createPlayers(){
         who= whoseMove(moveNumber,numPlayers);
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         
-        if (includes("AI_", players[who].name)) {
+        if (players[who].isAI) {
             replenishRack();
             AI_play();
         }

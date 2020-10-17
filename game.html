@@ -8,7 +8,7 @@
     	<meta name="author" content="">
 		<title>Scrabble</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<!-- <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'> -->
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
 		<link rel="stylesheet" href="style.css">
 
 	</head>
@@ -338,15 +338,15 @@
 					</div>
 					<div class="col d-flex flex-column">
 						<div class="p-2">
-							<table>
-								<tr>
+							<table id="score-table">
+								<tr id="1strow">
 									<th scope="col"><span id="pl1">Player1</span></th>
                                   <td><span id="pl1-points">0</span></td>
 									
 								</tr>
 								
 								<tbody>
-								<tr>
+									<tr id="2ndrow">
 									<th scope="col"><span id="pl2">Player2</span></th>
 									<td><span id="pl2-points">0</span></td>
 								</tr>
@@ -370,7 +370,7 @@
 						<div>
 							<p class="not-there" id="lastPlayed"></p>
 						</div>
-						<div>
+						<div >
 							<p class="not-there" id="AIbox"></p>
 						</div>
 
