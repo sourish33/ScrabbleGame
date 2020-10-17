@@ -120,7 +120,7 @@ e = e || event;
 e.preventDefault();
 },false);
 
-// document.getElementById("replenish").addEventListener("click", replenishRack());
+
 
 
 function onDragStart(event) {
@@ -479,6 +479,7 @@ function placeTileOnRack(space_id){
         for (slot of rackSlots){
             placeTileOnRack(slot);
         }
+
     }
 
     function isEmptyOnRack(space_id){
@@ -972,6 +973,7 @@ function AI_playGotMove(){
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
         replenishRack();
+        makeAIRackUntouchable(who);
         //reset the possible points 
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
@@ -1053,6 +1055,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
         replenishRack();
+        makeAIRackUntouchable(who);
         //reset the possible points 
         document.getElementById("points").innerHTML = 0;
         //update the list of legal positions
@@ -1110,6 +1113,7 @@ function pass(confirmPass=true)
     document.getElementById("who-is-playing").innerHTML=players[who].name;
     players[who].returnPieces();
     replenishRack();
+    makeAIRackUntouchable(who);
     //reset the possible points 
     document.getElementById("points").innerHTML = 0;
     //update the list of legal positions
@@ -1311,18 +1315,19 @@ function moveRackToRack(rack1, rack2){
         }
 }
 
-function makeRackUntouchable(n){
+function makeAIRackUntouchable(n){
     let rackIds = getRackIds()
-    if (!players[n].isAI){
+    if (players[n].isAI){
         for (rackId of rackIds){
-            rackId.setAttribute("ondragstart","onDragStart(event);");
+            let v =document.getElementById(rackId)
+            v.setAttribute("ondragstart","return false");
+        }
+    } else {
+        for (rackId of rackIds){
+            let v =document.getElementById(rackId)
+            v.setAttribute("ondragstart","onDragStart(event);");
         }
 
-    }else{
-    
-        for (rackId of rackIds){
-            rackId.setAttribute("ondragstart","return false");
-        }
     }
 }
 
@@ -1712,6 +1717,7 @@ function createPlayers(){
         
         if (players[who].isAI) {
             replenishRack();
+            makeAIRackUntouchable(who);
             AI_play();
         }
         else{
