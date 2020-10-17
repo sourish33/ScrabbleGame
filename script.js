@@ -7,6 +7,7 @@ let settings = getSettings();
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
 let endgame = settings[2];
+let AIlist = settings[3];
 
 let playerNames = getPlayerNames();
 let numPlayers  = playerNames.length;
@@ -91,7 +92,8 @@ function getSettings(){
     let toRandomize = (r === "1" ? true : false);
 
     let end = sessionStorage.getItem("gameend");
-    return ([dictcheck, toRandomize,end]);
+    let AIList = JSON.parse(sessionStorage.getItem('AIList'));
+    return ([dictcheck, toRandomize,end,AIList]);
 }
 
 

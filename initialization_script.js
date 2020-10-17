@@ -21,11 +21,12 @@ function addPlayer(){
     f3invisible=f3.classList.contains("not-there");
     f4invisible = f4.classList.contains("not-there");
     f3visible = !f3invisible;
-    f4vivible = !f4invisible;
+    f4visible = !f4invisible;
 
     if (f3invisible && f4invisible){
         show(f3)
         show(button2)
+        
     }
 
     if (f3visible && f4invisible){
@@ -42,6 +43,23 @@ function removePlayer(){////WORKING ON THIS!!!
     f4 = document.getElementById("4thplayer");
     button1 = document.getElementById("addplayerbutton");
     button2 = document.getElementById("removeplayerbutton");
+    f3invisible=f3.classList.contains("not-there");
+    f4invisible = f4.classList.contains("not-there");
+    f3visible = !f3invisible;
+    f4visible = !f4invisible;
+
+    if (f3visible && f4invisible){
+        hide(f3)
+        resetPlayer(3)
+        hide(button2)
+        // button2.removeEventListener('click')
+    }
+
+    if (f3visible && f4visible){
+        hide(f4)
+        resetPlayer(4)
+        show(button1)
+    }
 
 }
 
@@ -69,12 +87,16 @@ function showAILevel(n){
     }
 }
 
+function resetPlayer(i){
+    document.getElementById(`player${i}`).value ="";
+    document.getElementById(`p${i}`).value="1";
+    document.querySelector(`input[name=ck${i}]`).checked=false;
+}
+
 function resetPage(){
    
     for (let i=1;i<5;i++){
-        document.getElementById(`player${i}`).value ="";
-        u = document.getElementById('p${i}')
-        document.querySelector(`input[name=ck${i}]`).checked=false;
+        resetPlayer(i);
     }
 }
 
@@ -108,12 +130,19 @@ function getInitialData() {
         playernum++;
 
     }
+    //creating AI List
+    let AIList = []
+    for (let i=1;i<5;i++){
+       
+        if (document.querySelector(`input[name=ck${i}]`).checked==true){
+            AIList.push(document.getElementById(`p${i}`).value)
+        } else{
+            AIList.push("0")
+        }
+    }
 
-    //Radio Buttons
-    // let randPlayers = getRadioValue("randPlayers");
-    // let dictCheck = getRadioValue("dictCheck");
-    // let gameType = getRadioValue("gameType");
-
+    
+    sessionStorage.setItem('AIList', JSON.stringify(AIList))
     sessionStorage.setItem("randomize", getRadioValue("randPlayers"));
     sessionStorage.setItem("dictionary", getRadioValue("dictCheck"));
     sessionStorage.setItem("gameend", getRadioValue("gameType"));
@@ -131,6 +160,7 @@ function getInitialData() {
 
 document.getElementById("playbutton").addEventListener("click", getInitialData);
 document.getElementById("addplayerbutton").addEventListener("click", addPlayer);
+document.getElementById("removeplayerbutton").addEventListener('click', removePlayer);
 for (let i=1;i<5;i++){
     document.querySelector(`input[name=ck${i}]`).addEventListener("change", ()=>{
         showAILevel(i);
