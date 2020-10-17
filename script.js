@@ -1745,6 +1745,10 @@ for (sqr of sqrs){
     });
 }
 
+document.getElementById("s1").addEventListener("mousedown",()=>{
+    this.children[0].classList.add("zoom")
+})
+
 
 
 //call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
