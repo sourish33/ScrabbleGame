@@ -516,7 +516,7 @@
 						<div class="p-2">
 							<div class="btn-toolbar ">
 							<button type="button" class="btn btn-info mb-2 mr-2" id="info">Information</button>
-							<a href="index.html" type="button" class="btn btn-danger mb-2 mr-2" id="exitgame">Start New Game</a>
+							<a href="index.html" type="button" class="btn btn-danger mb-2 mr-2" id="exitgame" onclick="localStorage.clear()">Start New Game</a>
 							</div>
 						</div>
 					</div>
@@ -557,7 +557,7 @@
 			<div class="mt-0">
 				<form id="submittedWord">
 						<div class="input-group mb-3">
-							<input type="text" autofocus class="form-control" placeholder="Check dictionary"   name="word"   aria-label="Recipient's username" aria-describedby="basic-addon2">
+							<input type="text" id="dicInput" class="form-control" placeholder="Check dictionary"   name="word"   aria-label="Recipient's username" aria-describedby="basic-addon2">
 							<div class="input-group-append">
 							<button class="btn btn-primary" id="checkdic" type="button">Check</button>
 							</div>
