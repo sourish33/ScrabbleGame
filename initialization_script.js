@@ -97,6 +97,7 @@ function addPlayerC(){
         show(ais[0])
         players.push(fs[0])
         document.getElementById(`player${1}`).value = AINames.pop()
+        document.getElementById(`player${1}`).disabled = true
         AIList.push(1)
         show(button3)
         return 
@@ -109,6 +110,7 @@ function addPlayerC(){
     show(ais[v])
     players.push(fs[v])
     document.getElementById(`player${v+1}`).value = AINames.pop()
+    document.getElementById(`player${v+1}`).disabled = true
     AIList.push(1)
     if (players.length===4){
         hide(button1)
