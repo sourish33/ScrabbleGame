@@ -1505,7 +1505,7 @@ function createHumanPlayer(NAME, NUMBER){
 function createPlayer(n){
    
     if (AIlist[n]!=="0"){
-        players[n] = createAIPlayer(`${playerNames[n-1]} (AI-${AIlist[n]})`, n, parseInt(AIlist[n]));
+        players[n] = createAIPlayer(`${playerNames[n-1]}`, n, parseInt(AIlist[n]));
     } else {
         players[n] = createHumanPlayer(playerNames[n-1], n);
     }

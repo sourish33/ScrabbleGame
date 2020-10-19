@@ -27,7 +27,7 @@ function shuffle(arr){
 }
 
 let players=[]
-AINameList=["Parker", "Tori", "Lilly", "Sienna", "Jasmine", "Dylan", "Kira", "Kashmir"]
+AINameList=["AI Parker", "AI Tori", "AI Lilly", "AI Sienna", "AI Jasmine", "AI Dylan", "AI Kira", "AI Kashmir"]
 AINames =shuffle(AINameList)
 let AIList=[]
 

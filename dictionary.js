@@ -22,7 +22,7 @@ function getWordToCheck() {
     let myform = document.getElementById("submittedWord");
     // let formInput = document.getElementById("dicInput");
     // formInput.focus();
-    formInput.scrollIntoView();
+    // formInput.scrollIntoView();
     let inputword = myform[0].value.toUpperCase();
     if (inputword==="") {return;}
     // console.log(`${inputword} was checked and found to be ${checkDict(inputword)}`)
