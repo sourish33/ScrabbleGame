@@ -1079,8 +1079,12 @@ function endGameSequence(n) {
         m.classList.remove("not-there");
         document.getElementById("winner").innerHTML=winner;
         document.getElementById("play").classList.add("not-there");
-        // document.getElementById("twolw-list").classList.add("not-there");
-        // document.getElementById("submittedWord").classList.add("not-there");
+        document.getElementById("shuffle").disabled = true;
+        document.getElementById("recall").disabled = true;
+        document.getElementById("play").disabled = true;
+        document.getElementById("checkdic").disabled = true;
+        document.getElementById("exchange").disabled = true;
+        document.getElementById("pass").disabled = true;
         document.getElementById("cat-gif").classList.remove("not-there");
     }
 }
