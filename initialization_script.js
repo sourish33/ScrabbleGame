@@ -179,6 +179,7 @@ function showAILevel(n){
 function resetPlayer(i){
     document.getElementById(`player${i}`).value ="";
     document.getElementById(`p${i}`).value="1";
+    document.getElementById(`player${i}`).disabled = false;
 }
 
 function resetPage(){
