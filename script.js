@@ -182,7 +182,6 @@ window.addEventListener('touchstart', function(e) {
   window.addEventListener('touchend', function(e) {
     // Invoke the appropriate handler depending on the 
     // number of touch points.
-    let who= whoseMove(moveNumber,numPlayers);
         multipleTouches=false
     
   }, false);
