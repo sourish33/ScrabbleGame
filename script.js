@@ -183,9 +183,8 @@ window.addEventListener('touchstart', function(e) {
     // Invoke the appropriate handler depending on the 
     // number of touch points.
     let who= whoseMove(moveNumber,numPlayers);
-    if (e.touches.length>1 && !players[who].isAI) {
         multipleTouches=false
-    }
+    
   }, false);
 
 
