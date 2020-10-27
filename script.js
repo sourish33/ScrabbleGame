@@ -605,6 +605,11 @@ function placeTileOnRack(space_id){
 
     }
 
+    function toggleRack(){
+        console.log("toggling rack")
+        document.getElementById("rack").classList.toggle("ghost")
+    }
+
     function isEmptyOnRack(space_id){
         if (!checkNameOfLocation(space_id)) {return;}
         let space = document.getElementById(space_id);
@@ -1192,6 +1197,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
         // alert(`Please pass to ${players[who].name}`);
+        toggleRack()
         if (!players[who].isAI) {
             alert(`Please pass device to ${players[who].name}`);
         }
@@ -1205,8 +1211,10 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         legalPositions = getlegalPositions();
         if (players[who].isAI) {
             AI_play();
+            toggleRack();
         } else{
             play();
+            toggleRack();
         }
     }
     else {
