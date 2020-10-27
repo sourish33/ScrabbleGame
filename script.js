@@ -228,12 +228,14 @@ function onTouchMove(e) {
     if (!includes("s",endingloc)){
         emptySlotOnBoard = isEmptyOnBoard(endingloc)
     }
+    let locChanged = (startingloc!==endingloc)
 
-    if (endingloc!=="none" && emptySlotOnBoard){
+    if (endingloc!=="none" && emptySlotOnBoard &&locChanged ){
         move(startingloc,endingloc)
+        console.log(`Moved from: ${startingloc} to ${endingloc}` )
         displayScore();
     }
-    console.log(`Moved from: ${startingloc} to ${endingloc}` )
+    
     startingloc = endingloc
  
 
@@ -605,9 +607,13 @@ function placeTileOnRack(space_id){
 
     }
 
-    function toggleRack(){
-        console.log("toggling rack")
-        document.getElementById("rack").classList.toggle("ghost")
+    function hideRack(){
+        console.log("hiding rack")
+        document.getElementById("rack").classList.add("ghost")
+    }
+    function showRack(){
+        console.log("showing rack")
+        document.getElementById("rack").classList.remove("ghost")
     }
 
     function isEmptyOnRack(space_id){
@@ -1147,12 +1153,20 @@ function restoreTouch(tile_container){
     tile_container.setAttribute("ontouchend","onTouchEnd(event)" )
 }
 
+function askToPass(player="next player"){
+    hideRack()
+    setTimeout(function(){
+        alert(`Please pass to ${player}`);
+        showRack()
+      }, 100);
+    
+}
+
 
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
     let tiles = getTilesPlayedNotSubmitted();
     if (tiles.length === 0) {return;} //nothing submitted yet
-
     if (!checkLegalPlacement(tiles)) {
         alert("Tile placement illegal");
         return;
@@ -1173,6 +1187,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
+    
 
     for (tile of tiles) {
         tile.classList.remove("played-not-submitted");
@@ -1187,6 +1202,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
 
     //is the game over?
     let gameCheck = endCheck();
+    
 
     if (gameCheck===0)
     {
@@ -1197,9 +1213,13 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
         // alert(`Please pass to ${players[who].name}`);
-        toggleRack()
+        
         if (!players[who].isAI) {
-            alert(`Please pass device to ${players[who].name}`);
+            // hideRack()
+            // alert(`Please pass device to ${players[who].name}`);
+            // console.log(`Please pass device to ${players[who].name}`);
+            askToPass(`${players[who].name}`)
+            
         }
         document.getElementById("who-is-playing").innerHTML=players[who].name;
         players[who].returnPieces();
@@ -1210,11 +1230,11 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         //update the list of legal positions
         legalPositions = getlegalPositions();
         if (players[who].isAI) {
+            showRack();
             AI_play();
-            toggleRack();
         } else{
+            // showRack();
             play();
-            toggleRack();
         }
     }
     else {
