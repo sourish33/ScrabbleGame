@@ -175,7 +175,6 @@ window.addEventListener('touchstart', function(e) {
     // Invoke the appropriate handler depending on the 
     // number of touch points.
     if (e.touches.length>1) {
-        disableTouchRack()
         multipleTouches=true
     }   
   }, false);
@@ -183,8 +182,10 @@ window.addEventListener('touchstart', function(e) {
   window.addEventListener('touchend', function(e) {
     // Invoke the appropriate handler depending on the 
     // number of touch points.
-    enableTouchRack();
-    multipleTouches=false
+    let who= whoseMove(moveNumber,numPlayers);
+    if (e.touches.length>1 && !players[who].isAI) {
+        multipleTouches=false
+    }
   }, false);
 
 
@@ -1149,24 +1150,24 @@ function removeTouch(tile_container){
     tile_container.removeAttribute("ontouchend");
 }
 
-function disableTouchRack(){
-    let ids = getRackIds()
-    for (id of ids){
-        if (isEmptyOnRack(id)) {continue}
-        let tile = getTileAt(id)
-        removeTouch(tile)
-    }
-}
+// function disableTouchRack(){
+//     let ids = getRackIds()
+//     for (id of ids){
+//         if (isEmptyOnRack(id)) {continue}
+//         let tile = getTileAt(id)
+//         removeTouch(tile)
+//     }
+// }
 
 
-function enableTouchRack(){
-    let ids = getRackIds()
-    for (id of ids){
-        if (isEmptyOnRack(id)) {continue}
-        let tile = getTileAt(id)
-        restoreTouch(tile)
-    }
-}
+// function enableTouchRack(){
+//     let ids = getRackIds()
+//     for (id of ids){
+//         if (isEmptyOnRack(id)) {continue}
+//         let tile = getTileAt(id)
+//         restoreTouch(tile)
+//     }
+// }
 
 function restoreTouch(tile_container){
     tile_container.setAttribute("ontouchstart","onTouchStart(event)" )
@@ -1304,7 +1305,7 @@ function pass(confirmPass=true)
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
     if (!players[who].isAI) {
-        alert(`Please pass device to ${players[who].name}`);
+        askToPass(`${players[who].name}`)
     }
     document.getElementById("who-is-playing").innerHTML=players[who].name;
     players[who].returnPieces();
