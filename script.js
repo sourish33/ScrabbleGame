@@ -158,15 +158,17 @@ function onDropRackTile(event) {
     // event.dataTransfer.clearData();
 }
 
+
+
 let startingloc;
 let endingloc;
-var active = false;
-var currentX;
-var currentY;
-var initialX;
-var initialY;
-var xOffset = 0;
-var yOffset = 0;
+let currentX;
+let currentY;
+let initialX;
+let initialY;
+let xOffset = 0;
+let yOffset = 0;
+let lastMoved;
 
 
 function onTouchStart(e){
@@ -181,7 +183,8 @@ function onTouchStart(e){
 
 function onTouchMove(e) {
     e.preventDefault();
-    dragItem = e.currentTarget;
+    let dragItem = e.currentTarget;
+    lastMoved=dragItem;
       
     currentX = e.touches[0].clientX - initialX;
     currentY = e.touches[0].clientY - initialY;
@@ -199,8 +202,14 @@ function onTouchMove(e) {
     let u = e.currentTarget;
     let pos = getXY(u)
     endingloc = getSquareIdFromPos(pos)
-    console.log(`will move from: ${startingloc} to ${endingloc}` )
+    xOffset=0;
+    yOffset=0;
+    setTranslate(0, 0, lastMoved)
+    move(startingloc,endingloc)
+    console.log(`Moved from: ${startingloc} to ${endingloc}` )
     startingloc = endingloc
+ 
+
   }
 
   function getSquareIdFromPos(pos){
@@ -530,7 +539,7 @@ function fixSizesAttribs(){
 }
 
 function placeTileOnRack(space_id){
-    //pick a tile from the bag and put it on the rack
+    //pick a random tile from the bag and put it on the rack
     if (!checkNameOfLocation(space_id)) {return;}
     if (tilesArray.length==0) {return;}
     space = document.getElementById(space_id);
