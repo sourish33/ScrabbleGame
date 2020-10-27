@@ -205,7 +205,14 @@ function onTouchMove(e) {
     xOffset=0;
     yOffset=0;
     setTranslate(0, 0, lastMoved)
-    move(startingloc,endingloc)
+    let emptySlotOnBoard = true;
+    if (!includes("s",endingloc)){
+        emptySlotOnBoard = isEmptyOnBoard(endingloc)
+    }
+
+    if (endingloc!=="none" && emptySlotOnBoard){
+        move(startingloc,endingloc)
+    }
     console.log(`Moved from: ${startingloc} to ${endingloc}` )
     startingloc = endingloc
  
@@ -343,6 +350,9 @@ function isEmptyOnBoard(space_id){
     return (u.length ===0 ? true : false) 
 }
 
+
+
+
 function getTileAt(address){
     if (isEmptyOnBoard(address)){
         return null;
@@ -415,12 +425,20 @@ function moveOnRack(fromWhere, toWhere){
 }
 
 function checkNameOfLocation(loc) {
-    let validOnScreenName = (/^([a-z]\d+)$/.test(loc));
+    let validOnScreenName = (/^[^pqrtuvwxyz]\d+$/.test(loc));
     let validOffScreenName = (/^(\d+[a-z]\d+)$/.test(loc));
+    let validRackId = true;
+    if (loc[0]==="s"){
+        if (parseInt(loc.substr(1))>7) { 
+          console.log(`${loc} is bad location for a move`)
+          return false
+          }
+    }
     if (!validOffScreenName && !validOnScreenName) {
         console.log(`${loc} is bad location for a move`)
+        return false
     }
-    return ((validOnScreenName || validOffScreenName) ? true : false);
+    return true
 }
 
 
@@ -1047,6 +1065,10 @@ function AI_playGotMove(){
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
+        tile.setAttribute("ontouchstart","return");
+        tile.setAttribute("ontouchmove","return" );
+        tile.setAttribute("ontouchend", "return");
+        removeTouch(tile.children[0]);
     }
     let gameCheck = endCheck();
     if (gameCheck===0)
@@ -1088,6 +1110,12 @@ function AI_play(){
     
 }
 
+function removeTouch(tile_container){
+    tile_container.removeAttribute("ontouchstart");
+    tile_container.removeAttribute("ontouchmove");
+    tile_container.removeAttribute("ontouchend");
+}
+
 
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
@@ -1120,6 +1148,10 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
         tile.classList.add("unselectable");
+        tile.removeAttribute("ontouchstart");
+        tile.removeAttribute("ontouchmove" );
+        tile.removeAttribute("ontouchend");
+        removeTouch(tile.children[0]);
     }
 
     //is the game over?
