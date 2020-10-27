@@ -158,6 +158,82 @@ function onDropRackTile(event) {
     // event.dataTransfer.clearData();
 }
 
+let startingloc;
+let endingloc;
+var active = false;
+var currentX;
+var currentY;
+var initialX;
+var initialY;
+var xOffset = 0;
+var yOffset = 0;
+
+
+function onTouchStart(e){
+        // startingloc = e.currentTarget.parentElement.id
+        let u = e.currentTarget;
+        let pos = getXY(u)
+        startingloc = getSquareIdFromPos(pos)
+        console.log(`Starting location: ${startingloc}`)
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
+}
+
+function onTouchMove(e) {
+    e.preventDefault();
+    dragItem = e.currentTarget;
+      
+    currentX = e.touches[0].clientX - initialX;
+    currentY = e.touches[0].clientY - initialY;
+    
+    xOffset = currentX;
+    yOffset = currentY;
+  
+    setTranslate(currentX, currentY, dragItem);
+
+  }
+
+  function onTouchEnd(e) {
+    initialX = currentX;
+    initialY = currentY;
+    let u = e.currentTarget;
+    let pos = getXY(u)
+    endingloc = getSquareIdFromPos(pos)
+    console.log(`will move from: ${startingloc} to ${endingloc}` )
+    startingloc = endingloc
+  }
+
+  function getSquareIdFromPos(pos){
+      let x = pos[0]
+      let y = pos[1]
+      let whatshere = document.elementsFromPoint(x,y)
+      if (whatshere.length===0) {return "none"} 
+      for (stuffHere of whatshere){
+          let stuff_id = stuffHere.id
+          if (/^[^pqrtuvwxyz]\d+$/.test(stuff_id)) {return stuff_id}
+      }
+      return "none"
+  }
+
+  function getXY(space_id){
+      let el;
+      if (typeof(space_id)==="string"){
+        el=document.getElementById(space_id);
+      } else{
+          el=space_id;
+      }
+      let rect = el.getBoundingClientRect();
+      let posX = (rect.left+rect.right)/2;
+      let posY = (rect.top+rect.bottom)/2;
+      return ([posX, posY])
+  }
+
+
+  function setTranslate(xPos, yPos, el) {
+    el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+  }
+
+
 function getUniques(arr){//returns unique elements in an array
     return Array.from(new Set(arr));
 }
