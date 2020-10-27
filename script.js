@@ -175,6 +175,7 @@ window.addEventListener('touchstart', function(e) {
     // Invoke the appropriate handler depending on the 
     // number of touch points.
     if (e.touches.length>1) {
+        disableTouchRack()
         multipleTouches=true
     }   
   }, false);
@@ -182,6 +183,7 @@ window.addEventListener('touchstart', function(e) {
   window.addEventListener('touchend', function(e) {
     // Invoke the appropriate handler depending on the 
     // number of touch points.
+    enableTouchRack();
     multipleTouches=false
   }, false);
 
@@ -1147,6 +1149,25 @@ function removeTouch(tile_container){
     tile_container.removeAttribute("ontouchend");
 }
 
+function disableTouchRack(){
+    let ids = getRackIds()
+    for (id of ids){
+        if (isEmptyOnRack(id)) {continue}
+        let tile = getTileAt(id)
+        removeTouch(tile)
+    }
+}
+
+
+function enableTouchRack(){
+    let ids = getRackIds()
+    for (id of ids){
+        if (isEmptyOnRack(id)) {continue}
+        let tile = getTileAt(id)
+        restoreTouch(tile)
+    }
+}
+
 function restoreTouch(tile_container){
     tile_container.setAttribute("ontouchstart","onTouchStart(event)" )
     tile_container.setAttribute("ontouchmove","onTouchMove(event)" )
@@ -1504,6 +1525,7 @@ function makeAIRackUntouchable(n){
             v.setAttribute("ondragstart","onDragStart(event);");
             restoreTouch(v.children[0])
         }
+        // enableTouchRack()
 
     }
 }
