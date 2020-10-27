@@ -169,12 +169,29 @@ let initialY;
 let xOffset = 0;
 let yOffset = 0;
 let lastMoved;
+let multipleTouches = false;
+
+window.addEventListener('touchstart', function(e) {
+    // Invoke the appropriate handler depending on the 
+    // number of touch points.
+    if (e.touches.length>1) {
+        multipleTouches=true
+    }   
+  }, false);
+
+  window.addEventListener('touchend', function(e) {
+    // Invoke the appropriate handler depending on the 
+    // number of touch points.
+    multipleTouches=false
+  }, false);
 
 
 function onTouchStart(e){
-        // startingloc = e.currentTarget.parentElement.id
+
+        if (multipleTouches){return}
         let u = e.currentTarget;
         let pos = getXY(u)
+    
         startingloc = getSquareIdFromPos(pos)
         console.log(`Starting location: ${startingloc}`)
         initialX = e.touches[0].clientX - xOffset;
@@ -182,6 +199,7 @@ function onTouchStart(e){
 }
 
 function onTouchMove(e) {
+    if (multipleTouches){return}
     e.preventDefault();
     let dragItem = e.currentTarget;
     lastMoved=dragItem;
@@ -197,6 +215,7 @@ function onTouchMove(e) {
   }
 
   function onTouchEnd(e) {
+    if (multipleTouches){return}
     initialX = currentX;
     initialY = currentY;
     let u = e.currentTarget;
@@ -212,6 +231,7 @@ function onTouchMove(e) {
 
     if (endingloc!=="none" && emptySlotOnBoard){
         move(startingloc,endingloc)
+        displayScore();
     }
     console.log(`Moved from: ${startingloc} to ${endingloc}` )
     startingloc = endingloc
@@ -1116,6 +1136,12 @@ function removeTouch(tile_container){
     tile_container.removeAttribute("ontouchend");
 }
 
+function restoreTouch(tile_container){
+    tile_container.setAttribute("ontouchstart","onTouchStart(event)" )
+    tile_container.setAttribute("ontouchmove","onTouchMove(event)" )
+    tile_container.setAttribute("ontouchend","onTouchEnd(event)" )
+}
+
 
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
@@ -1442,11 +1468,13 @@ function makeAIRackUntouchable(n){
         for (rackId of rackIds){
             let v =document.getElementById(rackId)
             v.setAttribute("ondragstart","return false");
+            removeTouch(v.children[0])
         }
     } else {
         for (rackId of rackIds){
             let v =document.getElementById(rackId)
             v.setAttribute("ondragstart","onDragStart(event);");
+            restoreTouch(v.children[0])
         }
 
     }
