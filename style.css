@@ -332,6 +332,13 @@ align-items: center;
   cursor: pointer;
 } 
 
+.shorttext{
+  display: none;
+}
+
+
+
+
 
 
 
@@ -374,6 +381,14 @@ align-items: center;
       height:100%;
       grid-template-columns: 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% ; 
       grid-template-rows: 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% 6.66% ;
+    }
+
+    .shorttext{
+      display: inline-block;
+    }
+
+    .longtext{
+      display: none;
     }
 
 
