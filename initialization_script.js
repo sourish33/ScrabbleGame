@@ -121,8 +121,8 @@ function addPlayerC(){
 
 }
 
-function removePlayer(){////WORKING ON THIS!!!
-    /////TODO: Reset a player when removing them
+function removePlayer(){
+    
     let f1= document.getElementById("1stplayer");
     let f2 = document.getElementById("2ndplayer");
     let f3 = document.getElementById("3rdplayer");
@@ -189,6 +189,19 @@ function resetPage(){
     }
 }
 
+function showInfo(){
+    if (document.getElementById("info").innerHTML==="Help"){
+        document.getElementById("info").innerHTML = "Hide"
+        let infobox = document.getElementById("infocol")
+        infobox.classList.remove("not-there")
+        infobox.scrollIntoView();
+
+    } else{
+        document.getElementById("info").innerHTML = "Help"
+        document.getElementById("infocol").classList.add("not-there")
+    }
+}
+
 
 
 function getInitialData() {
@@ -250,5 +263,6 @@ document.getElementById("playbutton").addEventListener("click", getInitialData);
 document.getElementById("addH").addEventListener("click", addPlayerH);
 document.getElementById("addC").addEventListener("click", addPlayerC);
 document.getElementById("removeplayerbutton").addEventListener('click', removePlayer);
+document.getElementById("info").addEventListener("click",showInfo);
 resetPage()
 
