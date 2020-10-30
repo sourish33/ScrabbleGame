@@ -1044,7 +1044,7 @@ function trySingles(maxTries=maxWords){
     for (let pos of legalPositions) {
         for (let rackId of rackIds){
 
-            let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let alphabet = "SAEOQUXBCDFGHIJKLMNPRTVWYZ";
             let stop =  false;
         
             if (readLetter(rackId)==="_"){

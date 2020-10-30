@@ -33,12 +33,12 @@ onmessage = function(e) {
         if (rupa.haveIwon){
             break;
             }
-        postMessage(`${i}-letter combinations done`)
+        postMessage(`Done with ${i}-letter words`)
         }
         
     }
 
-    console.log("Worker0 done")
+    // console.log("Worker0 done")
    postMessage(rupa);
   }
 

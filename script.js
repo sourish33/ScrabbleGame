@@ -1828,16 +1828,11 @@ function createPlayers(){
 
             myWorker.postMessage([board, legalPositions, played_ids,submitted_ids,boosters, maxTries, cur_points, maxPoints]);
 
-            //   myWorker.onmessage = function(event) {
-            //     if (typeof(event.data)==="string"){
-            //         // console.log("Message from worker:", event.data); 
-            //         aibox.innerHTML = event.data;
-            //     }
-            // }
+
             myWorker.addEventListener('message', event => {
                 let result = event.data;
                 if (typeof(event.data)==="string"){
-                    aibox.innerHTML = event.data;
+                    aibox.innerHTML = `AI: ${event.data}`;
                 }
               }, false)
             
@@ -1984,9 +1979,6 @@ startGame();
 
 //TODO
 /*  
-- difficulty level for AI in the interface
-- checkbox for AI
-- make textbox in dictionary autofocus
 - 
 - 
 - 

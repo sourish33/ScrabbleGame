@@ -24,31 +24,14 @@ onmessage = function(e) {
     // t0=performance.now()
 
     if (!rupa.haveIwon){
-        console.log("Worker2 here!")
+        // console.log("Worker2 here!")
 
         // postMessage(`Trying ${6}-letter combinations`)
         tryNletters(6, maxTries)
-        console.log("Worker2 done")
+        // console.log("Worker2 done")
         postMessage(`${6}-letter combinations done`)
         }
 
-
-
-    // tryNletters(2, maxTries)
-    // postMessage("2 letter words complete")
-    // tryNletters(3, maxTries)
-    // postMessage("3 letter words complete")
-    // tryNletters(4, maxTries)
-    // postMessage("4 letter words complete")
-    // tryNletters(5, maxTries)
-    // postMessage("5 letter words complete")
-    // tryNletters(6, maxTries)
-    // postMessage("6 letter words complete")
-    // tryNletters(7, maxTries)
-    // postMessage("7 letter words complete")
-
-    // t1=performance.now()
-    // postMessage(`Best Move Found: ${readWord(rupa.bestMove["from"])} to ${rupa.bestMove["to"][0]} gets ${rupa.bestMove["points"]} points in ${t1-t0} ms`);
 
     postMessage(rupa);
   }
