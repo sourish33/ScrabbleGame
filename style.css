@@ -239,6 +239,11 @@ align-items: center;
     color: green;
   }
 
+  .redbold {
+    color:hotpink;
+    font-weight: bold;
+  }
+
   .victory {
     border: 2px solid blue; 
     background-color: #107896;

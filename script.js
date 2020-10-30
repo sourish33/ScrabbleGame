@@ -3,6 +3,8 @@
 let boosters = fillBoosters();
 let legalPositions = getlegalPositions();
 let moveNumber =1;
+let scoreboard = [];//stores strings with moves
+let scoreBoardLength=10;//max number of previous moves to show
 let settings = getSettings();
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
@@ -194,7 +196,7 @@ function onTouchStart(e){
         let pos = getXY(u)
     
         startingloc = getSquareIdFromPos(pos)
-        console.log(`Starting location: ${startingloc}`)
+        // console.log(`Starting location: ${startingloc}`)
         initialX = e.touches[0].clientX - xOffset;
         initialY = e.touches[0].clientY - yOffset;
 }
@@ -233,7 +235,7 @@ function onTouchMove(e) {
 
     if (endingloc!=="none" && emptySlotOnBoard &&locChanged ){
         move(startingloc,endingloc)
-        console.log(`Moved from: ${startingloc} to ${endingloc}` )
+        // console.log(`Moved from: ${startingloc} to ${endingloc}` )
         displayScore();
     }
     
@@ -609,11 +611,11 @@ function placeTileOnRack(space_id){
     }
 
     function hideRack(){
-        console.log("hiding rack")
+        // console.log("hiding rack")
         document.getElementById("rack").classList.add("ghost")
     }
     function showRack(){
-        console.log("showing rack")
+        // console.log("showing rack")
         document.getElementById("rack").classList.remove("ghost")
     }
 
@@ -1079,10 +1081,31 @@ function displayMove(){
     }
     // let wordsPlayed = readAllWords(getAllNewWords());
     let lw = document.getElementById("lastPlayed");
-    lw.innerHTML = `Played: ${readWord(playedWord)} for ${score()}`;
+    let who= whoseMove(moveNumber,numPlayers);
+    let latestscore = `${players[who].name}: <span class=\"redbold\">${readWord(playedWord)}</span> for ${score()}`
+    scoreboard.push(latestscore);
+    console.log(scoreboard)
+    let scoreString = makeScoreString(scoreboard, scoreBoardLength)
+    // lw.innerHTML = `${players[who].name}: ${readWord(playedWord)} for ${score()} <br>`+lw.innerHTML;
+    lw.innerHTML=scoreString
     lw.classList.remove("not-there");
     // console.log(`Played: ${wordsPlayed.join(', ')}`);
 }
+
+function makeScoreString(sb, lim=3) {
+    let revscoreboard
+    let sbcopy = Array.from(sb);//taking care to not reverse the original array
+    if (sb.length>lim){
+        revscoreboard = sbcopy.reverse().slice(0, lim);
+    } else{
+        revscoreboard = sbcopy.reverse(); 
+    }
+    let output=""
+    for (el of revscoreboard){
+      output+=`${el}<br>`
+    }
+    return output
+  }
 
 function AI_playGotMove(){
     legalPositions = getlegalPositions();
@@ -1984,5 +2007,24 @@ startGame();
 - 
 - 
 -
+*/
+
+
+/*
+let scoreboard =[]
+scoreboard.push("James: RAM for 5")
+scoreboard.push("Hari: JAM for 7")
+scoreboard.push("James: LIT for 6")
+scoreboard.push("Hari: JAMB for 10")
+scoreboard.push("James: LITARATE for 64")
+scoreboard.push("Hari: GET for 5")
+console.log(scoreboard)
+
+
+console.log(makeString(scoreboard))
+
+
+
+
 */
 
