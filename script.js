@@ -233,7 +233,7 @@ function onTouchMove(e) {
     }
     let locChanged = (startingloc!==endingloc)
 
-    if (endingloc!=="none" && emptySlotOnBoard &&locChanged ){
+    if (endingloc!=="none" && emptySlotOnBoard &&locChanged && !multipleTouches){
         move(startingloc,endingloc)
         // console.log(`Moved from: ${startingloc} to ${endingloc}` )
         displayScore();
