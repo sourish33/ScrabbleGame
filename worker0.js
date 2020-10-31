@@ -32,7 +32,7 @@ onmessage = function(e) {
         if (rupa.haveIwon){
             break;
             }
-        postMessage(`Done with ${i}-letter words`)
+        postMessage(`Done with ${i}-letter combos`)
         }
         
     }

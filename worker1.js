@@ -39,7 +39,7 @@ onmessage = function(e) {
         // postMessage(`Trying ${7}-letter combinations`)
         tryNletters(7, maxTries)
         // console.log("Worker1 done")
-        postMessage(`Done with ${7}-letter words`)
+        postMessage(`Done with ${7}-letter combos`)
         }
 
 

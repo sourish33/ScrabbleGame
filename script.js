@@ -14,7 +14,8 @@ for (let n=1;n<5;n++){
     AIlist[n]=settings[3][n-1]
 }
 
-let playerNames = getPlayerNames();
+let playerNamesAndTypes= getPlayerNamesAndTypes()
+let playerNames = Object.keys(playerNamesAndTypes)
 let numPlayers  = playerNames.length;
 if (randomize) {playerNames= shuffle(playerNames);}
 let players = {};
@@ -110,6 +111,17 @@ function getPlayerNames(){
         if (theName !== "_"){ playerNames.push(theName);}
     }
     return playerNames;
+}
+
+function getPlayerNamesAndTypes(){ 
+    let playerNamesAndTypes = {}
+    for (let x of ["1","2","3","4"]){
+        let pvar = `player${x}Name`;
+        let theName = sessionStorage.getItem(pvar);
+        if (theName !== "_"){ 
+            playerNamesAndTypes[theName]=AIlist[x]}
+    }
+    return playerNamesAndTypes;
 }
 
 //These prevent spurious webpages from opening by dragging
@@ -1082,9 +1094,9 @@ function displayMove(){
     // let wordsPlayed = readAllWords(getAllNewWords());
     let lw = document.getElementById("lastPlayed");
     let who= whoseMove(moveNumber,numPlayers);
-    let latestscore = `${players[who].name}: <span class=\"redbold\">${readWord(playedWord)}</span> for ${score()}`
+    let latestscore = `${players[who].name}: <span class=\"redbold\">${readWord(playedWord)}</span> for <span class=\"redbold\">${score()}</span>`
     scoreboard.push(latestscore);
-    console.log(scoreboard)
+    // console.log(scoreboard)
     let scoreString = makeScoreString(scoreboard, scoreBoardLength)
     // lw.innerHTML = `${players[who].name}: ${readWord(playedWord)} for ${score()} <br>`+lw.innerHTML;
     lw.innerHTML=scoreString
@@ -1720,11 +1732,14 @@ function createHumanPlayer(NAME, NUMBER){
 }
 
 function createPlayer(n){
+
+    let playerLevel = playerNamesAndTypes[playerNames[n-1]]
+    let playerName = playerNames[n-1]
    
-    if (AIlist[n]!=="0"){
-        players[n] = createAIPlayer(`${playerNames[n-1]}`, n, parseInt(AIlist[n]));
+    if (playerLevel!=="0"){
+        players[n] = createAIPlayer(playerName, n, parseInt(playerLevel));
     } else {
-        players[n] = createHumanPlayer(playerNames[n-1], n);
+        players[n] = createHumanPlayer(playerName, n);
     }
 }
 
