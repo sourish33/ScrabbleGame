@@ -2002,29 +2002,12 @@ startGame();
 
 //TODO
 /*  
-- 
-- 
-- 
+- Restart game button
+- Save and restore game
+- Save all the words found in a given turn and be able to pick from among them
+- create frequency lists
 - 
 -
 */
 
-
-/*
-let scoreboard =[]
-scoreboard.push("James: RAM for 5")
-scoreboard.push("Hari: JAM for 7")
-scoreboard.push("James: LIT for 6")
-scoreboard.push("Hari: JAMB for 10")
-scoreboard.push("James: LITARATE for 64")
-scoreboard.push("Hari: GET for 5")
-console.log(scoreboard)
-
-
-console.log(makeString(scoreboard))
-
-
-
-
-*/
 
