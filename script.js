@@ -103,15 +103,15 @@ function getSettings(){
 }
 
 
-function getPlayerNames(){ 
-    let playerNames = []
-    for (let x of ["1","2","3","4"]){
-        let pvar = `player${x}Name`;
-        let theName = sessionStorage.getItem(pvar);
-        if (theName !== "_"){ playerNames.push(theName);}
-    }
-    return playerNames;
-}
+// function getPlayerNames(){ 
+//     let playerNames = []
+//     for (let x of ["1","2","3","4"]){
+//         let pvar = `player${x}Name`;
+//         let theName = sessionStorage.getItem(pvar);
+//         if (theName !== "_"){ playerNames.push(theName);}
+//     }
+//     return playerNames;
+// }
 
 function getPlayerNamesAndTypes(){ 
     let playerNamesAndTypes = {}
