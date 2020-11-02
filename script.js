@@ -1908,15 +1908,25 @@ function createPlayers(){
     }
 
 
-    function  setBoardSize() {
-        let n=85;
-        let intViewportHeight = window.innerHeight;
-        let u=document.getElementsByClassName("grid-container")[0];
-        u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
-        u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
-        // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
-    }
+    // function  setBoardSize() {
+    //     let n=85;
+    //     let intViewportHeight = window.innerHeight;
+    //     let u=document.getElementsByClassName("grid-container")[0];
+    //     u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
+    //     u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
+    //     // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+    // }
 
+        function  setBoardSize() {
+            let n=80;
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+            let ww=Math.min(w,h);
+            let u=document.getElementsByClassName("grid-container")[0];
+            u.style.width = `${parseInt(ww*n/100)}px`;
+            u.style.height = `${parseInt(ww*n/100)}px`;
+        // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+        }
     
 
     function showModalInfo(){
