@@ -250,7 +250,7 @@ function getInitialData() {
 
     resetPage();
 
-    window.open('game.html', '_self')
+    window.open('game-sm.html', '_self')
     // window.open('game.html')
 }
 
