@@ -14,6 +14,10 @@
     padding: 0;
 }
 
+.bdry {
+  border: 1px solid green;
+}
+
   
   body {
     font-family: Arial;
