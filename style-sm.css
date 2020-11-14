@@ -265,6 +265,16 @@
       color:hotpink;
       font-weight: bold;
     }
+
+    .scorebox{
+      background-color:#336B87;
+      border: 2px solid blue; 
+    }
+
+    .whitebold {
+      font-weight:bold;
+      color: white;
+    }
   
     .victory {
       border: 2px solid blue; 
@@ -320,6 +330,15 @@
       background-color: cyan;
   
     }
+
+    #victorybox{
+      position: absolute;
+      top:10%;
+      left:15%;
+      z-index: 100;
+      background-color: aquamarine;
+    }
+
   
    /* The Modal (background) */
    .modal {

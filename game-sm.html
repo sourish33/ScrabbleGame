@@ -17,24 +17,24 @@
 
 
 
-		<div class="container-fluid bdry" >
-      <div class="row bdry">
-        <div class="col-sm-6 bdry">
-                <div class="row bdry ">
-                  <div class="col center-text bdry">
-                    <span id="pl1">Raghob</span>  <span id="pl1-points">40</span>
+		<div class="container-fluid nobdry" >
+      <div class="row nobdry">
+        <div class="col-sm-6 nobdry">
+                <div class="row nobdry ">
+                  <div class="col center-text nobdry scorebox">
+                    <span class=whitebold id="pl1">Raghob</span>  <span class=whitebold id="pl1-points">40</span>
                   </div>
-                  <div class="col center-text bdry">
-                    <span id="pl1">Bojro</span>  <span id="pl1-points">32</span>
+                  <div class="col center-text nobdry scorebox">
+                    <span class=whitebold id="pl2">Bojro</span>  <span class=whitebold id="pl2-points">32</span>
                   </div>
-                  <div class="col center-text bdry">
-                    <span id="pl1">Jhinook</span>  <span id="pl1-points">27</span>
+                  <div class="col center-text nobdry scorebox">
+                    <span class=whitebold id="pl3">Jhinook</span>  <span class=whitebold id="pl3-points">27</span>
                   </div>
-                  <div class="col center-text bdry">
-                    <span id="pl1">Namgir</span>  <span id="pl1-points">19</span>
+                  <div class="col center-text nobdry scorebox">
+                    <span class=whitebold id="pl4">Namgir</span>  <span class=whitebold id="pl4-points">19</span>
                   </div>
                 </div>
-                <div class="row bdry" >
+                <div class="row nobdry" >
                   <div class="grid-container">
                     <!-- row a -->
           
@@ -317,10 +317,10 @@
                      
                     </div> 
                 </div>
-                <div class="row justify-content-center bdry " style="position:relative;">
+                <div class="row justify-content-center nobdry " style="position:relative;">
                   <!-- <div class="d-flex flex-row justify-content-center" style="position:relative;" > -->
                     <!-- <img src="img/rack.png" class="img-fluid  rackimage" alt="rack" > -->
-                    <div class="d-flex flex-row justify-content-center bdry" id="rack">
+                    <div class="d-flex flex-row justify-content-center nobdry" id="rack">
                       
                       <div id="s1" class="slot"
                       ondrop="onDrop(event);"
@@ -418,8 +418,8 @@
                   
                 </div>
         </div>
-        <div class="col-sm-3 bdry">
-                <div class="row bdry ">
+        <div class="col-sm-3 nobdry">
+                <div class="row nobdry ">
                   <div class="col d-flex flex-column control-btns">
                       <div class="p-2 mt-0 smallscreen">
                         <button type="button" class="btn btn-primary" id="shuffle"><span class="longtext">Shuffle</span><span class="shorttext">Shuffle</span></button>
@@ -446,22 +446,46 @@
 
                 </div>
                 </div>
-                <div class="row bdry ">
-                  AI Thinking
+                <div class="row nobdry ">
+                  <p class="not-there" id="AIbox">AI: Thinking...</p>
                 </div>
 
         </div>
-        <div class="col-sm-3 bdry">
-            <div class="row bdry ">
-              Tiles left
+        <div class="col-sm-3 nobdry">
+            <div class="row nobdry ">
+              <div class="col d-flex flex-column control-btns" id="tilesandpoints">
+                <div class="p-1 mt-0">
+                    <p>Tiles remaining:  <span id="tile-counter">0</span></p>
+                </div>
+                <div class="p-1 mt-0">
+                    <p>Points possible this turn: <span id="points">0</span></p>
+                </div>
+								
+							</div>
             </div>
-            <div class="row bdry ">
-              Last played
+            <div class="row nobdry ">
+              <p class="not-there" id="lastPlayed"></p>
             </div>
       </div>
         </div>
                 
-      </div>
+      
+
+    </div>
+
+      	<div id="victorybox" class="not-there">	
+          <div>
+            <span class="close" id="closevictorybox">&times;</span>	
+        </div>	
+            <div id="messagebox" class="victory">
+              <h1><span id="winner">Namgir</span> has won the game!!!</h1>
+            </div>
+            <div id="cat-gif">
+              <img id="vic-img" src="img/tenor.gif" class="img-fluid" alt="cat dancing"> 
+            </div>
+        </div>
+        
+
 
         <div id="myModal" class="modal">
 
