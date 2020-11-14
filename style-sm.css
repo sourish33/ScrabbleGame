@@ -201,12 +201,12 @@
       /* border: 1px solid green;  */
       /* transform: translate(-10px); */
       display: block;
-      margin-left: auto;
-      margin-right: auto;
+      /* margin-left: auto;
+      margin-right: auto; */
       width:50%;
-      height:50%;
-      /* position: absolute;
-      left:20%; */
+      height:70%;
+      position: absolute;
+      left:20%; 
     }
   
     .unselectable {
