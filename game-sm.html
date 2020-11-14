@@ -420,7 +420,31 @@
         </div>
         <div class="col-sm-3 bdry">
                 <div class="row bdry ">
-                  buttons
+                  <div class="col d-flex flex-column control-btns">
+                      <div class="p-2 mt-0 smallscreen">
+                        <button type="button" class="btn btn-primary" id="shuffle"><span class="longtext">Shuffle</span><span class="shorttext">Shuffle</span></button>
+                      </div>
+                      <div class="p-2 mt-0 smallscreen">
+                        <button type="button" class="btn btn-primary" id="recall"><span class="longtext">Recall</span><span class="shorttext">Recall</span></button>
+                      </div>
+        
+                      <div class="p-2 mt-0 smallscreen">
+                        <button type="button" class="btn btn-primary" id="exchange"><span class="longtext">Exchange</span><span class="shorttext">Exch</span></button>
+                      </div>
+                      <div class="p-2 mt-0">
+                        <button type="button" class="btn btn-danger" id="pass"><span class="longtext">Pass</span><span class="shorttext">Pass</span></button>
+                      </div>
+                      
+                      <div class="p-2 mt-0">
+                        <button type="button" class="btn btn-info" id="2lw-list"><span class="longtext">Dictionary</span><span class="shorttext">Dict</span></button>
+                      </div>
+                      <div class="p-2 mt-0">
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-success" id="play">Play</button>
+                        </div>
+                      </div>
+
+                </div>
                 </div>
                 <div class="row bdry ">
                   AI Thinking
@@ -487,18 +511,21 @@
 		  </div>
 
     <script>
-    //     function  setBoardSize() {
-    //         let n=80;
-    //         let w = window.innerWidth;
-    //         let h = window.innerHeight;
-    //         let ww=Math.min(w,h);
-    //         let u=document.getElementsByClassName("grid-container")[0];
-    //         u.style.width = `${parseInt(ww*n/100)}px`;
-    //         u.style.height = `${parseInt(ww*n/100)}px`;
-    //     // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
-    // }
-    // window.addEventListener("resize", setBoardSize);
-    // window.addEventListener("load", setBoardSize);
+        function  setBoardSize() {
+            let n=100;
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+            let ww=Math.min(w,h);
+            if (ww>600){
+              n=85;
+            }
+            let u=document.getElementsByClassName("grid-container")[0];
+            u.style.width = `${parseInt(ww*n/100)}px`;
+            u.style.height = `${parseInt(ww*n/100)}px`;
+        // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+    }
+    window.addEventListener("resize", setBoardSize);
+    window.addEventListener("load", setBoardSize);
 
     </script>
 	</body>

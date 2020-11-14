@@ -362,8 +362,40 @@
   .shorttext{
     display: none;
   }
+
+  .longtext{
+    display: inline-block;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+  @media only screen and (max-width: 600px) {
+
+    .shorttext{
+      font-size: 0.8em;
+      display: inline-block;
+    }
+
+    .longtext{
+      display: none;
+    }
+
+    .control-btns{
+      flex-direction: row !important;
+    }
+
+    .smallscreen{
+      padding-left: 0 !important;
+    }
   
   
   
-  
-  
+  }
