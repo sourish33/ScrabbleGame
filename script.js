@@ -1914,7 +1914,8 @@ function createPlayers(){
             }
         let toExArrUni= getUniques(toExArr); //remove duplicates
         returnAllToBag(toExArrUni);
-        pass();
+        pass(false);
+    
 
     }
 
