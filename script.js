@@ -1119,6 +1119,13 @@ function makeScoreString(sb, lim=3) {
     return output
   }
 
+  function highlightPlayer(m){
+      for (let n=1;n<5;n++){
+        document.getElementById(`pl${n}`).classList.remove("highlight")
+      }
+      document.getElementById(`pl${m}`).classList.add("highlight")
+  }
+
 function AI_playGotMove(){
     legalPositions = getlegalPositions();
     let who= whoseMove(moveNumber,numPlayers);
@@ -1145,8 +1152,8 @@ function AI_playGotMove(){
         who= whoseMove(moveNumber,numPlayers);
   
         document.getElementById("who-is-playing").innerHTML=players[who].name;
-        // let toHighlight = document.getElementById(`pl${who}`);
-        // toHighlight.classList.add("highlight")
+        highlightPlayer(who);
+ 
         players[who].returnPieces();
         replenishRack();
         makeAIRackUntouchable(who);
@@ -1279,6 +1286,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
             
         }
         document.getElementById("who-is-playing").innerHTML=players[who].name;
+        highlightPlayer(who);
         players[who].returnPieces();
         replenishRack();
         makeAIRackUntouchable(who);
@@ -1343,6 +1351,7 @@ function pass(confirmPass=true)
         askToPass(`${players[who].name}`)
     }
     document.getElementById("who-is-playing").innerHTML=players[who].name;
+    highlightPlayer(who);
     players[who].returnPieces();
     replenishRack();
     makeAIRackUntouchable(who);
@@ -1958,6 +1967,7 @@ function createPlayers(){
         updateScoreBoard();
         who= whoseMove(moveNumber,numPlayers);
         document.getElementById("who-is-playing").innerHTML=players[who].name;
+        highlightPlayer(who);
         
         if (players[who].isAI) {
             replenishRack();
