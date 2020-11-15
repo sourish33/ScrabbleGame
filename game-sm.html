@@ -22,16 +22,16 @@
         <div class="col-sm-6 nobdry">
                 <div class="row nobdry ">
                   <div class="col center-text nobdry scorebox">
-                    <span class=whitebold id="pl1">Raghob</span>  <span class=whitebold id="pl1-points">40</span>
+                    <span class=whitebold id="pl1"></span>  <span class=whitebold id="pl1-points">40</span>
                   </div>
                   <div class="col center-text nobdry scorebox">
-                    <span class=whitebold id="pl2">Bojro</span>  <span class=whitebold id="pl2-points">32</span>
+                    <span class=whitebold id="pl2"></span>  <span class=whitebold id="pl2-points">32</span>
                   </div>
                   <div class="col center-text nobdry scorebox not-there" id="3rdrow">
-                    <span class=whitebold id="pl3">Jhinook</span>  <span class=whitebold id="pl3-points">27</span>
+                    <span class=whitebold id="pl3"></span>  <span class=whitebold id="pl3-points">27</span>
                   </div>
                   <div class="col center-text nobdry scorebox not-there" id="4throw">
-                    <span class=whitebold id="pl4">Namgir</span>  <span class=whitebold id="pl4-points">19</span>
+                    <span class=whitebold id="pl4"></span>  <span class=whitebold id="pl4-points">19</span>
                   </div>
                 </div>
                 <div class="row nobdry" >
@@ -320,7 +320,7 @@
                 <div class="row justify-content-center nobdry " style="position:relative;">
                   <!-- <div class="d-flex flex-row justify-content-center" style="position:relative;" > -->
                     <!-- <img src="img/rack.png" class="img-fluid  rackimage" alt="rack" > -->
-                    <div class="d-flex flex-row justify-content-center nobdry" id="rack">
+                    <div class="d-flex flex-row justify-content-center bdry" id="rack">
                       
                       <div id="s1" class="slot"
                       ondrop="onDrop(event);"
@@ -460,9 +460,6 @@
                 <div class="p-1 mt-0 scorebox">
                     <p class="whitebold"><span class="longtext">Tiles Remaining: </span><span class="shorttext">Tiles left: </span><span class="p-1 whitebold" id="tile-counter">0</span></p>
                 </div>
-                <div class="p-1 mt-0 scorebox not-there">
-                  <p class="whitebold" id="playingbox"><span class="longtext">Playing: </span><span class="shorttext">Playing: </span><span class="p-1 whitebold" id="who-is-playing"></span></p>
-                </div>
                 <div class="p-1 mt-0 scorebox">
                     <p class="whitebold"><span class="longtext">Points possible:  </span><span class="shorttext">Points:  </span><span class="p-1 whitebold" id="points">0</span></p>
                 </div>
@@ -474,7 +471,7 @@
                   <div class="mt-2">
                       <button type="button" class="btn btn-info mb-2 mr-2" id="info">Help</button>
                   </div>
-                  <div class="mt-0">
+                  <div class="mt-2">
                       <a href="index.html" type="button" class="btn btn-danger mb-2 mr-2" id="exitgame" onclick="localStorage.clear()">Start New Game</a>
                   </div>
                 </div>
@@ -540,12 +537,19 @@
 				</form>
 				<p class="searchresult"></p>
 			</div>
-			  <h4>Two-letter Words</h4>
+			  <h4><span class="longtext">Two-letter Words</span></h4>
 			  <p id="twolw-list">
+          <span class="longtext">
 				AA, AB, AD, AE, AG, AH, AI, AL, AM, AN, AR, AS, AT, AW, AX, AY, BA, BE, BI, BO, BY, CH, DA, DE, DI, DO, EA, EE, ED, EF, EH, EL, EM, EN, ER, ES, ET, EW, EX, 
 				FA, FE, FY, GI, GO, GU, HA, HE, HI, HM, HO, ID, IF, IN, IO, IS, IT, JA, JO, KA, KO, KI, KY, LA, LI, LO, MA, ME, MI, MM, MO, MU, MY, NA, NE, NO, NU, NY, OB, OD, OE, OF, OH, OI, OK, 
 				OM, ON, OO, OP, OR, OS, OU, OW, OX, OY, PA, PE, PI, PO, QI, RE, SH, SI, SO, ST, TA, TE, TI, TO, UG, UH, UM, UN, UP, UR, US, UT, WE, WO, XI, XU, YA, YE, YO, YU, ZA, ZE, ZO
-			</p>
+      </span>
+      <span class="shorttext">
+        AA, AB, AD, AE, AG, AH, AI, AL, AM, AN, AR, AS, AT, AW, AX, AY, BA, BE, BI, BO, BY, CH, DA, DE, DI, DO, EA, EE, ED, EF, EH, EL, EM, EN, ER, ES, ET, EW, EX, 
+				FA, FE, FY, GI, GO, GU, HA, HE, HI, HM, HO, ID, IF, IN, IO, IS, IT, JA, JO, KA, KO, KI, KY, LA, LI, LO, MA, ME, MI, MM, MO, MU, MY, NA, NE, NO, NU, NY, OB, OD, OE, OF, OH, OI, OK, 
+				OM, ON, OO, OP, OR, OS, OU, OW, OX, OY, PA, PE, PI, PO, QI, RE, SH, SI, SO, ST, TA, TE, TI, TO, UG, UH, UM, UN, UP, UR, US, UT, WE, WO, XI, XU, YA, YE, YO, YU, ZA, ZE, ZO
+      </span>
+      </p>
 
 			</div>
 		  

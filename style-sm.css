@@ -253,7 +253,7 @@
     }
   
    #twolw-list{
-     font-size: 0.8em;
+     /* font-size: 0.8em; */
    }
   
     .verdict-bad {
@@ -384,6 +384,11 @@
   .longtext{
     display: inline-block;
   }
+
+  
+  #rack{
+    background-color: #C19A6B;
+  }
   
 
 
@@ -442,6 +447,7 @@
       font-weight: bold;
     }
 
+
     #points {
       font-size: .8em;
       /* color: green; */
@@ -451,8 +457,16 @@
       font-size: .8em;
     }
   
-    #who-is-playing {
+    /* #who-is-playing {
       font-size: .8em;
+    } */
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 10px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
     }
   
   

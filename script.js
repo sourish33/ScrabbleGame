@@ -1151,7 +1151,7 @@ function AI_playGotMove(){
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
   
-        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        // document.getElementById("who-is-playing").innerHTML=players[who].name;
         highlightPlayer(who);
  
         players[who].returnPieces();
@@ -1285,7 +1285,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
             askToPass(`${players[who].name}`)
             
         }
-        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        // document.getElementById("who-is-playing").innerHTML=players[who].name;
         highlightPlayer(who);
         players[who].returnPieces();
         replenishRack();
@@ -1350,7 +1350,7 @@ function pass(confirmPass=true)
     if (!players[who].isAI) {
         askToPass(`${players[who].name}`)
     }
-    document.getElementById("who-is-playing").innerHTML=players[who].name;
+    // document.getElementById("who-is-playing").innerHTML=players[who].name;
     highlightPlayer(who);
     players[who].returnPieces();
     replenishRack();
@@ -1966,7 +1966,7 @@ function createPlayers(){
         createPlayers();
         updateScoreBoard();
         who= whoseMove(moveNumber,numPlayers);
-        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        // document.getElementById("who-is-playing").innerHTML=players[who].name;
         highlightPlayer(who);
         
         if (players[who].isAI) {
