@@ -233,24 +233,7 @@
   
    
   
-    .mytable {
-      border: 2px solid black;
-    }
-  
-     td, th{
-      border: 2px solid black;
-      padding:10px;
-    }
-  
-    table {
-      border: 2px solid black;
-      width:80%;
-    }
-  
-    #who-is-playing {
-      font-weight: bold;
-      background: magenta;
-    }
+
   
    #twolw-list{
      /* font-size: 0.8em; */
@@ -269,13 +252,13 @@
     }
 
     .scorebox{
-      background-color:#336B87;
-      border: 2px solid blue; 
+      background-color:#F4B41A;
+      border: 2px solid #143D59; 
     }
 
     .whitebold {
       font-weight:bold;
-      color: white;
+      color:#143D59;
     }
   
     .victory {
@@ -476,6 +459,14 @@
       font-size: 20px;
       font-weight: bold;
     }
+
+    .bottom-right-on-rack {
+      position: absolute;
+      bottom: 1px;
+      right: 3px;
+      color: black;
+      font-size: 10px;
+  }
 
 
     #points {

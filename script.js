@@ -590,6 +590,7 @@ function fixSizesAttribs(){
         tile.children[0].children[1].classList.add("centered");
         tile.children[0].children[2].classList.add("bottom-right");
     }
+    // setFontSizes();
 
 }
 
@@ -1919,6 +1920,40 @@ function createPlayers(){
 
     }
 
+    // function setFontSizes(){
+    //         // set font sizes
+    //         return
+    //         let el=document.getElementById("h8")
+    //         let rect = el.getBoundingClientRect();
+    //         let squareSize = rect.bottom-rect.top;
+    //         let centereds = document.getElementsByClassName("centered");
+    //         let centeredArray = [...centereds];
+    //         centeredArray.forEach(element => {
+    //             element.style.fontSize = `${parseInt(squareSize*0.589)}px`
+    //         });
+    //         let bottomRights = document.getElementsByClassName("bottom-right");
+    //         bottomRightsArray= [...bottomRights]
+    //         bottomRightsArray.forEach(element => {
+    //             element.style.fontSize = `${parseInt(squareSize*0.236)}px`
+    //         });
+
+    //         // el=document.getElementById("s1")
+    //         // rect = el.getBoundingClientRect();
+    //         // squareSize = rect.bottom-rect.top;
+    //         // centereds = document.getElementsByClassName("centered-on-rack");
+    //         // centeredArray = [...centereds];
+    //         // centeredArray.forEach(element => {
+    //         //     element.style.fontSize = `${parseInt(squareSize*0.577)}px`
+    //         // });
+
+    //         // bottomRights = document.getElementsByClassName("bottom-right-on-rack");
+    //         // bottomRightsArray= [...bottomRights]
+    //         // bottomRightsArray.forEach(element => {
+    //         //     element.style.fontSize = `${parseInt(squareSize*0.192)}px`
+    //         // });
+
+    // }
+
 
 
     function  setBoardSize() {
@@ -1932,7 +1967,7 @@ function createPlayers(){
         let u=document.getElementsByClassName("grid-container")[0];
         u.style.width = `${parseInt(ww*n/100)}px`;
         u.style.height = `${parseInt(ww*n/100)}px`;
-    // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+        // setFontSizes()
 }
 
     
