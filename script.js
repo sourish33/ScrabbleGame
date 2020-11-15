@@ -1119,6 +1119,13 @@ function makeScoreString(sb, lim=3) {
     return output
   }
 
+  function highlightPlayer(m){
+      for (let n=1;n<5;n++){
+        document.getElementById(`pl${n}`).classList.remove("highlight")
+      }
+      document.getElementById(`pl${m}`).classList.add("highlight")
+  }
+
 function AI_playGotMove(){
     legalPositions = getlegalPositions();
     let who= whoseMove(moveNumber,numPlayers);
@@ -1144,7 +1151,9 @@ function AI_playGotMove(){
         moveNumber++;
         who= whoseMove(moveNumber,numPlayers);
   
-        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        // document.getElementById("who-is-playing").innerHTML=players[who].name;
+        highlightPlayer(who);
+ 
         players[who].returnPieces();
         replenishRack();
         makeAIRackUntouchable(who);
@@ -1276,7 +1285,8 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
             askToPass(`${players[who].name}`)
             
         }
-        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        // document.getElementById("who-is-playing").innerHTML=players[who].name;
+        highlightPlayer(who);
         players[who].returnPieces();
         replenishRack();
         makeAIRackUntouchable(who);
@@ -1301,8 +1311,8 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
 function endGameSequence(n) {
     if (n===1 || n===2){
         winner =getTopper()[0];
-        let m = document.getElementById("messagebox");
-        m.classList.remove("not-there");
+        // let m = document.getElementById("messagebox");
+        // m.classList.remove("not-there");
         document.getElementById("winner").innerHTML=winner;
         document.getElementById("play").classList.add("not-there");
         document.getElementById("shuffle").disabled = true;
@@ -1311,7 +1321,7 @@ function endGameSequence(n) {
         document.getElementById("checkdic").disabled = true;
         document.getElementById("exchange").disabled = true;
         document.getElementById("pass").disabled = true;
-        document.getElementById("cat-gif").classList.remove("not-there");
+        document.getElementById("victorybox").classList.remove("not-there");
     }
 }
 
@@ -1340,7 +1350,8 @@ function pass(confirmPass=true)
     if (!players[who].isAI) {
         askToPass(`${players[who].name}`)
     }
-    document.getElementById("who-is-playing").innerHTML=players[who].name;
+    // document.getElementById("who-is-playing").innerHTML=players[who].name;
+    highlightPlayer(who);
     players[who].returnPieces();
     replenishRack();
     makeAIRackUntouchable(who);
@@ -1903,30 +1914,27 @@ function createPlayers(){
             }
         let toExArrUni= getUniques(toExArr); //remove duplicates
         returnAllToBag(toExArrUni);
-        pass();
+        pass(false);
+    
 
     }
 
 
-    // function  setBoardSize() {
-    //     let n=85;
-    //     let intViewportHeight = window.innerHeight;
-    //     let u=document.getElementsByClassName("grid-container")[0];
-    //     u.style.width = `${parseInt(intViewportHeight*n/100)}px`;
-    //     u.style.height = `${parseInt(intViewportHeight*n/100)}px`;
-    //     // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
-    // }
 
-        function  setBoardSize() {
-            let n=80;
-            let w = window.innerWidth;
-            let h = window.innerHeight;
-            let ww=Math.min(w,h);
-            let u=document.getElementsByClassName("grid-container")[0];
-            u.style.width = `${parseInt(ww*n/100)}px`;
-            u.style.height = `${parseInt(ww*n/100)}px`;
-        // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+    function  setBoardSize() {
+        let n=95;
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+        let ww=Math.min(w,h);
+        if (ww>600){
+          n=85;
         }
+        let u=document.getElementsByClassName("grid-container")[0];
+        u.style.width = `${parseInt(ww*n/100)}px`;
+        u.style.height = `${parseInt(ww*n/100)}px`;
+    // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+}
+
     
 
     function showModalInfo(){
@@ -1949,12 +1957,18 @@ function createPlayers(){
         modal.style.display="none"
     }
 
+    function closevictorybox(){
+        let modal = document.getElementById("victorybox");
+        modal.style.display="none"
+    }
+
     function startGame(){
-        setBoardSize(85);
+        setBoardSize();
         createPlayers();
         updateScoreBoard();
         who= whoseMove(moveNumber,numPlayers);
-        document.getElementById("who-is-playing").innerHTML=players[who].name;
+        // document.getElementById("who-is-playing").innerHTML=players[who].name;
+        highlightPlayer(who);
         
         if (players[who].isAI) {
             replenishRack();
@@ -1980,6 +1994,8 @@ document.getElementById("info").addEventListener("click", showModalInfo);
 document.getElementById("closemodal").addEventListener("click", closeMondalInfo);
 document.getElementById("2lw-list").addEventListener("click", showModal2lw);
 document.getElementById("close2lw-list").addEventListener("click", closeMondal2lw);
+document.getElementById("closevictorybox").addEventListener("click", closevictorybox);
+
 
 window.addEventListener("resize", setBoardSize);
 window.addEventListener("click", function (event){
