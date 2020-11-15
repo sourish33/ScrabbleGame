@@ -27,10 +27,10 @@
                   <div class="col center-text nobdry scorebox">
                     <span class=whitebold id="pl2">Bojro</span>  <span class=whitebold id="pl2-points">32</span>
                   </div>
-                  <div class="col center-text nobdry scorebox">
+                  <div class="col center-text nobdry scorebox not-there" id="3rdrow">
                     <span class=whitebold id="pl3">Jhinook</span>  <span class=whitebold id="pl3-points">27</span>
                   </div>
-                  <div class="col center-text nobdry scorebox">
+                  <div class="col center-text nobdry scorebox not-there" id="4throw">
                     <span class=whitebold id="pl4">Namgir</span>  <span class=whitebold id="pl4-points">19</span>
                   </div>
                 </div>
@@ -326,7 +326,7 @@
                       ondrop="onDrop(event);"
                       ondragover="onDragOver(event);"
                       ondragstart="onDragStart(event);">
-                        <div class="tile-container"  ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
+                        <div class="tile-container ghost"  ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
                         draggable="true">
                           <img  src="img/tile.png" class="tile-on-board">
                           <div class="centered">Q</div>
@@ -339,7 +339,7 @@
                       ondrop="onDrop(event);"	
                       ondragstart="onDragStart(event);"
                       >
-                        <div class="tile-container" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
+                        <div class="tile-container ghost" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
                         draggable="true" >					
                           <img src="img/tile.png" class="tile-on-board" draggable="false">
                           <div class="centered">B</div>
@@ -352,7 +352,7 @@
                       ondrop="onDrop(event);"	
                       ondragstart="onDragStart(event);"
                       >
-                        <div class="tile-container" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
+                        <div class="tile-container ghost" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
                         draggable="true" >
                           <img src="img/tile.png" class="tile-on-board" draggable="false">
                           <div class="centered">J</div>
@@ -366,7 +366,7 @@
                       ondrop="onDrop(event);"	
                       ondragstart="onDragStart(event);"
                       >
-                        <div class="tile-container" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
+                        <div class="tile-container ghost" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
                         draggable="true">
                           <img src="img/tile.png" class="tile-on-board" draggable="false">
                           <div class="centered">S</div>
@@ -379,7 +379,7 @@
                       ondrop="onDrop(event);"	
                       ondragstart="onDragStart(event);"
                       >
-                        <div class="tile-container" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
+                        <div class="tile-container ghost" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
                         draggable="true" >
                           <img src="img/tile.png" class="tile-on-board" draggable="false">
                           <div class="centered">D</div>
@@ -393,7 +393,7 @@
                       ondrop="onDrop(event);"	
                       ondragstart="onDragStart(event);"
                       >
-                        <div class="tile-container" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
+                        <div class="tile-container ghost" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
                         draggable="true">
                           <img src="img/tile.png" class="tile-on-board" draggable="false">
                           <div class="centered">V</div>
@@ -406,7 +406,7 @@
                       ondrop="onDrop(event);"	
                       ondragstart="onDragStart(event);"
                       >
-                        <div class="tile-container" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
+                        <div class="tile-container ghost" ontouchstart ="onTouchStart(event)" ontouchmove = "onTouchMove(event)" ontouchend = "onTouchEnd(event)"
                         draggable="true">
                           <img src="img/tile.png" class="tile-on-board" draggable="false">
                           <div class="centered">P</div>
@@ -448,23 +448,40 @@
                 </div>
                 <div class="row nobdry ">
                   <p class="not-there" id="AIbox">AI: Thinking...</p>
+                  <div class="p2" id="AIthinking">
+                    <p></p>
+                  </div>
                 </div>
 
         </div>
         <div class="col-sm-3 nobdry">
             <div class="row nobdry ">
               <div class="col d-flex flex-column control-btns" id="tilesandpoints">
-                <div class="p-1 mt-0">
-                    <p>Tiles remaining:  <span id="tile-counter">0</span></p>
+                <div class="p-1 mt-0 scorebox">
+                    <p class="whitebold"><span class="longtext">Tiles Remaining: </span><span class="shorttext">Tiles left: </span><span class="p-1 whitebold" id="tile-counter">0</span></p>
                 </div>
-                <div class="p-1 mt-0">
-                    <p>Points possible this turn: <span id="points">0</span></p>
+                <div class="p-1 mt-0 scorebox">
+                  <p class="whitebold" id="playingbox"><span class="longtext">Playing: </span><span class="shorttext">Playing: </span><span class="p-1 whitebold" id="who-is-playing"></span></p>
+                </div>
+                <div class="p-1 mt-0 scorebox">
+                    <p class="whitebold"><span class="longtext">Points possible:  </span><span class="shorttext">Points:  </span><span class="p-1 whitebold" id="points">0</span></p>
                 </div>
 								
-							</div>
+              </div>
             </div>
             <div class="row nobdry ">
-              <p class="not-there" id="lastPlayed"></p>
+                <div class="col d-flex flex-column control-btns">
+                  <div class="mt-2">
+                      <button type="button" class="btn btn-info mb-2 mr-2" id="info">Help</button>
+                  </div>
+                  <div class="mt-0">
+                      <a href="index.html" type="button" class="btn btn-danger mb-2 mr-2" id="exitgame" onclick="localStorage.clear()">Start New Game</a>
+                  </div>
+                </div>
+              
+            </div>
+            <div class="row nobdry ">
+              <p class="p-1 not-there" id="lastPlayed"></p>
             </div>
       </div>
         </div>
@@ -478,7 +495,7 @@
             <span class="close" id="closevictorybox">&times;</span>	
         </div>	
             <div id="messagebox" class="victory">
-              <h1><span id="winner">Namgir</span> has won the game!!!</h1>
+              <h1><span id="winner"></span> has won the game!!!</h1>
             </div>
             <div id="cat-gif">
               <img id="vic-img" src="img/tenor.gif" class="img-fluid" alt="cat dancing"> 
@@ -533,23 +550,25 @@
 			</div>
 		  
 		  </div>
-
-    <script>
-        function  setBoardSize() {
-            let n=100;
-            let w = window.innerWidth;
-            let h = window.innerHeight;
-            let ww=Math.min(w,h);
-            if (ww>600){
-              n=85;
-            }
-            let u=document.getElementsByClassName("grid-container")[0];
-            u.style.width = `${parseInt(ww*n/100)}px`;
-            u.style.height = `${parseInt(ww*n/100)}px`;
-        // console.log(`setBoardSize called new window size is ${intViewportHeight} and board is ${parseInt(intViewportHeight*n/100)}px `)
+      
+		<script src="dictformatted.js"></script>
+		<script src="dictionary.js"></script>
+    <script src="script.js"></script>
+    <!-- <script>
+          function  setBoardSize() {
+        let n=100;
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+        let ww=Math.min(w,h);
+        if (ww>600){
+          n=85;
+        }
+        let u=document.getElementsByClassName("grid-container")[0];
+        u.style.width = `${parseInt(ww*n/100)}px`;
+        u.style.height = `${parseInt(ww*n/100)}px`; 
     }
     window.addEventListener("resize", setBoardSize);
-    window.addEventListener("load", setBoardSize);
-
-    </script>
-	</body>
+    window.addEventListener("load", setBoardSize)
+    </script> -->
+  </body>
+</html>

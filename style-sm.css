@@ -158,6 +158,10 @@
   .highlight-box{
     border: 4px solid black;
   }
+
+  .highlight {
+    background-color: magenta;
+  }
   
   
   
@@ -174,9 +178,7 @@
       visibility: hidden;
     }
   
-    .highlight {
-      background: yellow;
-    }
+ 
   
     .slot {
       /* border: 2px solid  #855E42;
@@ -247,7 +249,7 @@
   
     #who-is-playing {
       font-weight: bold;
-      background:yellow;
+      background: magenta;
     }
   
    #twolw-list{
@@ -283,10 +285,7 @@
     }
   
   
-    #points {
-      /* font-size: 1.5em; */
-      color: green;
-    }
+
   
     @keyframes animate
     {     
@@ -414,7 +413,47 @@
     .smallscreen{
       padding-left: 0 !important;
     }
+
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+      color: black;
+      font-size: 15px;
+      font-weight: bold;
+    }
   
+    .bottom-right {
+      position: absolute;
+      bottom: 7px;
+      right: 3px;
+      color: black;
+      font-size: 8px;
+    }
+  
+    .centered-on-rack {
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+      color: black;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #points {
+      font-size: .8em;
+      /* color: green; */
+    }
+
+    #tile-counter {
+      font-size: .8em;
+    }
+  
+    #who-is-playing {
+      font-size: .8em;
+    }
   
   
   }
