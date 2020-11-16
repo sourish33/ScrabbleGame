@@ -79,9 +79,6 @@
     /* padding:10px; */
   }
 
-  table {
-    
-  }
 
   .mytable {
     border: 2px solid blue;
@@ -400,7 +397,7 @@
 
 
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 900px) {
 
   /* @media (max-width: @screen-sm-min) { */
      
@@ -508,6 +505,15 @@
       border: 1px solid #888;
       width: 80%; /* Could be more or less, depending on screen size */
     }
+
+    
+  .mytable {
+    border: 2px solid blue;
+    width:50%;
+    /* border-radius: 10px; */
+    margin-left:auto;
+    margin-right: auto;
+  }
   
   
   }
