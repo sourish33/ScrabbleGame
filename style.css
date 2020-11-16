@@ -73,6 +73,16 @@
     border: 1px solid white;
     padding:0;
   }
+
+  td, th{
+    border: 2px solid blue;
+    /* padding:10px; */
+  }
+
+  table {
+    border: 2px solid blue;
+    width:50%;
+  }
   
   
   

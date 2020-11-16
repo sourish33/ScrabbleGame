@@ -20,7 +20,7 @@
 		<div class="container-fluid " >
       <div class="row ">
         <div class="col-sm-8 col-lg-8 ">
-                <div class="row  ">
+                <!-- <div class="row  ">
                   <div class="col center-text  scorebox">
                     <span class=whitebold id="pl1"></span>  <span class=whitebold id="pl1-points">40</span>
                   </div>
@@ -33,7 +33,7 @@
                   <div class="col center-text  scorebox not-there" id="4throw">
                     <span class=whitebold id="pl4"></span>  <span class=whitebold id="pl4-points">19</span>
                   </div>
-                </div>
+                </div> -->
                 <div class="row " >
                   <div class="grid-container">
                     <!-- row a -->
@@ -455,8 +455,45 @@
 
         </div>
         <div class="col-sm-2 col-lg-2">
+			<div class="row">
+				<table class="table">
+					<tr id="row1">
+						<th scope="col"><span id="pl1">Player1</span></th>
+					  <td><span id="pl1-points">0</span></td>
+						
+					</tr>
+					
+					<tbody>
+					<tr id="row2">
+						<th scope="col"><span id="pl2">Player2</span></th>
+						<td><span id="pl2-points">0</span></td>
+					</tr>
+					  <tr id="row3" class="not-there">
+						<th scope="col"><span id="pl3">Player3</span></th>
+						<td><span id="pl3-points">0</span></td>
+					</tr>
+					 <tr id="row4" class="not-there">
+						<th scope="col"><span id="pl4">Player4</span></th>
+						<td><span id="pl4-points">0</span></td>
+					</tr>
+					</tbody>
+				</table>
+
+			</div>
             <div class="row  ">
               <div class="col d-flex flex-column control-btns" id="tilesandpoints">
+				<!-- <div class="p-1 mt-0  scorebox">
+                    <span class=whitebold id="pl1"></span> : <span class=whitebold id="pl1-points">40</span>
+                  </div>
+                  <div class="p-1 mt-0  scorebox">
+                    <span class=whitebold id="pl2"></span> : <span class=whitebold id="pl2-points">32</span>
+				  </div>
+				  <div class="p-1 mt-0 scorebox not-there" id="3rdrow">
+                    <span class=whitebold id="pl3"></span> : <span class=whitebold id="pl3-points">40</span>
+                  </div>
+                  <div class="p-1 mt-0  scorebox not-there" id="4throw">
+                    <span class=whitebold id="pl4"></span> : <span class=whitebold id="pl4-points">32</span>
+                  </div> -->
                 <div class="p-1 mt-0 scorebox">
                     <p class="whitebold"><span class="longtext">Tiles Remaining: </span><span class="shorttext">Tiles left: </span><span class="p-1 whitebold" id="tile-counter">0</span></p>
                 </div>

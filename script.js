@@ -1122,9 +1122,9 @@ function makeScoreString(sb, lim=3) {
 
   function highlightPlayer(m){
       for (let n=1;n<5;n++){
-        document.getElementById(`pl${n}`).classList.remove("highlight")
+        document.getElementById(`row${n}`).classList.remove("highlight")
       }
-      document.getElementById(`pl${m}`).classList.add("highlight")
+      document.getElementById(`row${m}`).classList.add("highlight")
   }
 
 function AI_playGotMove(){
@@ -1764,7 +1764,7 @@ function createPlayers(){
     
     if (numPlayers ===3){
         createPlayer(3);
-        row=document.getElementById("3rdrow");
+        row=document.getElementById("row3");
         row.classList.remove("not-there");
 
 
@@ -1773,11 +1773,11 @@ function createPlayers(){
     if (numPlayers ===4){
 
         createPlayer(3);
-        row=document.getElementById("3rdrow");
+        row=document.getElementById("row3");
         row.classList.remove("not-there");
 
         createPlayer(4);
-        row=document.getElementById("4throw");
+        row=document.getElementById("row4");
         row.classList.remove("not-there");
     }
 }
