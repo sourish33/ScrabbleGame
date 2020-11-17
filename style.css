@@ -266,8 +266,10 @@
     }
 
     .scorebox{
-      /* background-color:#F4B41A; */
-      /* border: 2px solid blue;  */
+      width:80%;
+      background-color: lightgreen;
+      border-radius: 10px;
+      margin:auto;
     }
 
     .whitebold {
