@@ -530,8 +530,13 @@ function move(fromWhere, toWhere) {
             {
                 destination.removeChild(tileAlreadyThere);	
             }
+        else {
+            return;
+        }
     
     }
+
+    
     destination.innerHTML = "";
     destination.appendChild(tile);
     origin.innerHTML=getLettersOnSquare(fromWhere);
