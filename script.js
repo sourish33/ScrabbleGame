@@ -153,7 +153,7 @@ function onDrop(event) {
     let endingloc = getSquareIdFromPos(pos)//calculating space_id from position of drop
     console.log(`Ending loc:${endingloc}`)
     let incoming = event.dataTransfer.getData('text');
-    let destination = event.target.id;
+    let destination = endingloc;
     let u = document.getElementById(incoming);
     if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
     origin = u.parentElement.id;
