@@ -148,6 +148,10 @@ function onDragOver(event) {
 }
 
 function onDrop(event) {
+    let uu = event.currentTarget;
+    let pos = getXY(uu)
+    let endingloc = getSquareIdFromPos(pos)//calculating space_id from position of drop
+    console.log(`Ending loc:${endingloc}`)
     let incoming = event.dataTransfer.getData('text');
     let destination = event.target.id;
     let u = document.getElementById(incoming);
@@ -1930,6 +1934,31 @@ function createPlayers(){
 
     }
 
+    function exchangeLetters1(){
+        let xch=document.getElementById("xch-modal")
+        xch.style.display="block";
+        const pnum = 5;//this will be the exchange rack number. Players have rack1->rack4
+        let originalRack = document.getElementById("rack");
+        let rackholder= document.getElementById("exchRackHolder")
+    //    let slot;
+    //    rack.classList.add("not-there");
+    //    for (let n=1;n<8;n++){
+    //        slot = originalSlot.cloneNode(true);
+    //        slot.id = pnum+"s"+n.toString();
+    //     //    console.log(`n=${n} and the slotid is ${slot.id}`)
+    //        rack.appendChild(slot);
+    //    }
+        let clonedRack = originalRack.cloneNode(true)
+        clonedRack.id = `rack${pnum}`
+       for (let n=1;n<8;n++){
+           let slot = clonedRack.children[n-1]
+           slot.classList.add("ghost")
+           slot.id = pnum+"s"+n.toString();
+        //    console.log(`n=${n} and the slotid is ${slot.id}`)
+       }
+        rackholder.append(clonedRack);
+    }
+
     // function setFontSizes(){
     //         // set font sizes
     //         return
@@ -2007,6 +2036,12 @@ function createPlayers(){
         modal.style.display="none"
     }
 
+    
+    function closeexchangebox(){
+        let modal = document.getElementById("xch-modal");
+        modal.style.display="none"
+    }
+
     function startGame(){
         setBoardSize();
         createPlayers();
@@ -2040,6 +2075,8 @@ document.getElementById("closemodal").addEventListener("click", closeMondalInfo)
 document.getElementById("2lw-list").addEventListener("click", showModal2lw);
 document.getElementById("close2lw-list").addEventListener("click", closeMondal2lw);
 document.getElementById("closevictorybox").addEventListener("click", closevictorybox);
+document.getElementById("closexchbox").addEventListener("click", closeexchangebox);
+
 
 
 window.addEventListener("resize", setBoardSize);
