@@ -512,7 +512,7 @@ function move(fromWhere, toWhere) {
     if (tile.children[2].innerHTML==="0"){ blankTile=true;}
 
     if (tile.children[1].innerHTML==="_" && toBoard){// untouched blank tile at origin
-        let newLetter  = prompt("Please choose a letter for this tile:", "_");
+        let newLetter  = prompt("Please choose a letter for this tile:", "");
         if (newLetter == null || newLetter == "") {
             return;
           } 
@@ -532,8 +532,9 @@ function move(fromWhere, toWhere) {
             }
         else {
             //spot on rack occupied by letter
-            toWhere = findEmptyRackPosition();
-            move(fromWhere,toWhere);
+            emptyOnRack = findEmptyRackPosition();
+            move(fromWhere,emptyOnRack);
+            move(emptyOnRack,toWhere);
             return;
 
         }
