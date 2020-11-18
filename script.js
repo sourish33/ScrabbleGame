@@ -446,14 +446,14 @@ function moveOnRack(fromWhere, toWhere){
             for(let c=ni;c<nf;c++){
                 let a = `s${c}`;
                 let b = `s${c+1}`;
-                console.log(`s${c}<->s${c+1}`);
+                // console.log(`s${c}<->s${c+1}`);
                 switchSpots(a,b);
             }
     } else if (ni>nf){
             for(let c=ni;c>nf;c--){
                 let a = `s${c}`;
                 let b = `s${c-1}`;
-                console.log(`s${c}<->s${c-1}`);
+                // console.log(`s${c}<->s${c-1}`);
                 switchSpots(a,b);
             }
     }
