@@ -531,7 +531,11 @@ function move(fromWhere, toWhere) {
                 destination.removeChild(tileAlreadyThere);	
             }
         else {
+            //spot on rack occupied by letter
+            toWhere = findEmptyRackPosition();
+            move(fromWhere,toWhere);
             return;
+
         }
     
     }
