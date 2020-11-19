@@ -1912,17 +1912,26 @@ function createPlayers(){
 
     }
 
+    function returnExchangeTiles(){
+        let toExArr = []
+        let selectedTiles = document.getElementsByClassName("pushup")
+        if (selectedTiles.length===0){return}
+        [...selectedTiles].forEach(el => {
+
+            num = el.id.slice(-1);
+            toExArr.push(num)
+        })
+        closeexchangebox()
+        returnSelected(toExArr)
+    }
 
 
 
+    function returnSelected(toExArr) {
 
-    function exchangeLetters() {
-        let onboard = getTilesPlayedNotSubmitted();
-        if (onboard.length!==0) {returnToRack();}
-        let toExStr  = prompt("Please indicate which tiles (1-7) to exchange: (e.g. 1,2,6)", "");
-        if (toExStr==null) {return [];} 
-        let toExArr = toExStr.split(",");
-        for (num of toExArr){
+        if (toExArr.length===0) {return}
+
+       for (num of toExArr){
             if (!isNumeric(num) || parseInt(num)<1 || parseInt(num)>7){return [];}
             }
         let toExArrUni= getUniques(toExArr); //remove duplicates
@@ -1932,7 +1941,9 @@ function createPlayers(){
 
     }
 
-    function exchangeLetters1(){
+    function exchangeLetters(){
+        let onboard = getTilesPlayedNotSubmitted();
+        if (onboard.length!==0) {returnToRack();}
         let xch=document.getElementById("xch-modal")
         xch.style.display="block";
         
@@ -1945,6 +1956,21 @@ function createPlayers(){
        for (let n=1;n<8;n++){
         let slot = clonedRack.children[n-1]
         slot.id = "5s"+n.toString();
+        slot.children[0].id += "5s"
+        slot.children[0].setAttribute("draggable","false")
+        let getRidOf1 = ["ondrop", "ondragover", "ondragstart"]
+        let getRidOf2 = ["ontouchstart","ontouchmove", "ontouchend"]
+        for (let attrib of getRidOf1){
+            slot.removeAttribute(attrib)
+        }
+        for (let attrib of getRidOf2){
+            slot.children[0].removeAttribute(attrib)
+        }
+        slot.addEventListener("click", ()=>{
+            let u=document.getElementById(slot.id)
+            u.classList.toggle("pushup")
+            //TODO: need to handle touch
+        })
     }
         rackholder.append(clonedRack);
         hideRack()
@@ -2034,9 +2060,7 @@ function createPlayers(){
         let modal = document.getElementById("xch-modal");
         modal.style.display="none"
         let rackholder= document.getElementById("exchRackHolder")
-        let rackSubmit= document.getElementById("exchSubmit")
         rackholder.querySelectorAll('*').forEach(n => n.remove());
-        rackSubmit.querySelectorAll('*').forEach(n => n.remove());
         showRack()
     }
 
@@ -2074,6 +2098,8 @@ document.getElementById("2lw-list").addEventListener("click", showModal2lw);
 document.getElementById("close2lw-list").addEventListener("click", closeMondal2lw);
 document.getElementById("closevictorybox").addEventListener("click", closevictorybox);
 document.getElementById("closexchbox").addEventListener("click", closeexchangebox);
+document.getElementById("exchSubmit").addEventListener("click", returnExchangeTiles);
+
 
 
 
