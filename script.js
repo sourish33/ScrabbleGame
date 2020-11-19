@@ -150,14 +150,13 @@ function onDragOver(event) {
 function onDrop(event) {
     let uu = event.currentTarget;
     let pos = getXY(uu)
-    let endingloc = getSquareIdFromPos(pos)//calculating space_id from position of drop
+    let destination = getSquareIdFromPos(pos)//calculating space_id from position of drop
     console.log(`Ending loc:${endingloc}`)
     let incoming = event.dataTransfer.getData('text');
-    let destination = endingloc;
     let u = document.getElementById(incoming);
     if (u==null) {return;}//to prevent the error "cannot read parentelement of null"
     origin = u.parentElement.id;
-    if (origin==="" || destination==="") {return;}
+    if (origin==="" || destination==="none") {return;}
     move(origin,destination);
     displayScore();
     // event.dataTransfer.clearData();
