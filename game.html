@@ -455,12 +455,7 @@
 				  </div>
 				  <div class="p-1 mt-2 mb-2 d-flex scorebox justify-content-center">
 					  <p class="whitebold"><span class="longtext">Points possible:  </span><span class="shorttext">Points possible:  </span><span class="p-1 whitebold" id="points">0</span></p>
-					  <!-- <table class="table mytable  scorebox">
-						<tr>
-							<th scope="col">Points Possible</th>
-						  <td><span id="points">0</span></td>	
-						</tr>
-					</table> -->
+
 				</div>
 								  
 				</div>
@@ -513,10 +508,6 @@
 
 				</div>
 
-				<!-- <div class="p2" id="AIthinking">
-					<p class="not-there" id="AIbox">AI: Thinking...</p>
-                  </div>
-              <p class="p-1 not-there" id="lastPlayed"></p> -->
             </div>
       </div>
         </div>
@@ -598,12 +589,15 @@
         <!-- Modal content -->
         <div id="xch-modal" class="modal-content">
           <span class="close" id="closexchbox">&times;</span>
-          <div class="mt-0">
-         <p>Pick letters to exchange</p>
-         <div id="exchRackHolder"></div>
-        </div>
-        
-        </div>
+          <div class=" d-flex flex-column justify-content-center">
+                <div>
+                  <p>Select letters to exchange</p>
+              </div>
+              <div class="mt-2" id="exchRackHolder"></div>
+              <button type="button" class="btn btn-primary w-50 mt-4" id="exchSubmit"><span class="longtext">Exchange</span><span class="shorttext">Exchange</span></button>
+          </div>
+      
+          </div>
       </div>
       
 		<script src="dictformatted.js"></script>

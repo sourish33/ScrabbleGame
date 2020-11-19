@@ -467,7 +467,6 @@ function moveOnRack(fromWhere, toWhere){
 function checkNameOfLocation(loc) {
     let validOnScreenName = (/^[^pqrtuvwxyz]\d+$/.test(loc));
     let validOffScreenName = (/^(\d+[a-z]\d+)$/.test(loc));
-    let validRackId = true;
     if (loc[0]==="s"){
         if (parseInt(loc.substr(1))>7) { 
           console.log(`${loc} is bad location for a move`)
@@ -1936,26 +1935,21 @@ function createPlayers(){
     function exchangeLetters1(){
         let xch=document.getElementById("xch-modal")
         xch.style.display="block";
-        const pnum = 5;//this will be the exchange rack number. Players have rack1->rack4
+        
         let originalRack = document.getElementById("rack");
         let rackholder= document.getElementById("exchRackHolder")
-    //    let slot;
-    //    rack.classList.add("not-there");
-    //    for (let n=1;n<8;n++){
-    //        slot = originalSlot.cloneNode(true);
-    //        slot.id = pnum+"s"+n.toString();
-    //     //    console.log(`n=${n} and the slotid is ${slot.id}`)
-    //        rack.appendChild(slot);
-    //    }
+
         let clonedRack = originalRack.cloneNode(true)
-        clonedRack.id = `rack${pnum}`
+        clonedRack.id = `rack5`
+
        for (let n=1;n<8;n++){
-           let slot = clonedRack.children[n-1]
-           slot.classList.add("ghost")
-           slot.id = pnum+"s"+n.toString();
-        //    console.log(`n=${n} and the slotid is ${slot.id}`)
-       }
+        let slot = clonedRack.children[n-1]
+        slot.id = "5s"+n.toString();
+    }
         rackholder.append(clonedRack);
+        hideRack()
+
+        
     }
 
     // function setFontSizes(){
@@ -2039,6 +2033,11 @@ function createPlayers(){
     function closeexchangebox(){
         let modal = document.getElementById("xch-modal");
         modal.style.display="none"
+        let rackholder= document.getElementById("exchRackHolder")
+        let rackSubmit= document.getElementById("exchSubmit")
+        rackholder.querySelectorAll('*').forEach(n => n.remove());
+        rackSubmit.querySelectorAll('*').forEach(n => n.remove());
+        showRack()
     }
 
     function startGame(){
