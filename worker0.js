@@ -1,7 +1,7 @@
 importScripts("dictformatted.js", "dictionary.js","workerLibrary.js");
 
 // console.log("Hello I am the grestest worker");
-rackIds=[ "s1", "s2", "s3", "s4", "s5", "s6", "s7" ];
+
 cols = generateCols();
 rows = generateRows();
 rupa = createAIPlayer();
@@ -20,6 +20,7 @@ onmessage = function(e) {
 
     rupa.score=cur_points;
     // console.log("This is worker 0")
+    rackIds=getRackIds();
     if (legalPositions.length!==1){
         postMessage(`Trying single tiles`)
         trySingles(maxTries);

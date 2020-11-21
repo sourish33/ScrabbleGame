@@ -261,7 +261,7 @@
     }
   
     .redbold {
-      color:hotpink;
+      color:blue;
       font-weight: bold;
     }
 
@@ -277,8 +277,8 @@
 
     .tpdiv{
       width:80%;
-      background-color: cyan;
-      /* border-radius: 10px; */
+      background-color:burlywood;
+       border-radius: 5px;
       margin:auto;
       /* display: flex;
       justify-content: center;
@@ -343,7 +343,7 @@
       border: 2px solid #666;
       padding: 5px;
       border-radius: 10px;
-      background-color: cyan;
+      background-color:burlywood;
   
     }
 
@@ -521,9 +521,9 @@
       /* color: green; */
     }
 
-    #tile-counter {
+    /* #tile-counter {
       font-size: .8em;
-    }
+    } */
 
 
   

@@ -2082,7 +2082,9 @@ function createPlayers(){
         createPlayers();
         updateScoreBoard();
         who= whoseMove(moveNumber,numPlayers);
-        document.getElementById("maxpts").innerHTML=maxPoints;
+        if (maxPoints<151){
+            document.getElementById("maxpts").innerHTML=`${maxPoints} point game`;
+        }
         highlightPlayer(who);
         
         if (players[who].isAI) {

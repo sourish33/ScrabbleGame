@@ -1,7 +1,7 @@
 importScripts("dictformatted.js", "dictionary.js","workerLibrary.js");
 
 // console.log("Hello I am the grestest worker");
-rackIds=[ "s1", "s2", "s3", "s4", "s5", "s6", "s7" ];
+
 cols = generateCols();
 rows = generateRows();
 rupa = createAIPlayer();
@@ -34,6 +34,7 @@ onmessage = function(e) {
     
     //         }
     //     }
+    rackIds=getRackIds();
     if (!rupa.haveIwon){
         // console.log("Worker1 here!")
         // postMessage(`Trying ${7}-letter combinations`)
