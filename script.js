@@ -1259,11 +1259,17 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         }
     }
 
+    if (rackEmpty("rack")) { 
+        document.getElementById("all7box").style.display="block";
+    }
+
     let who= whoseMove(moveNumber,numPlayers);
     displayMove();
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
+
+    
     
 
     for (tile of tiles) {
@@ -1489,7 +1495,9 @@ function score(){//find the scores of all the words in the list
     for (word of wordsToScore) {
         totalPoints += wordScore(word);
     }
-    if (rackEmpty("rack")) { totalPoints += 50;}
+    if (rackEmpty("rack")) { 
+        totalPoints += 50;
+    }
 
     return totalPoints;
 }
@@ -2055,6 +2063,11 @@ function createPlayers(){
         modal.style.display="none"
     }
 
+    function closeall7box(){
+        let modal = document.getElementById("all7box");
+        modal.style.display="none"
+    }
+
     
     function closeexchangebox(){
         let modal = document.getElementById("xch-modal");
@@ -2098,6 +2111,7 @@ document.getElementById("2lw-list").addEventListener("click", showModal2lw);
 document.getElementById("close2lw-list").addEventListener("click", closeMondal2lw);
 document.getElementById("closevictorybox").addEventListener("click", closevictorybox);
 document.getElementById("closexchbox").addEventListener("click", closeexchangebox);
+document.getElementById("closeall7box").addEventListener("click", closeall7box);
 document.getElementById("exchSubmit").addEventListener("click", returnExchangeTiles);
 
 
