@@ -270,6 +270,23 @@
       background-color: lightgreen;
       border-radius: 10px;
       margin:auto;
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+    }
+
+    .tpdiv{
+      width:80%;
+      background-color: cyan;
+      /* border-radius: 10px; */
+      margin:auto;
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+    }
+
+    .tpbox{
+      text-align: center;
     }
 
     .whitebold {

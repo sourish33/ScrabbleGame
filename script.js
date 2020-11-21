@@ -2082,7 +2082,7 @@ function createPlayers(){
         createPlayers();
         updateScoreBoard();
         who= whoseMove(moveNumber,numPlayers);
-        // document.getElementById("who-is-playing").innerHTML=players[who].name;
+        document.getElementById("maxpts").innerHTML=maxPoints;
         highlightPlayer(who);
         
         if (players[who].isAI) {

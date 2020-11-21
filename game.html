@@ -450,11 +450,11 @@
       <div class="row  ">
 				<div class="col d-flex flex-column justify-content-center control-btns" id="tilesandpoints">
 
-				  <div class="p-1 mt-0 scorebox not-there">
+				  <!-- <div class="p-1 mt-0 scorebox not-there">
 					  <p class="whitebold"><span class="longtext">Tiles Remaining: </span><span class="shorttext">Tiles left: </span><span class="p-1 whitebold" id="tile-counter">0</span></p>
-				  </div>
+				  </div> -->
 				  <div class="p-1 mt-2 mb-2 d-flex scorebox justify-content-center">
-					  <p class="whitebold"><span class="longtext">Points possible:  </span><span class="shorttext">Points possible:  </span><span class="p-1 whitebold" id="points">0</span></p>
+					  <div class="tpbox">Points possible:  <span class="p-1 whitebold" id="points">0</span></div>
 
 				</div>
 								  
@@ -484,10 +484,17 @@
 					</tbody>
 				</table>
 
-			</div>
+      </div>
+      
+      <div class="row">
+        <div class="tpdiv d-flex flex-column justify-content-center">
+          <div class="tpbox">Tiles Left: <span id="tile-counter">0</span></div>
+          <div class=tpbox><span id="maxpts">150</span> point game</div>
+        </div>
+      </div>
 
-            <div class="row  ">
-                <div class="col d-flex flex-row control-btns">
+            <div class="row mt-2 ">
+                <div class="col d-flex flex-row control-btns justify-content-center">
                   <div class="mt-2">
                       <button type="button" class="btn btn-info mb-2 mr-2" id="info">Help</button>
                   </div>
