@@ -680,7 +680,27 @@ function pickRandomTile() {
     return pickedTile.flat();
 }
 
-function pickSpecificTile(n) {
+function findTileWithLetter(letter){
+    //returns the index of the first tile with that letter from the tilesArray, else -1
+    let index=-1
+    letter = letter.toUpperCase()
+    ////TODO Fix this
+    for (let n=0;n< tilesArray.length;n++){
+        if (letter === tilesArray[n][1]){
+            index=n
+            break
+        }
+    }
+    return index
+}
+
+function pickTileWithLetter(letter){
+    let n = findTileWithLetter(letter)
+    if (n===-1) {return []}
+    return pickTileNumbered(n)
+}
+
+function pickTileNumbered(n) {//picks the n'th tile from the tile array
     if (tilesArray.length ==0) {return;}
     pickedTile = tilesArray.splice(n,1);
     document.getElementById("tile-counter").innerHTML = tilesArray.length;
