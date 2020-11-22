@@ -2156,6 +2156,13 @@ document.getElementById("closexchbox").addEventListener("click", closeexchangebo
 document.getElementById("closeall7box").addEventListener("click", closeall7box);
 document.getElementById("exchSubmit").addEventListener("click", returnExchangeTiles);
 
+window.addEventListener('beforeunload', (event) => {
+    // Cancel the event as stated by the standard.
+    event.preventDefault();
+    // Older browsers supported custom message
+    event.returnValue = '';
+  });
+
 
 
 
