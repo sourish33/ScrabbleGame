@@ -2103,6 +2103,8 @@ function createPlayers(){
         who= whoseMove(moveNumber,numPlayers);
         if (maxPoints<151){
             document.getElementById("maxpts").innerHTML=`${maxPoints} point game`;
+        } else{
+            document.getElementById("maxpts").innerHTML=`Till out of tiles`;
         }
         highlightPlayer(who);
         
