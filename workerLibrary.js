@@ -25,7 +25,7 @@ function permute(permutation) {
       let rackids = [];
       let possRackIds = [ "s1", "s2", "s3", "s4", "s5", "s6", "s7" ];
       for (possRackId of possRackIds){
-          if(board[possRackId]!==null){ rackids.push(possRackId)}
+          if(board[possRackId]!==undefined){ rackids.push(possRackId)}
       }
       return rackids;
   }

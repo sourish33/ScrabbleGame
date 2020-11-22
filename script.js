@@ -1328,10 +1328,16 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
 }
 
 function endGameSequence(n) {
-    if (n===1 || n===2){
+    if (n===1){
         winner =getTopper()[0];
-        // let m = document.getElementById("messagebox");
-        // m.classList.remove("not-there");
+        }
+    if (n===2){
+        for (let i=1;i<numPlayers+1;i++) {
+            players[i].endGameAdjust()
+            updateScoreBoard()
+        }
+        winner =getTopper()[0];
+    }
         document.getElementById("winner").innerHTML=winner;
         document.getElementById("play").classList.add("not-there");
         document.getElementById("shuffle").disabled = true;
@@ -1341,7 +1347,7 @@ function endGameSequence(n) {
         document.getElementById("exchange").disabled = true;
         document.getElementById("pass").disabled = true;
         document.getElementById("victorybox").classList.remove("not-there");
-    }
+    
 }
 
 
@@ -1609,6 +1615,19 @@ let player = {
     },
     addPoints: function(points){
         this.score+=points;
+    },
+    endGameAdjust: function(){
+        let r = ""//rack prefix, e.g. 1s1
+        let toSubtract=0
+
+        for (let n=1;n<8;n++){
+            if (readPoint(`${this.number}s${n}`)!==undefined){
+                toSubtract-=readPoint(`${this.number}s${n}`)
+            }
+        }
+        this.addPoints(toSubtract)
+        
+
     },
 
    /////TODO makerack()
