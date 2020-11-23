@@ -175,7 +175,7 @@
   }
 
   .highlight {
-    background-color: magenta;
+    background-color: lightyellow;
   }
   
   
@@ -278,7 +278,7 @@
 
     .tpdiv{
       width:80%;
-      background-color:burlywood;
+      background-color:lightpink;
        border-radius: 5px;
       margin:auto;
       /* display: flex;
@@ -344,7 +344,7 @@
       border: 2px solid #666;
       padding: 5px;
       border-radius: 10px;
-      background-color:burlywood;
+      background-color:lightskyblue;
   
     }
 
