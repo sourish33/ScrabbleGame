@@ -5,6 +5,7 @@ let legalPositions = getlegalPositions();
 let moveNumber =1;
 let scoreboard = [];//stores strings with moves
 let scoreBoardLength=10;//max number of previous moves to show
+let gameOver = false //used to decide whether to save game upon unexpected exit
 let settings = getSettings();
 let dictionaryChecking = settings[0];
 let randomize = settings[1];
@@ -103,15 +104,82 @@ function getSettings(){
 }
 
 
-// function getPlayerNames(){ 
-//     let playerNames = []
-//     for (let x of ["1","2","3","4"]){
-//         let pvar = `player${x}Name`;
-//         let theName = sessionStorage.getItem(pvar);
-//         if (theName !== "_"){ playerNames.push(theName);}
-//     }
-//     return playerNames;
-// }
+function saveGame(){
+    sessionStorage.setItem('board', JSON.stringify( whatsOnTheBoard() ))
+    sessionStorage.setItem('players', JSON.stringify( players ))
+    sessionStorage.setItem('moveNumber', moveNumber )
+    let lptext=document.getElementById("lastPlayed").innerHTML
+    sessionStorage.setItem('lptext', lptext )
+}
+
+function retrieveSavedGame(){
+    if(sessionStorage.getItem("board")==null || sessionStorage.getItem("players")==null || sessionStorage.getItem("moveNumber")==null)
+    {
+        console.log("Game not saved")
+        return []
+    }
+    let board = JSON.parse(sessionStorage.getItem('board'))
+    let players = JSON.parse(sessionStorage.getItem('players'))
+    let mn = sessionStorage.getItem('moveNumber')
+    let lptext = sessionStorage.getItem('lptext')
+    return ([board,players, mn, lptext])
+}
+
+function savedGameExists(){
+    return !(sessionStorage.getItem("board")==null)
+}
+
+function loadSavedGame(){
+    if (!savedGameExists()) {return }
+    if (!rackEmpty()){
+        returnAllToBag()
+    }
+    const savedGame = retrieveSavedGame();
+    if (savedGame.length===0){return}
+    const board = savedGame[0];
+    const plyrs = savedGame[1];
+    const mn = savedGame[2];
+    const lptext = savedGame[3];
+
+    //reset scores
+    for (let n=1;n<Object.keys(plyrs).length+1;n++) {
+        players[n].score = plyrs[n].score
+    }
+    //reset last played display
+    document.getElementById("lastPlayed").innerHTML = lptext
+
+    //reset move number
+    moveNumber = mn
+
+    
+
+    //set the board
+    let positions = Object.keys(board)
+    let tiles = Object.values(board)
+    let letters = []
+    for (let tile of tiles){
+        letters.push(tile[0])
+    }
+    for (let n=0;n<tiles.length;n++){
+        placeTileWithLetterOnRack("1s1", letters[n])
+        // console.log(`plaving the ${letters[n]} at ${positions[n]}`)
+        move("1s1",positions[n])
+    }
+    let playedTiles = getTilesPlayedNotSubmitted();
+    for (let tile of playedTiles) {
+        tile.classList.remove("played-not-submitted");
+        tile.classList.add("submitted");
+        tile.setAttribute("ondragstart","return false");
+        tile.classList.add("unselectable");
+        tile.removeAttribute("ontouchstart");
+        tile.removeAttribute("ontouchmove" );
+        tile.removeAttribute("ontouchend");
+        removeTouch(tile.children[0]);
+    }
+    legalPositions=getlegalPositions()
+    updateScoreBoard()
+    document.getElementById("lastPlayed").classList.remove("not-there")
+}
 
 function getPlayerNamesAndTypes(){ 
     let playerNamesAndTypes = {}
@@ -650,7 +718,7 @@ function placeTileOnRack(space_id){
         return tile.classList.contains("ghost") ? true : false;
     }
 
-    function rackEmpty(rack_id){
+    function rackEmpty(rack_id="rack"){
         let rackSquares = getRackIds(rack_id);
         for (rackSquare of rackSquares){
             if (!isEmptyOnRack(rackSquare)) {return false; }
@@ -707,9 +775,11 @@ function pickTileNumbered(n) {//picks the n'th tile from the tile array
     return pickedTile.flat();
 }
 
-function placeSpecificTileOnRack(space_id, pickedTile){
-    //pick a tile from the bag and put it on the rack
-    if (tilesArray.length==0) {return;}
+function placeTileWithLetterOnRack(space_id, letter){
+    //place a tile with a given letter on a rack space
+
+    let pickedTile = pickTileWithLetter(letter);
+    
     if (!checkNameOfLocation(space_id)) {return;}
     space = document.getElementById(space_id);
     tile = getTheTile(space);
@@ -1127,7 +1197,7 @@ function displayMove(){
     let lw = document.getElementById("lastPlayed");
     let who= whoseMove(moveNumber,numPlayers);
     let latestscore = `${players[who].name}: <span class=\"redbold\">${readWord(playedWord)}</span> for <span class=\"redbold\">${score()}</span>`
-    scoreboard.push(latestscore);
+    scoreboard.push(latestscore)
     // console.log(scoreboard)
     let scoreString = makeScoreString(scoreboard, scoreBoardLength)
     // lw.innerHTML = `${players[who].name}: ${readWord(playedWord)} for ${score()} <br>`+lw.innerHTML;
@@ -1262,7 +1332,7 @@ function askToPass(player="next player"){
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
     let tiles = getTilesPlayedNotSubmitted();
-    if (tiles.length === 0) {return;} //nothing submitted yet
+    if (tiles.length === 0) {return;} //nothing played yet
     if (!checkLegalPlacement(tiles)) {
         alert("Tile placement illegal");
         return;
@@ -1366,7 +1436,7 @@ function endGameSequence(n) {
         document.getElementById("exchange").disabled = true;
         document.getElementById("pass").disabled = true;
         document.getElementById("victorybox").classList.remove("not-there");
-    
+        gameOver = true
 }
 
 
@@ -1868,7 +1938,7 @@ function createPlayers(){
         document.getElementById("tile-counter").innerHTML = tilesArray.length;
     }
 
-    function returnAllToBag(slotlist) {//takes an array of numbers and returns those tiles to the bag
+    function returnAllToBag(slotlist=[1,2,3,4,5,6,7]) {//takes an array of numbers and returns those tiles to the bag
         
         //add checks that slotlist is ok
         if (!Array.isArray(slotlist) || !slotlist.length ===0){
@@ -2119,6 +2189,11 @@ function createPlayers(){
         setBoardSize();
         createPlayers();
         updateScoreBoard();
+        if (savedGameExists()) {
+            if (confirm("Load saved game?")) {
+                loadSavedGame()
+              } 
+        }
         who= whoseMove(moveNumber,numPlayers);
         if (maxPoints<151){
             document.getElementById("maxpts").innerHTML=`${maxPoints} point game`;
@@ -2158,10 +2233,20 @@ document.getElementById("exchSubmit").addEventListener("click", returnExchangeTi
 
 window.addEventListener('beforeunload', (event) => {
     // Cancel the event as stated by the standard.
+    if (!gameOver){
+        saveGame()
+    }
     event.preventDefault();
     // Older browsers supported custom message
     event.returnValue = '';
   });
+
+  window.addEventListener("unload", function(event) { 
+    if (!gameOver){
+        saveGame()
+    }
+
+});
 
 
 
