@@ -2214,6 +2214,12 @@ function createPlayers(){
         
     }
 
+    function exitGame(){
+        gameOver=true
+        sessionStorage.clear();
+        console.log("exit game speaking")
+    }
+
 
 
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
@@ -2230,6 +2236,8 @@ document.getElementById("closevictorybox").addEventListener("click", closevictor
 document.getElementById("closexchbox").addEventListener("click", closeexchangebox);
 document.getElementById("closeall7box").addEventListener("click", closeall7box);
 document.getElementById("exchSubmit").addEventListener("click", returnExchangeTiles);
+document.getElementById("exitgame").addEventListener("click", exitGame);
+
 
 window.addEventListener('beforeunload', (event) => {
     // Cancel the event as stated by the standard.
