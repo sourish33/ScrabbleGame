@@ -105,6 +105,7 @@ function getSettings(){
 
 
 function saveGame(){
+    //Only saves game variables necessary to restart an accidentally closed game. Assumes that the initialization variables are intact
     sessionStorage.setItem('board', JSON.stringify( whatsOnTheBoard() ))
     sessionStorage.setItem('players', JSON.stringify( players ))
     sessionStorage.setItem('moveNumber', moveNumber )
@@ -2241,16 +2242,16 @@ document.getElementById("exitgame").addEventListener("click", exitGame);
 
 window.addEventListener('beforeunload', (event) => {
     // Cancel the event as stated by the standard.
-    if (!gameOver){
-        saveGame()
-    }
+    // if (!gameOver || moveNumber>1){
+    //     saveGame()
+    // }
     event.preventDefault();
     // Older browsers supported custom message
     event.returnValue = '';
   });
 
   window.addEventListener("unload", function(event) { 
-    if (!gameOver){
+    if (!gameOver && moveNumber>1){
         saveGame()
     }
 
