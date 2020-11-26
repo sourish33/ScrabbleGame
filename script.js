@@ -2293,12 +2293,13 @@ for (sqr of sqrs){
 let myform = document.getElementById("submittedWord");
 myform.addEventListener('input', checknow)
 //call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
-// myform.addEventListener('keypress',function(event){
-//     if(event.keyCode == 13) {
-//         event.preventDefault();
-//         getWordToCheck();
-//     }
-// });
+//needed because pressing enter after entering a word causes the page to reload otherwise
+myform.addEventListener('keypress',function(event){
+    if(event.keyCode == 13) {
+        event.preventDefault();
+        // getWordToCheck();
+    }
+});
 
 
 
