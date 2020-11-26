@@ -1358,6 +1358,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     players[who].addPoints(score());
     players[who].removePieces();
     updateScoreBoard();
+    clearDict()
 
     
     
@@ -1433,7 +1434,6 @@ function endGameSequence(n) {
         document.getElementById("shuffle").disabled = true;
         document.getElementById("recall").disabled = true;
         document.getElementById("play").disabled = true;
-        document.getElementById("checkdic").disabled = true;
         document.getElementById("exchange").disabled = true;
         document.getElementById("pass").disabled = true;
         document.getElementById("victorybox").classList.remove("not-there");
@@ -2158,6 +2158,7 @@ function createPlayers(){
     }
 
     function showModal2lw(){
+        clearResult()
         let modal = document.getElementById("two-letter-modal");
         modal.style.display="block"
     }
@@ -2165,6 +2166,7 @@ function createPlayers(){
     function closeMondal2lw(){
         let modal = document.getElementById("two-letter-modal");
         modal.style.display="none"
+        clearDict()
     }
 
     function closevictorybox(){
@@ -2226,7 +2228,7 @@ function createPlayers(){
 document.getElementById("shuffle").addEventListener("click", shuffle_rack);
 document.getElementById("recall").addEventListener("click", returnToRack);
 document.getElementById("play").addEventListener("click", play);
-document.getElementById("checkdic").addEventListener("click", getWordToCheck);
+document.getElementById("cleardic").addEventListener("click", clearDict);
 document.getElementById("exchange").addEventListener("click", exchangeLetters);
 document.getElementById("pass").addEventListener("click", pass);
 document.getElementById("info").addEventListener("click", showModalInfo);
@@ -2239,6 +2241,7 @@ document.getElementById("closexchbox").addEventListener("click", closeexchangebo
 document.getElementById("closeall7box").addEventListener("click", closeall7box);
 document.getElementById("exchSubmit").addEventListener("click", returnExchangeTiles);
 document.getElementById("exitgame").addEventListener("click", exitGame);
+
 
 
 window.addEventListener('beforeunload', (event) => {
@@ -2283,20 +2286,21 @@ for (sqr of sqrs){
     });
 }
 
-// document.getElementById("s1").addEventListener("mousedown",()=>{
-//     this.children[0].classList.add("zoom")
-// })
 
 
 
-//call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
+
 let myform = document.getElementById("submittedWord");
-myform.addEventListener('keypress',function(event){
-    if(event.keyCode == 13) {
-        event.preventDefault();
-        getWordToCheck();
-    }
-});
+myform.addEventListener('input', checknow)
+//call function getWordToCheck upon pressing enter after entering text into search button, after suppressing default behavior for the enter button (keyCode 13)
+// myform.addEventListener('keypress',function(event){
+//     if(event.keyCode == 13) {
+//         event.preventDefault();
+//         getWordToCheck();
+//     }
+// });
+
+
 
 
 startGame();
