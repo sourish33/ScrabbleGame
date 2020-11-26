@@ -2231,6 +2231,7 @@ document.getElementById("exchange").addEventListener("click", exchangeLetters);
 document.getElementById("pass").addEventListener("click", pass);
 document.getElementById("info").addEventListener("click", showModalInfo);
 document.getElementById("closemodal").addEventListener("click", closeMondalInfo);
+document.getElementById("close-help").addEventListener("click", closeMondalInfo);
 document.getElementById("2lw-list").addEventListener("click", showModal2lw);
 document.getElementById("close2lw-list").addEventListener("click", closeMondal2lw);
 document.getElementById("closevictorybox").addEventListener("click", closevictorybox);

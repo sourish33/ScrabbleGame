@@ -496,7 +496,7 @@
             <div class="row mt-2 ">
                 <div class="col d-flex flex-row control-btns justify-content-center">
                   <div class="mt-2">
-                      <button type="button" class="btn btn-info mb-2 mr-2" id="info">Help</button>
+                      <button type="button" class="btn btn-info mb-2 mr-2" id="info">How to Play</button>
                   </div>
                   <div class="mt-2">
                       <a href="index.html" type="button" class="btn btn-danger mb-2 mr-2" id="exitgame">Exit</a>
@@ -556,15 +556,19 @@
 			  <span class="close" id="closemodal">&times;</span>
 			  <h3>Instructions</h3>
 			<ul>
-				<li>Move tiles around by dragging and dropping.</li>
-				<li>The <span class="infobox">Shuffle</span> button shuffles the tiles on the rack.</li>
+        <li>Move tiles around either by mouse or touch.</li>
+        <li><span class="infobox">Double-clicking/tapping</span> an unsubmitted  tile on the board will send it back to the rack</li>
+				<li>The <span class="infobox">Shuffle</span> button shuffles the tiles on the rack. You can also manually rearrange the rack by dragging tiles.</li>
 				<li>The <span class="infobox">Exchange</span> button allows you to exchange some/all of your tiles (this costs you your turn).</li>
-				<li>The <span class="infobox">Recall</span> button brings back all the unsubmitted tiles on the board back to the rack</li>
-				<li><span class="infobox">Double-clicking</span> an unsubmitted  tile will bring it back to the rack</li>
+				<li>The <span class="infobox">Recall</span> button sends all the unsubmitted tiles on the board back to the rack</li>
 				<li><span class="infobox">Points possible</span> shows the points you could earn assuming your words are in the dictionary</li>
-				<li>The <span class="infobox">Play</span> button submits your tiles.</li>
-				<li>A list of two-letter words and a dictionary interface are provided for convenience.</li>
-			</ul>
+				<li>The <span class="infobox">Play</span> button submit tiles on the board.</li>
+        <li>The <span class="infobox">Dict</span> button brings up a dictionary and list of two-letter words.</li>
+        <li>All words played by the AI are valid words according to the Official Scrabble Dictionary.</li>
+      </ul>
+      <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" id="close-help">Dismiss</button>
+      </div>
 			</div>
 		  
 		  </div>
