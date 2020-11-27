@@ -147,22 +147,25 @@
                         <div class="form-check">
                           <input class="form-check-input" type="radio" name="gameType" id="gt75" value="75pt">
                           <label class="form-check-label" for="gridRadios1">
-                            <span class="longtext">75 point game</span>
-                            <span class="shorttext">75 pt max</span>
+                            75 point game
+                            <!-- <span class="longtext">75 point game</span>
+                            <span class="shorttext">75 pt max</span> -->
                           </label>
                         </div>
                         <div class="form-check">
                           <input class="form-check-input" type="radio" name="gameType" id="gt150" value="150pt" checked>
                           <label class="form-check-label" for="gridRadios2">
-                            <span class="longtext">150 point game</span>
-                            <span class="shorttext">150 pt max</span>
+                            150 point game
+                            <!-- <span class="longtext">150 point game</span>
+                            <span class="shorttext">150 pt max</span> -->
                           </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="gameType" id="gt" value="4eva">
                             <label class="form-check-label" for="gridRadios2">
-                              <span class="longtext">Till tiles run out</span>
-                              <span class="shorttext">All tiles</span>
+                              Till the tiles run out
+                              <!-- <span class="longtext">Till tiles run out</span>
+                              <span class="shorttext">All tiles</span> -->
                             </label>
                           </div>
    
@@ -171,7 +174,7 @@
                   </fieldset>
 
                 <div class="form-group row">
-                  <div class="col-sm-6">
+                  <div class="col-sm-12">
                     <div class="btn-group" role="group" aria-label="lastbuttons">
                       <button type="button" class="btn btn-lg btn-primary mr-1" id="playbutton" >Start Game</button>
                       <button type="button" class="btn btn-lg btn-info" id="info" >Help</button>
@@ -181,31 +184,25 @@
               </form>
               
           </div>
-          <div class="col sm-6 not-there" id="infocol">
-             <div class="card">
-                <div class="card-body">
-                  <h3 class="card-title">Instructions</h3>
-                  <ul>
-                    <li>Click <span class="infobox">Add Human</span> to add a human player or  <span class="infobox">Add Computer</span> to add a Artificial Intelligence player.</li>
-                    <li>Select the strength of each AI player (stronger = more thinking time)</li>
-                    <li>Enable/Disable dictionary checking. If dictionary checking is on, each submitted word will be checked against the official Scrabble dictionary</li>
-                    <li>Choose the how the game should end.</li>
-                    <li>Press <span class="infobox">Start Game</span> to begin the game.</li>
-                </ul>
-                <!-- <h5>Once game starts</h5>
-                <ul>
-                  <li>Move tiles around by dragging and dropping.</li>
-                  <li>The <span class="infobox">Shuffle</span> button shuffles the tiles on the rack.</li>
-                  <li>The <span class="infobox">Exchange</span> button allows you to exchange some/all of your tiles (this costs you your turn).</li>
-                  <li>The <span class="infobox">Recall</span> button brings back all tiles on the board back to the rack</li>
-                  <li>Double-clicking a tile will bring it back to the rack</li>
-                  <li><span class="infobox">Points possible</span> shows the points you could earn assuming your words are in the dictionary</li>
-                  <li>The <span class="infobox">Play</span> button submits your tiles.</li>
-                  <li>A list of two-letter words and a dictionary interface are provided for convenience.</li>
-                </ul> -->
-                </div>
-            </div>
-         </div>         
+
+         <div id="myModal" class="modal">
+
+          <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close" id="closemodal">&times;</span>
+              <ul>
+                <li>Click <span class="infobox">Add Human</span> to add a human player or  <span class="infobox">Add Computer</span> to add a Artificial Intelligence player.</li>
+                <li>Select the strength of each AI player (stronger = more thinking time)</li>
+                <li>Enable/Disable dictionary checking. If dictionary checking is on, each submitted word will be checked against the official Scrabble dictionary</li>
+                <li>Choose the how the game should end.</li>
+                <li>Press <span class="infobox">Start Game</span> to begin the game.</li>
+              </ul>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" id="dismiss-help">Dismiss</button>
+              </div>
+              </div>
+          
+          </div>
           
 
         
