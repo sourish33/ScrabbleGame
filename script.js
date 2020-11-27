@@ -1323,7 +1323,14 @@ function restoreTouch(tile_container){
 function askToPass(player="next player"){
     hideRack()
     setTimeout(function(){
-        alert(`Please pass to ${player}`);
+        // alert(`Please pass to ${player}`);
+        msg = `Please pass to ${player}`
+        swal({
+            title: "Nice!",
+            text: msg,
+            icon: "success",
+          });
+
         showRack()
       }, 100);
     
@@ -1335,7 +1342,11 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
     let tiles = getTilesPlayedNotSubmitted();
     if (tiles.length === 0) {return;} //nothing played yet
     if (!checkLegalPlacement(tiles)) {
-        alert("Tile placement illegal");
+        swal({
+            title: "Uh oh!",
+            text: "Tile placement illegal",
+            icon: "error",
+          });
         return;
     }
 
@@ -1344,7 +1355,11 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         let notAWords = checkIfLegal(wordarray);
         if (notAWords.length!==0){
             let msg =`${notAWords.join(", ")} not valid` ;
-            alert(msg);
+            swal({
+                title: "Uh oh!",
+                text: msg,
+                icon: "error",
+              });
             return;
         }
     }
@@ -2211,7 +2226,13 @@ function createPlayers(){
             AI_play();
         }
         else{
-            alert(`Please pass to ${players[who].name}`); 
+            let msg=`Please pass to ${players[who].name}` 
+
+            swal({
+                title: "Let the games begin!",
+                text: msg,
+                icon: "success",
+              });
             replenishRack();
         }
         

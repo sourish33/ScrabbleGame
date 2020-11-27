@@ -213,7 +213,8 @@ function getInitialData() {
     let thePlayers = [p1,p2,p3,p4]
     let nonzeros = thePlayers.filter(function(e){ return e === 0 || e });
     if (nonzeros.length <2){
-        alert("At least two players are required.")
+        // alert("At least two players are required.")
+        swal("At least two players are required.")
         return;
     }
     
