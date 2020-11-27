@@ -16,8 +16,8 @@ for (let n=1;n<5;n++){
 }
 
 const passGreetings = ["Nice!", "Finally!", "Good Job!", "INCREDIBLE!", 
-"You Made Scrabble Great Again!", "Wowza!", "Woot Woot!", "Thats Yuge!", 
-"Groovy!", "Righteous!", "Copacetic!", "Nifty!", "Future Pulitzer Prize Winner!", "Shakespeare would be proud!"]
+"Wowza!", "Woot Woot!", "That's LITERALLY awesome!", 
+"Groovy!", "Righteous!", "Copacetic!", "Nifty!", "Quite a wordsmith there!"]
 
 
 
