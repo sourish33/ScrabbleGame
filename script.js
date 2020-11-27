@@ -15,6 +15,12 @@ for (let n=1;n<5;n++){
     AIlist[n]=settings[3][n-1]
 }
 
+const passGreetings = ["Nice!", "Finally!", "Good Job!", "INCREDIBLE!", 
+"You Made Scrabble Great Again!", "Wowza!", "Woot Woot!", "Thats Yuge!", 
+"Groovy!", "Righteous!", "Copacetic!", "Nifty!", "Future Pulitzer Prize Winner!", "Shakespeare would be proud!"]
+
+
+
 let playerNamesAndTypes= getPlayerNamesAndTypes()
 let playerNames = Object.keys(playerNamesAndTypes)
 let numPlayers  = playerNames.length;
@@ -74,6 +80,11 @@ let tilesArray;
     }
 
 })();
+
+function randomUpTo(max) { // min and max included 
+    let min=0;
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 
 
 function fillBoosters() {
@@ -1295,24 +1306,7 @@ function removeTouch(tile_container){
     tile_container.removeAttribute("ontouchend");
 }
 
-// function disableTouchRack(){
-//     let ids = getRackIds()
-//     for (id of ids){
-//         if (isEmptyOnRack(id)) {continue}
-//         let tile = getTileAt(id)
-//         removeTouch(tile)
-//     }
-// }
 
-
-// function enableTouchRack(){
-//     let ids = getRackIds()
-//     for (id of ids){
-//         if (isEmptyOnRack(id)) {continue}
-//         let tile = getTileAt(id)
-//         restoreTouch(tile)
-//     }
-// }
 
 function restoreTouch(tile_container){
     tile_container.setAttribute("ontouchstart","onTouchStart(event)" )
@@ -1326,7 +1320,23 @@ function askToPass(player="next player"){
         // alert(`Please pass to ${player}`);
         msg = `Please pass to ${player}`
         swal({
-            title: "Nice!",
+            title: `${passGreetings[randomUpTo(passGreetings.length-1)]}`,
+            text: msg,
+            icon: "success",
+          });
+
+        showRack()
+      }, 100);
+    
+}
+
+function askToPassMessage(player="next player", message="Better Luck Next Time!"){
+    hideRack()
+    setTimeout(function(){
+        // alert(`Please pass to ${player}`);
+        msg = `Please pass to ${player}`
+        swal({
+            title: message,
             text: msg,
             icon: "success",
           });
@@ -1478,7 +1488,7 @@ function pass(confirmPass=true)
     moveNumber++;
     who= whoseMove(moveNumber,numPlayers);
     if (!players[who].isAI) {
-        askToPass(`${players[who].name}`)
+        askToPassMessage(`${players[who].name}`)
     }
     // document.getElementById("who-is-playing").innerHTML=players[who].name;
     highlightPlayer(who);
