@@ -2151,7 +2151,7 @@ function createPlayers(){
         let w = window.innerWidth;
         let h = window.innerHeight;
         let ww=Math.min(w,h);
-        if (ww>768){
+        if (ww>650){
           n=85;
         }
         let u=document.getElementsByClassName("grid-container")[0];
