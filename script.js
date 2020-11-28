@@ -707,6 +707,9 @@ function placeTileOnRack(space_id){
 }
 
 
+    const showAIsRack = ()=>{document.getElementById("aisrack").style.display="flex"}
+    const hideAIsRack = ()=>{document.getElementById("aisrack").style.display="None"}
+
 
     function replenishRack() {
 
@@ -1291,6 +1294,7 @@ function AI_playGotMove(){
 }
 
 function AI_play(){
+    showAIsRack();
     legalPositions = getlegalPositions();
     let who= whoseMove(moveNumber,numPlayers);
     players[who].makeMove();
@@ -1301,7 +1305,7 @@ function AI_play(){
     } else {
         AI_playGotMove();
     }
-    
+    hideAIsRack();
 }
 
 function removeTouch(tile_container){
@@ -1349,6 +1353,7 @@ function askToPassMessage(player="next player", message="Better Luck Next Time!"
 
 function play(){//makes tiles stuck and animates new tiles when play button is pressed
 
+    hideAIsRack()
     let tiles = getTilesPlayedNotSubmitted();
     if (tiles.length === 0) {return;} //nothing played yet
     if (!checkLegalPlacement(tiles)) {

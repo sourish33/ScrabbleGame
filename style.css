@@ -179,7 +179,15 @@
   }
   
   
-  
+  #aisrack{
+    background-color: #accbe6;
+    display: none;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    color: green;
+    font-weight: bold;
+  }
   
   
     .tile-on-board {
