@@ -1316,33 +1316,29 @@ function restoreTouch(tile_container){
 
 function askToPass(player="next player"){
     hideRack()
-    setTimeout(function(){
         // alert(`Please pass to ${player}`);
         msg = `Please pass to ${player}`
         swal({
             title: `${passGreetings[randomUpTo(passGreetings.length-1)]}`,
             text: msg,
             icon: "success",
+          }).then((value) => {
+                    showRack();
           });
-
-        showRack()
-      }, 100);
-    
 }
 
 function askToPassMessage(player="next player", message="Better Luck Next Time!"){
     hideRack()
-    setTimeout(function(){
         // alert(`Please pass to ${player}`);
         msg = `Please pass to ${player}`
         swal({
             title: message,
             text: msg,
             icon: "success",
-          });
+          }).then((value) => {
+            showRack();
+        });
 
-        showRack()
-      }, 100);
     
 }
 
@@ -2242,8 +2238,11 @@ function createPlayers(){
                 title: "Let the games begin!",
                 text: msg,
                 icon: "success",
-              });
-            replenishRack();
+              }).then((value) => {
+                    replenishRack();
+                });
+
+            
         }
         
     }
