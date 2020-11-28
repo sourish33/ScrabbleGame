@@ -663,10 +663,12 @@ function fixSizesAttribs(){
     for (slot of rackslots){
         if (slot.children.length ===0) {break;}
         if (slot.children[0].children[1]==null) {break;}
+        slot.children[0].children[0].classList.add("tile-on-board")
         slot.children[0].children[1].classList.add("centered-on-rack");
         slot.children[0].children[2].classList.add("bottom-right-on-rack");
         slot.children[0].setAttribute("ondrop", "onDropRackTile(event)");
 
+        slot.children[0].children[0].classList.remove("tile-on-rack");
         slot.children[0].children[1].classList.remove("centered");
         slot.children[0].children[2].classList.remove("bottom-right");
     }
@@ -674,10 +676,12 @@ function fixSizesAttribs(){
     let tilesOnBoard = getTilesPlayedNotSubmitted();
     if (tilesOnBoard.length===0) {return;}
     for (tile of tilesOnBoard){
+        slot.children[0].children[0].classList.remove("tile-on-rack")
         tile.children[0].children[1].classList.remove("centered-on-rack");
         tile.children[0].children[2].classList.remove("bottom-right-on-rack");
         tile.children[0].removeAttribute("ondrop");
 
+        slot.children[0].children[0].classList.add("tile-on-board");
         tile.children[0].children[1].classList.add("centered");
         tile.children[0].children[2].classList.add("bottom-right");
     }
