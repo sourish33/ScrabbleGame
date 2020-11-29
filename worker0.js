@@ -1,6 +1,6 @@
 importScripts("dictformatted.js", "dictionary.js","workerLibrary.js");
 
-// console.log("Hello I am the grestest worker");
+// THIS WORKER DOES 1,2,3,4,5
 
 cols = generateCols();
 rows = generateRows();
