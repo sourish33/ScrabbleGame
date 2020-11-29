@@ -1467,6 +1467,7 @@ function endGameSequence(n) {
         document.getElementById("exchange").disabled = true;
         document.getElementById("pass").disabled = true;
         document.getElementById("victorybox").classList.remove("not-there");
+        hideAIsRack()
         gameOver = true
 }
 
