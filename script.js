@@ -1857,7 +1857,11 @@ let player = {
             const workerResults = await Promise.all([
                 try_n_tiles(this.max_words, this.score, "worker7.js"), 
                 try_n_tiles(this.max_words, this.score, "worker6.js"),
-                try_n_tiles(this.max_words, this.score, "worker0.js")
+                try_n_tiles(this.max_words, this.score, "worker5.js"),
+                try_n_tiles(this.max_words, this.score, "worker4.js"),
+                try_n_tiles(this.max_words, this.score, "worker3.js"),
+                try_n_tiles(this.max_words, this.score, "worker2.js"),
+                try_n_tiles(this.max_words, this.score, "worker1.js")
             ]);
             sortedres = workerResults.sort((a,b)=>{return b.bestMove["points"]-a.bestMove["points"]});
             workerResult = sortedres[0];
