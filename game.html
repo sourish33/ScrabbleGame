@@ -635,12 +635,12 @@
           newLocation()
         }
         //the following is to prevent the UI from distorting when the soft keyboard shows up on Android
-        document.documentElement.style.setProperty('overflow', 'auto') 
-        const metaViewport = document.querySelector('meta[name=viewport]')
-        metaViewport.setAttribute('content', 'height=' + initialHeight + 'px, width=device-width, initial-scale=1.0')
-        metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
-        initialWidth = window.innerWidth
-        initialHeight = window.innerHeight
+        // document.documentElement.style.setProperty('overflow', 'auto') 
+        // const metaViewport = document.querySelector('meta[name=viewport]')
+        // metaViewport.setAttribute('content', 'height=' + initialHeight + 'px, width=device-width, initial-scale=1.0')
+        // metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+        // initialWidth = window.innerWidth
+        // initialHeight = window.innerHeight
       </script> 
       
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
