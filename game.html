@@ -634,7 +634,11 @@
         if (sessionStorage.length<8){
           newLocation()
         }
+
+        const metaViewport = document.querySelector('meta[name=viewport]')
+        metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
       </script> 
+      
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="dictformatted.js"></script>
 		<script src="dictionary.js"></script>
