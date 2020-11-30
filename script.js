@@ -122,6 +122,7 @@ function saveGame(){
     sessionStorage.setItem('moveNumber', moveNumber )
     let lptext=document.getElementById("lastPlayed").innerHTML
     sessionStorage.setItem('lptext', lptext )
+    console.log("saved game")
 }
 
 function retrieveSavedGame(){
@@ -1265,6 +1266,7 @@ function AI_playGotMove(){
         tile.setAttribute("ontouchend", "return");
         removeTouch(tile.children[0]);
     }
+    saveGame()
     let gameCheck = endCheck();
     if (gameCheck===0)
     {
@@ -1403,6 +1405,8 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         tile.removeAttribute("ontouchend");
         removeTouch(tile.children[0]);
     }
+
+    saveGame()
 
     //is the game over?
     let gameCheck = endCheck();
