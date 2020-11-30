@@ -1266,12 +1266,13 @@ function AI_playGotMove(){
         tile.setAttribute("ontouchend", "return");
         removeTouch(tile.children[0]);
     }
-    saveGame()
+    
     let gameCheck = endCheck();
     if (gameCheck===0)
     {
         //advance the movenumber
         moveNumber++;
+        saveGame()//saving the game
         who= whoseMove(moveNumber,numPlayers);
   
         // document.getElementById("who-is-playing").innerHTML=players[who].name;
@@ -1419,6 +1420,7 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         searchresult.innerHTML ="";
         //advance the movenumber
         moveNumber++;
+        saveGame()
         who= whoseMove(moveNumber,numPlayers);
         // alert(`Please pass to ${players[who].name}`);
         
@@ -1496,6 +1498,7 @@ function pass(confirmPass=true)
     searchresult.innerHTML ="";
     //advance the movenumber
     moveNumber++;
+    saveGame()
     who= whoseMove(moveNumber,numPlayers);
     if (!players[who].isAI) {
         askToPassMessage(`${players[who].name}`)
