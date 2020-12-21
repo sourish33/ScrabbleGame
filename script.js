@@ -34,8 +34,7 @@ if (endgame=="150pt") {maxPoints =150;}
 
 
 
-let levels = [1500,50000,500000]
-// maxWords=levels[level-1]
+let levels = [1500,55000,500000]
 let tilesArray;
 (tilesArray = function makeTileList(){
 
