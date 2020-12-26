@@ -8,7 +8,6 @@ rupa = createAIPlayer();
 
 
 onmessage = function(e) {
-    t0=performance.now()
     board = e.data[0];
     legalPositions = e.data[1];
     played_ids = e.data[2];
