@@ -34,7 +34,7 @@ if (endgame=="150pt") {maxPoints =150;}
 
 
 
-let levels = [1500,55000,500000]
+let levels = [1500,60000,500000]
 let tilesArray;
 (tilesArray = function makeTileList(){
 
