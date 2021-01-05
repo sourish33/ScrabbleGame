@@ -118,6 +118,7 @@ function saveGame(verbose = false){
     //Only saves game variables necessary to restart an accidentally closed game. Assumes that the initialization variables are intact
     sessionStorage.setItem('board', JSON.stringify( whatsOnTheBoard() ))
     sessionStorage.setItem('players', JSON.stringify( players ))
+    sessionStorage.setItem('scoreboard', JSON.stringify( scoreboard ))
     sessionStorage.setItem('moveNumber', moveNumber )
     let lptext=document.getElementById("lastPlayed").innerHTML
     sessionStorage.setItem('lptext', lptext )
@@ -135,9 +136,10 @@ function retrieveSavedGame(){
     }
     let board = JSON.parse(sessionStorage.getItem('board'))
     let players = JSON.parse(sessionStorage.getItem('players'))
+    let scoreboard = JSON.parse(sessionStorage.getItem('scoreboard'))
     let mn = sessionStorage.getItem('moveNumber')
     let lptext = sessionStorage.getItem('lptext')
-    return ([board,players, mn, lptext])
+    return ([board,players, mn, lptext, scoreboard])
 }
 
 function savedGameExists(){
@@ -155,6 +157,7 @@ function loadSavedGame(){
     const plyrs = savedGame[1];
     const mn = savedGame[2];
     const lptext = savedGame[3];
+    scoreboard = savedGame[4]
 
     //reset scores
     for (let n=1;n<Object.keys(plyrs).length+1;n++) {
