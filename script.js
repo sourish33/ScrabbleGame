@@ -114,7 +114,7 @@ function getSettings(){
 }
 
 
-function saveGame(){
+function saveGame(verbose = false){
     //Only saves game variables necessary to restart an accidentally closed game. Assumes that the initialization variables are intact
     sessionStorage.setItem('board', JSON.stringify( whatsOnTheBoard() ))
     sessionStorage.setItem('players', JSON.stringify( players ))
@@ -122,6 +122,9 @@ function saveGame(){
     let lptext=document.getElementById("lastPlayed").innerHTML
     sessionStorage.setItem('lptext', lptext )
     console.log("saved game")
+    if (verbose){
+        alert("Game saved")
+    }
 }
 
 function retrieveSavedGame(){
@@ -2140,41 +2143,6 @@ function createPlayers(){
         
     }
 
-    // function setFontSizes(){
-    //         // set font sizes
-    //         return
-    //         let el=document.getElementById("h8")
-    //         let rect = el.getBoundingClientRect();
-    //         let squareSize = rect.bottom-rect.top;
-    //         let centereds = document.getElementsByClassName("centered");
-    //         let centeredArray = [...centereds];
-    //         centeredArray.forEach(element => {
-    //             element.style.fontSize = `${parseInt(squareSize*0.589)}px`
-    //         });
-    //         let bottomRights = document.getElementsByClassName("bottom-right");
-    //         bottomRightsArray= [...bottomRights]
-    //         bottomRightsArray.forEach(element => {
-    //             element.style.fontSize = `${parseInt(squareSize*0.236)}px`
-    //         });
-
-    //         // el=document.getElementById("s1")
-    //         // rect = el.getBoundingClientRect();
-    //         // squareSize = rect.bottom-rect.top;
-    //         // centereds = document.getElementsByClassName("centered-on-rack");
-    //         // centeredArray = [...centereds];
-    //         // centeredArray.forEach(element => {
-    //         //     element.style.fontSize = `${parseInt(squareSize*0.577)}px`
-    //         // });
-
-    //         // bottomRights = document.getElementsByClassName("bottom-right-on-rack");
-    //         // bottomRightsArray= [...bottomRights]
-    //         // bottomRightsArray.forEach(element => {
-    //         //     element.style.fontSize = `${parseInt(squareSize*0.192)}px`
-    //         // });
-
-    // }
-
-
 
     function  setBoardSize() {
         let n=95;
@@ -2296,7 +2264,7 @@ document.getElementById("closexchbox").addEventListener("click", closeexchangebo
 document.getElementById("closeall7box").addEventListener("click", closeall7box);
 document.getElementById("exchSubmit").addEventListener("click", returnExchangeTiles);
 document.getElementById("exitgame").addEventListener("click", exitGame);
-document.getElementById("savethegame").addEventListener("click", saveGame);
+document.getElementById("savethegame").addEventListener("click", ()=>saveGame(true));
 
 
 
