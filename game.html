@@ -493,33 +493,43 @@
           <div class=tpbox id="maxpts"></div>
         </div>
       </div>
+      <div class="row">
+        <div class="col d-flex flex-column">
+            <div class="p-2 mt-0">
+            <p class="p-1 not-there" id="lastPlayed"></p>
+            </div>
+        </div>
+
+      </div>
 
             <div class="row mt-2 ">
                 <div class="col d-flex flex-row control-btns justify-content-center">
                   <div class="mt-2">
-                      <button type="button" class="btn btn-info mb-2 mr-2" id="info">How to Play</button>
-                  </div>
-                  <div class="mt-2">
-                      <a href="index.html" type="button" class="btn btn-danger mb-2 mr-2" id="exitgame">Exit</a>
+                      <button type="button" class="btn btn-info mb-2 mr-2" id="info">Instructions</button>
                   </div>
                 </div>
+            </div> 
+            <div class="row mt-0 ">
+              <div class="col d-flex flex-row control-btns justify-content-center">
+                  <div class="mt-0">
+                    <button type="button" class="btn btn-info mb-2 mr-2" id="savethegame">Save</a>
+                </div>
+                  <div class="mt-0">
+                      <a href="index.html" type="button" class="btn btn-danger mb-2 mr-2" id="exitgame">Exit</a>
+                  </div>
+              </div>
+             </div>
+             <div class="row mt-2">
+              <div class="col d-flex flex-row control-btns justify-content-center">
+                <div class="mt-0">
+                  <a href="https://forms.gle/LPCXA6WhG1qBYZYK7" target="_blank">Leave Feedback</a>
+                </div>
+              </div>
+             </div>
                 
                 
-              
-            </div>
-            <div class="row">
-				<div class="col d-flex flex-column">
+    
 
-					  <div class="p-2 mt-0">
-						<p class="p-1 not-there" id="lastPlayed"></p>
-            </div>
-            <div class="mt-0">
-              <a href="https://forms.gle/LPCXA6WhG1qBYZYK7" target="_blank">Leave Feedback</a>
-            </div>
-
-				</div>
-
-            </div>
       </div>
         </div>
                 
@@ -569,6 +579,7 @@
         <li>The <span class="infobox">Play</span> button submit tiles on the board.</li>
         <li>The current player will be <span class="highlight">highlighted</span></li>
         <li>The <span class="infobox">Dict</span> button brings up a dictionary and a list of two-letter words.</li>
+        <li>The <span class="infobox">Save</span> button saves the current state of the game in the browser's local storage. If a saved game exists you will be asked whether to reload it upon resuming</li>
         <li>All words played by the AI are valid words according to the Official Scrabble Dictionary.</li>
       </ul>
       <div class="d-flex justify-content-center">
@@ -637,34 +648,13 @@
         if (sessionStorage.length<8){
           newLocation()
         }
-        //the following is to prevent the UI from distorting when the soft keyboard shows up on Android
-        // document.documentElement.style.setProperty('overflow', 'auto') 
-        // const metaViewport = document.querySelector('meta[name=viewport]')
-        // metaViewport.setAttribute('content', 'height=' + initialHeight + 'px, width=device-width, initial-scale=1.0')
-        // metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
-        // initialWidth = window.innerWidth
-        // initialHeight = window.innerHeight
+
       </script> 
       
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="dictformatted.js"></script>
 		<script src="dictionary.js"></script>
     <script src="script.js"></script>
-    <!-- <script>
-          function  setBoardSize() {
-        let n=100;
-        let w = window.innerWidth;
-        let h = window.innerHeight;
-        let ww=Math.min(w,h);
-        if (ww>600){
-          n=85;
-        }
-        let u=document.getElementsByClassName("grid-container")[0];
-        u.style.width = `${parseInt(ww*n/100)}px`;
-        u.style.height = `${parseInt(ww*n/100)}px`; 
-    }
-    window.addEventListener("resize", setBoardSize);
-    window.addEventListener("load", setBoardSize)
-    </script> -->
+
   </body>
 </html>

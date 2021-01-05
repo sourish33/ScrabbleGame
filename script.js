@@ -1271,7 +1271,6 @@ function AI_playGotMove(){
     {
         //advance the movenumber
         moveNumber++;
-        saveGame()//saving the game
         who= whoseMove(moveNumber,numPlayers);
   
         // document.getElementById("who-is-playing").innerHTML=players[who].name;
@@ -1279,6 +1278,7 @@ function AI_playGotMove(){
  
         players[who].returnPieces();
         replenishRack();
+        saveGame()//saving the game
         makeAIRackUntouchable(who);
         //reset the possible points 
         document.getElementById("points").innerHTML = 0;
@@ -2295,6 +2295,7 @@ document.getElementById("closexchbox").addEventListener("click", closeexchangebo
 document.getElementById("closeall7box").addEventListener("click", closeall7box);
 document.getElementById("exchSubmit").addEventListener("click", returnExchangeTiles);
 document.getElementById("exitgame").addEventListener("click", exitGame);
+document.getElementById("savethegame").addEventListener("click", saveGame);
 
 
 
