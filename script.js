@@ -2152,6 +2152,8 @@ function createPlayers(){
         if (ww>650){
           n=85;
         }
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('rack').style.display = 'block';
         let u=document.getElementsByClassName("grid-container")[0];
         u.style.display ='grid';
         u.style.width = `${parseInt(ww*n/100)}px`;
