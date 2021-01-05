@@ -124,7 +124,7 @@ function saveGame(verbose = false){
     sessionStorage.setItem('lptext', lptext )
     console.log("saved game")
     if (verbose){
-        alert("Game saved")
+        alert("Game saved in your browser")
     }
 }
 
