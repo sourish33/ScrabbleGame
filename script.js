@@ -2185,6 +2185,7 @@ function createPlayers(){
           n=85;
         }
         let u=document.getElementsByClassName("grid-container")[0];
+        u.style.display ='grid';
         u.style.width = `${parseInt(ww*n/100)}px`;
         u.style.height = `${parseInt(ww*n/100)}px`;
         // setFontSizes()
