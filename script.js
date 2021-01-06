@@ -2210,6 +2210,10 @@ function createPlayers(){
     function startGame(){
         setBoardSize();
         createPlayers();
+        let tilecontainers=document.getElementsByClassName("tile-container");
+        for (tile of tilecontainers){
+            tile.classList.add("ghost")
+        }
         updateScoreBoard();
         if (savedGameExists()) {
             if (confirm("Load saved game?")) {
