@@ -713,8 +713,14 @@ function placeTileOnRack(space_id){
 }
 
 
-    const showAIsRack = ()=>{document.getElementById("aisrack").style.display="flex"}
-    const hideAIsRack = ()=>{document.getElementById("aisrack").style.display="None"}
+    const showAIsRack = ()=>{
+        document.getElementById("aisrack").style.display="flex"
+        disableButtons()
+    }
+    const hideAIsRack = ()=>{
+        document.getElementById("aisrack").style.display="None"
+        enableButtons()
+    }
 
 
     function replenishRack() {
@@ -1459,6 +1465,22 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
 
 }
 
+function disableButtons(){
+    document.getElementById("shuffle").disabled = true;
+    document.getElementById("recall").disabled = true;
+    document.getElementById("play").disabled = true;
+    document.getElementById("exchange").disabled = true;
+    document.getElementById("pass").disabled = true;
+}
+
+function enableButtons(){
+    document.getElementById("shuffle").disabled = false;
+    document.getElementById("recall").disabled = false;
+    document.getElementById("play").disabled = false;
+    document.getElementById("exchange").disabled = false;
+    document.getElementById("pass").disabled = false;
+}
+
 function endGameSequence(n) {
     if (n===1){
         winner =getTopper()[0];
@@ -1472,13 +1494,9 @@ function endGameSequence(n) {
     }
         document.getElementById("winner").innerHTML=winner;
         document.getElementById("play").classList.add("not-there");
-        document.getElementById("shuffle").disabled = true;
-        document.getElementById("recall").disabled = true;
-        document.getElementById("play").disabled = true;
-        document.getElementById("exchange").disabled = true;
-        document.getElementById("pass").disabled = true;
         document.getElementById("victorybox").classList.remove("not-there");
         hideAIsRack()
+        disableButtons();
         gameOver = true
 }
 
