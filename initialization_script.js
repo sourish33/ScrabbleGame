@@ -207,7 +207,6 @@ function getInitialData() {
     let thePlayers = [p1,p2,p3,p4]
     let nonzeros = thePlayers.filter(function(e){ return e === 0 || e });
     if (nonzeros.length <2){
-        // alert("At least two players are required.")
         swal("At least two players are required.")
         return;
     }
@@ -258,6 +257,14 @@ function closeMondalInfo(){
     let modal = document.getElementById("myModal");
     modal.style.display="none"
 }
+
+// This can start the game upon pressing enter, but might not be a good idea
+// document.addEventListener('keypress',function(event){
+//     if(event.keyCode == 13) {
+//         event.preventDefault();
+//         getInitialData()
+//     }
+// });
 
 
 
