@@ -1454,16 +1454,11 @@ function play(){//makes tiles stuck and animates new tiles when play button is p
         moveNumber++;
         saveGame()
         who= whoseMove(moveNumber,numPlayers);
-        // alert(`Please pass to ${players[who].name}`);
         
         if (!players[who].isAI) {
-            // hideRack()
-            // alert(`Please pass device to ${players[who].name}`);
-            // console.log(`Please pass device to ${players[who].name}`);
-            askToPass(`${players[who].name}`)
-            
+            askToPass(`${players[who].name}`)      
         }
-        // document.getElementById("who-is-playing").innerHTML=players[who].name;
+
         highlightPlayer(who);
         players[who].returnPieces();
         replenishRack();
