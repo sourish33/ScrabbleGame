@@ -136,12 +136,12 @@ function retrieveSavedGame(){
         return []
     }
     let board = JSON.parse(sessionStorage.getItem('board'))
-    let hidnracks = JSON.parse(sessionStorage.getItem('hidnracks'))
+    let hidnrack = JSON.parse(sessionStorage.getItem('hidnracks'))
     let players = JSON.parse(sessionStorage.getItem('players'))
     let scoreboard = JSON.parse(sessionStorage.getItem('scoreboard'))
     let mn = sessionStorage.getItem('moveNumber')
     let lptext = sessionStorage.getItem('lptext')
-    return ([board,players, mn, lptext, scoreboard, hidnracks])
+    return ([board,players, mn, lptext, scoreboard, hidnrack])
 }
 
 function savedGameExists(){
@@ -160,7 +160,7 @@ function loadSavedGame(){
     const mn = savedGame[2];
     const lptext = savedGame[3];
     scoreboard = savedGame[4];
-    const hidnracks = savedGame[5]
+    const hidnrack = savedGame[5]
 
     //reset scores
     for (let n=1;n<Object.keys(plyrs).length+1;n++) {
@@ -186,6 +186,21 @@ function loadSavedGame(){
         // console.log(`plaving the ${letters[n]} at ${positions[n]}`)
         move("1s1",positions[n])
     }
+
+    //set letters on the hidden racks
+    let hidRackPositions = Object.keys(hidnrack)
+    let hidRackTiles = Object.values(hidnrack)
+    let hidLetters = []
+    for (let tile of hidRackTiles){
+        hidLetters.push(tile[0])
+    }
+
+    for (let n=0;n<hidRackTiles.length;n++){
+        placeTileWithLetterOnRack(hidRackPositions[n], hidLetters[n])
+        // console.log(`placing the ${letters[n]} at ${positions[n]}`)
+    }
+
+
     let playedTiles = getTilesPlayedNotSubmitted();
     for (let tile of playedTiles) {
         tile.classList.remove("played-not-submitted");
@@ -197,6 +212,8 @@ function loadSavedGame(){
         tile.removeAttribute("ontouchend");
         removeTouch(tile.children[0]);
     }
+
+
     legalPositions=getlegalPositions()
     updateScoreBoard()
     document.getElementById("lastPlayed").classList.remove("not-there")
