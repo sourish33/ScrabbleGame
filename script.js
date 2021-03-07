@@ -453,6 +453,7 @@ function generateCols() {
 
 function getRackIds(rackid="rack") {//finds the rack element and grabs the ids of the slots
     let rack = document.getElementById(rackid);
+    if (rack=== null) {return null}
     let rackSlots = rack.children;
     let rackSlotIds = [];
     for (slot of rackSlots) {
