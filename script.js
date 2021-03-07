@@ -2083,7 +2083,6 @@ function createPlayers(){
         let allRackIds =[]
         let hidnrack={};
         for (let i=1;i<numPlayers+1;i++){
-            console.log("rack"+i)
             allRackIds.push(getRackIds("rack"+i))
         }
         allRackIds=allRackIds.flat()
