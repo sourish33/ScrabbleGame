@@ -2059,6 +2059,22 @@ function createPlayers(){
         return boardnrack;
     }
 
+    function whatsOnTheRacks(){
+        let allRackIds =[]
+        let hidnrack={};
+        for (let i=1;i<numPlayers+1;i++){
+            console.log("rack"+i)
+            allRackIds.push(getRackIds("rack"+i))
+        }
+        allRackIds=allRackIds.flat()
+        for (rackId of allRackIds){
+            if (!isEmptyOnRack(rackId)){
+                hidnrack[rackId]=[readLetter(rackId),readPoint(rackId)];
+            }
+        }
+        return hidnrack;
+    }
+
 
     function try_n_tiles(maxTries, cur_points=0, workerfile){
 
