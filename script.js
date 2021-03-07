@@ -1616,36 +1616,30 @@ function displayScore() {
     document.getElementById("points").innerHTML = u;
 }
 
-// function decorateAI(n){
-//     if (players[n].isAI){
-//         document.getElementById(`pl${n}`).classList.add("AIPlayer")
-//         document.getElementById(`pl${n}-points`).classList.add("AIPlayer")
-//     }
-// }
 
 
 function updateScoreBoard(){
     document.getElementById("pl1").innerHTML = players[1].name;
     document.getElementById("pl1-points").innerHTML = players[1].score;
-    // decorateAI(1);
+    
     
     document.getElementById("pl2-points").innerHTML = players[2].score;
     document.getElementById("pl2").innerHTML = players[2].name;
-    // decorateAI(2);
+    
 
     if (numPlayers===3){
         document.getElementById("pl3-points").innerHTML = players[3].score;
         document.getElementById("pl3").innerHTML = players[3].name;
-        // decorateAI(3);
+        
     }
     if (numPlayers===4){
         document.getElementById("pl3-points").innerHTML = players[3].score;
         document.getElementById("pl3").innerHTML = players[3].name;
-        // decorateAI(3);
+        
 
         document.getElementById("pl4-points").innerHTML = players[4].score;
         document.getElementById("pl4").innerHTML = players[4].name;
-        // decorateAI(4);
+        
     }
 }
 
