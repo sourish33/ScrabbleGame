@@ -685,7 +685,7 @@ function move(fromWhere, toWhere) {
 
     }
     fixSizesAttribs();
-
+    saveGame()
 }
 
 
