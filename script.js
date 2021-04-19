@@ -121,6 +121,7 @@ function saveGame(verbose = false){
     sessionStorage.setItem('players', JSON.stringify( players ))
     sessionStorage.setItem('scoreboard', JSON.stringify( scoreboard ))
     sessionStorage.setItem('moveNumber', moveNumber )
+    sessionStorage.setItem('submitted', getTilesSubmitted(true) )
     let lptext=document.getElementById("lastPlayed").innerHTML
     sessionStorage.setItem('lptext', lptext )
     console.log("saved game")
@@ -140,8 +141,10 @@ function retrieveSavedGame(){
     let players = JSON.parse(sessionStorage.getItem('players'))
     let scoreboard = JSON.parse(sessionStorage.getItem('scoreboard'))
     let mn = sessionStorage.getItem('moveNumber')
+    let submitted = sessionStorage.getItem('submitted')
+    let playedNotSubmitted = sessionStorage.getItem('playedNotsubmitted')
     let lptext = sessionStorage.getItem('lptext')
-    return ([board,players, mn, lptext, scoreboard, hidnrack])
+    return ([board,players, mn, lptext, scoreboard, hidnrack, submitted])
 }
 
 function savedGameExists(){
@@ -160,7 +163,8 @@ function loadSavedGame(){
     const mn = savedGame[2];
     const lptext = savedGame[3];
     scoreboard = savedGame[4];
-    const hidnrack = savedGame[5]
+    const hidnrack = savedGame[5];
+    const submitted = savedGame[6].split(",");
 
     //reset scores
     for (let n=1;n<Object.keys(plyrs).length+1;n++) {
@@ -200,9 +204,10 @@ function loadSavedGame(){
         // console.log(`placing the ${letters[n]} at ${positions[n]}`)
     }
 
-
-    let playedTiles = getTilesPlayedNotSubmitted();
-    for (let tile of playedTiles) {
+    // submit the ones which were submitted earlier
+    for (let id of submitted) {
+        console.log(`Playing ${id}`)
+        let tile = document.getElementById(id);
         tile.classList.remove("played-not-submitted");
         tile.classList.add("submitted");
         tile.setAttribute("ondragstart","return false");
@@ -212,6 +217,9 @@ function loadSavedGame(){
         tile.removeAttribute("ontouchend");
         removeTouch(tile.children[0]);
     }
+
+    //return unplayed tiles to rack
+    returnToRack()
 
 
     legalPositions=getlegalPositions()
@@ -877,14 +885,26 @@ function getTilesOnBoard(){
     return u.concat(v);
 }
 
-function getTilesSubmitted(){
+function getTilesSubmitted(ids = false){
     let u = document.getElementsByClassName("submitted");
-    return Object.values(u);
+    let tiles = Object.values(u); 
+    if (ids) {
+        let tile_ids = [];
+        tiles.forEach((tile)=>{tile_ids.push(tile.id);})
+        return tile_ids
+    }
+    return tiles
 }
 
-function getTilesPlayedNotSubmitted(){
+function getTilesPlayedNotSubmitted(ids = false){
     let u = document.getElementsByClassName("played-not-submitted");
-    return Object.values(u);
+    let tiles = Object.values(u); 
+    if (ids) {
+        let tile_ids = [];
+        tiles.forEach((tile)=>{tile_ids.push(tile.id);})
+        return tile_ids
+    }
+    return tiles
 }
 
 function getSquareNumber(s) {//converts a cell address to a numerical value i.e. a1 = 1 , o15 = 225 etc
@@ -2295,7 +2315,7 @@ function createPlayers(){
     function exitGame(){
         gameOver=true
         sessionStorage.clear();
-        console.log("exit game speaking")
+        console.log("session storage cleared exiting game")
     }
 
 
