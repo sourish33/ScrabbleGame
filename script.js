@@ -2278,9 +2278,11 @@ function createPlayers(){
             tile.classList.add("ghost")
         }
         updateScoreBoard();
+        let thisIsASavedGame = false
         if (savedGameExists()) {
             if (confirm("Load saved game?")) {
                 loadSavedGame()
+                thisIsASavedGame = true
               } 
         }
         who= whoseMove(moveNumber,numPlayers);
@@ -2298,9 +2300,11 @@ function createPlayers(){
         }
         else{
             let msg=`Please pass to ${players[who].name}` 
+            let titlemsg = ""
+            thisIsASavedGame ? titlemsg = "Sorry about the interruption!" : titlemsg = "Let the games begin!"
 
             swal({
-                title: "Let the games begin!",
+                title: titlemsg,
                 text: msg,
                 icon: "success",
               }).then((value) => {
