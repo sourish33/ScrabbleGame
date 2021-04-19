@@ -739,6 +739,7 @@ function placeTileOnRack(space_id){
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
     tile.id = newid;
     fixSizesAttribs();
+    saveGame();
 }
 
 
@@ -850,6 +851,8 @@ function placeTileWithLetterOnRack(space_id, letter){
     tile.children[2].innerHTML = picked[1];
     newid = pickedTile[0].toString() + pickedTile[1]+ pickedTile[2];
     tile.id = newid;
+    fixSizesAttribs();
+    saveGame();
 }
 
 function switchSpots(slot1, slot2){
