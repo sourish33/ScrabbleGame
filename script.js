@@ -2149,6 +2149,7 @@ function createPlayers(){
             myWorker.addEventListener('message', event => {
                 let result = event.data;
                 if (typeof(event.data)==="object"){
+                    myWorker.terminate()
                     resolve(result); 
                 }
               }, false)

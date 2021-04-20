@@ -28,7 +28,7 @@ onmessage = function(e) {
         postMessage(`Done with ${NN}-letter combos`)
         }
     postMessage(rupa);
-    self.close();
+    // self.close();
   }
 
 

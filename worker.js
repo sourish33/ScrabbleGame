@@ -40,7 +40,7 @@ onmessage = function(e) {
 
     // console.log("Worker0 done")
    postMessage(rupa);
-   self.close();
+//    self.close();
   }
 
 
