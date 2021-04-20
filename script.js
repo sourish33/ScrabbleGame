@@ -186,8 +186,14 @@ function loadSavedGame(){
         letters.push(tile[0])
     }
     for (let n=0;n<tiles.length;n++){
-        placeTileWithLetterOnRack("1s1", letters[n])
-        // console.log(`plaving the ${letters[n]} at ${positions[n]}`)
+        console.log()
+        if (tiles[n][1]===0){//if its a blank tile that had been played, draw a blank tile and then give it the same letter value
+            placeTileWithLetterOnRack("1s1", "_")
+            changeLetter("1s1", letters[n])
+            
+        } else {
+            placeTileWithLetterOnRack("1s1", letters[n])
+        }
         move("1s1",positions[n])
     }
 
@@ -206,7 +212,6 @@ function loadSavedGame(){
 
     // submit the ones which were submitted earlier
     for (let id of submitted) {
-        console.log(`Playing ${id}`)
         let tile = document.getElementById(id);
         tile.classList.remove("played-not-submitted");
         tile.classList.add("submitted");
@@ -1098,6 +1103,13 @@ function changeLetter(space_id, letter){
     if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
     let tile = getTileAt(space_id);
     tile.children[1].innerHTML = letter.toUpperCase();
+}
+
+function changePoint(space_id, point){
+    if (includes("s", space_id) && isEmptyOnRack(space_id)){return;}
+    if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
+    let tile = getTileAt(space_id);
+    tile.children[2].innerHTML = point
 }
 
 function readWord(arr){
