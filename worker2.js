@@ -29,6 +29,7 @@ onmessage = function(e) {
         }
 
     postMessage(rupa);
+    self.close();
   }
 
 

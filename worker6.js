@@ -27,8 +27,8 @@ onmessage = function(e) {
         tryNletters(NN, maxTries)
         postMessage(`Done with ${NN}-letter combos`)
         }
-
     postMessage(rupa);
+    self.close();
   }
 
 
