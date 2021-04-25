@@ -15,7 +15,7 @@ for (let n=1;n<5;n++){
     AIlist[n]=settings[3][n-1]
 }
 
-const passGreetings = ["Nice!", "Finally!", "Good Job!", "INCREDIBLE!", 
+const passGreetings = ["Nice!", "Finally!", "Good Job!", "INCREDIBLE!", "Noice",
 "Wowza!", "Woot Woot!", "That's LITERALLY awesome!", 
 "Groovy!", "Righteous!", "Copacetic!", "Nifty!", "Quite a wordsmith there!"]
 
@@ -337,6 +337,7 @@ function onTouchStart(e){
 
 function onTouchMove(e) {
     if (multipleTouches){return}
+    document.getElementsByTagName("body")[0].style.touchAction="none"
     e.preventDefault();
     let dragItem = e.currentTarget;
     lastMoved=dragItem;
