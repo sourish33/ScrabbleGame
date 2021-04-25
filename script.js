@@ -325,6 +325,7 @@ window.addEventListener('touchstart', function(e) {
 function onTouchStart(e){
 
         if (multipleTouches){return}
+        document.getElementsByTagName("body")[0].style.touchAction="none"
         let u = e.currentTarget;
         let pos = getXY(u)
     
@@ -352,6 +353,7 @@ function onTouchMove(e) {
 
   function onTouchEnd(e) {
     if (multipleTouches){return}
+    document.getElementsByTagName("body")[0].style.touchAction="auto"
     initialX = currentX;
     initialY = currentY;
     let u = e.currentTarget;
