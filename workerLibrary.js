@@ -182,7 +182,12 @@ function readLetter(space_id){
 }
 
 function readPoint(space_id){
-    return board[space_id][1];
+    let point = board[space_id][1]
+    if (isNaN(point)) {
+        alert(`Had trouble reading ${space_id} - contact developer`)
+        return 0
+    }
+    return point;
 }
 
 function changeLetter(space_id, letter){

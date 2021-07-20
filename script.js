@@ -1095,6 +1095,10 @@ function readPoint(space_id){
     if (!includes("s", space_id) && isEmptyOnBoard(space_id)){return;}
     let tile = getTileAt(space_id);
     let point =tile.children[2].innerHTML;
+    if (isNaN(point)) {
+        alert(`Had trouble reading ${space_id} - contact developer`)
+        return 0
+    }
     point = parseInt(point);
     return point;
 }
@@ -1829,7 +1833,7 @@ let player = {
 
     },
 
-   /////TODO makerack()
+
    makeRack: function() {
        let rname = this.rackname;
        let pnum = this.number.toString();
