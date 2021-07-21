@@ -1817,6 +1817,10 @@ let player = {
       console.log(`I am player ${this.name}, my number is ${this.number} and I have scored ${this.score} points`);
     },
     addPoints: function(points){
+        if (isNaN(points)){
+            alert(`I am player ${this.name} and I am being asked to add NaN points` )
+            points=0
+        }
         this.score+=points;
     },
     endGameAdjust: function(){
