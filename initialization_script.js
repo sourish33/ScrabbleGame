@@ -267,7 +267,7 @@ function closeMondalInfo(){
 // });
 
 
-
+sessionStorage.clear();
 document.getElementById("playbutton").addEventListener("click", getInitialData);
 document.getElementById("addH").addEventListener("click", addPlayerH);
 document.getElementById("addC").addEventListener("click", addPlayerC);
