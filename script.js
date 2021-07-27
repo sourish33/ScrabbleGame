@@ -1311,11 +1311,55 @@ function checkForIsolatedLetters(arr) {
     return false
 }
 
+function checkTilesContiguous() {
+    let playedTiles = getTilesPlayedNotSubmitted()
+    let rows = getPlayedRows(playedTiles)
+    let cols = getPlayedCols(playedTiles)
+    //Catches non-contiguous in row
+    if (rows.length === 1 && !isContiguous(cols)) {
+        let numCols = cols.map((el) => parseInt(el))
+        let min = Math.min(...numCols)
+        let max = Math.max(...numCols)
+
+        for (let col = min; col < max + 1; col++) {
+            console.log(rows[0] + col)
+            if (isEmptyOnBoard(rows[0] + col.toString())) {
+                console.log("letters not contiguous")
+                return false
+            }
+        }
+    }
+    //catches non-contiguous in column TODO
+    //  if ((cols.length ===1) && !isContiguous(rows)){
+    //     console.log("Getting in ")
+    //      let numRows = cols.map((el)=>parseInt(el))
+    //      let min = Math.min(...numCols)
+    //      let max = Math.max(...numCols)
+    //      console.log("Math and min are "+max+" and "+min)
+
+    //      for (let col=min; col<max+1; col++) {
+    //          console.log(rows[0]+col)
+    //          if (isEmptyOnBoard(rows[0]+col.toString())){
+    //              console.log("letters not contiguous")
+    //              return false
+    //             }
+    //      }
+
+    //  }
+
+    return true
+}
+
 function checkLegalPlacement(tiles) {
     let cols = getPlayedCols(tiles)
     let rows = getPlayedRows(tiles)
     let ids = getPlayedIds(tiles)
     if (!(rows.length === 1 || cols.length === 1)) {
+        console.log("letters submitted are not in the same row or col")
+        return false
+    }
+
+    if (!checkTilesContiguous()) {
         console.log("letters submitted are not in the same row or col")
         return false
     }
