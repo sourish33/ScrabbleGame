@@ -1311,10 +1311,15 @@ function checkForIsolatedLetters(arr) {
     return false
 }
 
-function checkTilesContiguous() {
+function chkTilePlacement() {
     let playedTiles = getTilesPlayedNotSubmitted()
     let rows = getPlayedRows(playedTiles)
     let cols = getPlayedCols(playedTiles)
+
+    if (!(rows.length === 1 || cols.length === 1)) {
+        console.log("letters submitted are not in the same row or col")
+        return false
+    }
     //Catches non-contiguous in row
     if (rows.length === 1 && !isContiguous(cols)) {
         let numCols = cols.map((el) => parseInt(el))
@@ -1324,19 +1329,20 @@ function checkTilesContiguous() {
         for (let col = min; col < max + 1; col++) {
             console.log(rows[0] + col)
             if (isEmptyOnBoard(rows[0] + col.toString())) {
+                console.log("Tiles not contiguous")
                 return false
             }
         }
     }
 
     if (cols.length === 1 && !isContiguous(rows)) {
-        console.log("Getting in ")
         let numCols = rows.map((el) => el.charCodeAt(0)) //convert letters into numbers
         let min = Math.min(...numCols)
         let max = Math.max(...numCols)
 
         for (let row = min; row < max + 1; row++) {
             if (isEmptyOnBoard(String.fromCharCode(row) + cols[0])) {
+                console.log("Tiles not contiguous")
                 return false
             }
         }
@@ -1346,26 +1352,20 @@ function checkTilesContiguous() {
 }
 
 function checkLegalPlacement(tiles) {
-    let cols = getPlayedCols(tiles)
-    let rows = getPlayedRows(tiles)
+
     let ids = getPlayedIds(tiles)
-    if (!(rows.length === 1 || cols.length === 1)) {
-        console.log("letters submitted are not in the same row or col")
+    if (checkForIsolatedLetters(ids)) {
+        console.log("isolated letters")
         return false
     }
 
-    if (!checkTilesContiguous()) {
-        console.log("letters submitted are not in the same row or col")
+
+    if (!chkTilePlacement()) {
         return false
     }
 
     if (getAllIslandWords().length !== 0) {
         console.log("illegal words")
-        return false
-    }
-
-    if (checkForIsolatedLetters(ids)) {
-        console.log("isolated letters")
         return false
     }
 
