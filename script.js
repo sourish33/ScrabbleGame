@@ -1324,28 +1324,23 @@ function checkTilesContiguous() {
         for (let col = min; col < max + 1; col++) {
             console.log(rows[0] + col)
             if (isEmptyOnBoard(rows[0] + col.toString())) {
-                console.log("letters not contiguous")
                 return false
             }
         }
     }
-    //catches non-contiguous in column TODO
-    //  if ((cols.length ===1) && !isContiguous(rows)){
-    //     console.log("Getting in ")
-    //      let numRows = cols.map((el)=>parseInt(el))
-    //      let min = Math.min(...numCols)
-    //      let max = Math.max(...numCols)
-    //      console.log("Math and min are "+max+" and "+min)
 
-    //      for (let col=min; col<max+1; col++) {
-    //          console.log(rows[0]+col)
-    //          if (isEmptyOnBoard(rows[0]+col.toString())){
-    //              console.log("letters not contiguous")
-    //              return false
-    //             }
-    //      }
+    if (cols.length === 1 && !isContiguous(rows)) {
+        console.log("Getting in ")
+        let numCols = rows.map((el) => el.charCodeAt(0)) //convert letters into numbers
+        let min = Math.min(...numCols)
+        let max = Math.max(...numCols)
 
-    //  }
+        for (let row = min; row < max + 1; row++) {
+            if (isEmptyOnBoard(String.fromCharCode(row) + cols[0])) {
+                return false
+            }
+        }
+    }
 
     return true
 }
